@@ -10,17 +10,19 @@
       ./hardware-configuration.nix
     ];
 
+  # Allow instaling non-free packages
   nixpkgs.config.allowUnfree = true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "archbox";
+  # Network settings
+  networking.hostName = "nixhost";
   networking.networkmanager.enable = true;
 
+  # Locale settings
   time.timeZone = "Europe/Warsaw";
-
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -28,60 +30,87 @@
     useXkbConfig = false;
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # Use dash as /bin/sh
+  environment.binsh = "${pkgs.dash}/bin/dash";
 
-  # Enable sound.
+  # Enable services
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    
     pulse.enable = true;
     jack.enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
+  services.ntp.enable = true;
+  services.printing.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.pcache = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      discord
-      thunderbird
-      git
-      gnumake
-      python3
-      pass-wayland
-      lf
-      tmux
-      mpv
-    ];
+  # XDG Desktop Portal for PipeWire screensharing etc.
+  xdg.portal = {
+    enable = true;
+    config.common.default = [ "wlr" ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim
-    tree
-    curl wget htop
+  # Enable bluetooth support
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+    package = pkgs.bluez;
+  };
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    jetbrains-mono
+    dejavu_fonts
+    texlivePackages.opensans
+    font-awesome
+    ipafont
+    liberation_ttf
+    carlito
+    libertinus
+    unifont
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
+  # System-wide packages
+  environment.systemPackages = with pkgs; [
+    bash dash
+    firefox
+    discord
+    thunderbird
+    sxiv oculante mpv
+    xarchiver
+    lf tmux tree jq ripgrep fzf
+    curl wget htop
+    gnupg pinentry-curses pinentry-gtk2
+    iputils wpa_supplicant nettools wirelesstools
+    udisks
+    qpwgraph pulsemixer
+    dosfstools
+    inxi pciutils neofetch
+    zip unzip p7zip rar
+    bc libqalculate
+    rsync
+    trash-cli
+    imagemagick graphicsmagick
+    numix-icon-theme
+  ];
+
+  # Enable programs
   programs.mtr.enable = true;
+  programs.zsh = {
+    enable = true;
+    syntaxHighlighting.enable = true;
+  };
   programs.river = {
     enable = true;
     extraPackages = with pkgs; [
+      rivercarro
       foot
       swayidle
-      waylock 
+      waylock
       swww
       yambar
       bemenu
-      mako
+      libnotify mako
       gammastep
       grim slurp swappy
       wl-clipboard wlr-randr
@@ -89,7 +118,88 @@
   };
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
+    pinentryPackage = pkgs.pinentry-gtk2;
+  };
+  programs.ssh.startAgent = true;
+
+  # User configuration
+  users.users.pcache = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    packages = with pkgs; [
+      # Development tools
+      git lazygit patch
+      neovim tree-sitter nodejs
+      gcc gdb valgrind gnumake cmake
+      bear clang
+      vscode-langservers-extracted  # HTML, CSS, JSON, Markdown, ESLint
+      zig zls
+      lua lua-language-server
+      nodePackages.bash-language-server shellcheck
+      rustc cargo rustfmt clippy rust-analyzer
+      tokei highlight
+      python3 python312Packages.pip pyright ruff
+      binutils
+      meld
+      unixtools.xxd
+
+      # Typesetting / presentation
+      zathura
+      md4c graphviz gnuplot
+      (texliveBasic.withPackages (ps: with ps; [
+        collection-latexrecommended
+        collection-fontsrecommended
+        collection-latexextra
+        collection-plaingeneric
+        collection-langcjk
+        collection-binextra
+        collection-bibtexextra
+      ])) texlab biber
+      typst typst-lsp
+      farbfeld
+      mscgen
+
+      # Music listening
+      mpd ncmpcpp mpc-cli
+      chromaprint
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-good
+      gst_all_1.gst-plugins-bad
+      gst_all_1.gst-plugins-ugly
+      atomicparsley
+      mp3info mp3gain rsgain
+      mpd-discord-rpc
+      python312Packages.pygobject3
+      python312Packages.musicbrainzngs
+      python312Packages.pyacoustid
+      python312Packages.requests
+      python312Packages.pylast
+      python312Packages.pyxdg
+      beets-unstable
+
+      # Music production
+      alsa-utils
+      carla
+      x42-plugins
+      helm
+      geonkick
+      distrho
+      sfizz
+      vmpk
+      ardour
+      hydrogen
+      zynaddsubfx
+
+      # Misc applications
+      syncthing
+      pass-wayland
+      yt-dlp
+      obs-studio
+      figlet sl asciiquarium
+      newsraft
+      onedrive
+    ];
+    shell = pkgs.zsh;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
