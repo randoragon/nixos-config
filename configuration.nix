@@ -79,7 +79,7 @@
     sxiv oculante mpv
     xarchiver
     lf tmux tree jq ripgrep fzf
-    curl wget htop
+    curl wget htop file
     gnupg pinentry-curses pinentry-gtk2
     iputils wpa_supplicant nettools wirelesstools
     udisks
@@ -92,6 +92,7 @@
     trash-cli
     imagemagick graphicsmagick
     numix-icon-theme
+    ffmpeg sox
   ];
 
   # Enable programs
@@ -130,7 +131,7 @@
       # Development tools
       git lazygit patch
       neovim tree-sitter nodejs
-      gcc gdb valgrind gnumake cmake
+      gcc gdb valgrind gnumake cmake pkg-config
       bear clang
       vscode-langservers-extracted  # HTML, CSS, JSON, Markdown, ESLint
       zig zls
@@ -160,7 +161,8 @@
       mscgen
 
       # Music listening
-      mpd ncmpcpp mpc-cli
+      mpd mpc-cli
+      (ncmpcpp.override { visualizerSupport = true; clockSupport = true; taglibSupport = false; })
       chromaprint
       gst_all_1.gstreamer
       gst_all_1.gst-plugins-good
