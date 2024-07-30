@@ -78,7 +78,7 @@
   # System-wide packages
   environment.systemPackages = with pkgs; [
     bash dash
-    firefox
+    firefox ungoogled-chromium
     discord
     thunderbird
     sxiv oculante mpv
@@ -98,6 +98,7 @@
     imagemagick graphicsmagick
     numix-icon-theme
     ffmpeg sox
+    lm_sensors
   ];
 
   # Enable programs
@@ -144,7 +145,8 @@
       nodePackages.bash-language-server shellcheck
       rustc cargo rustfmt clippy rust-analyzer
       tokei highlight
-      python3 python312Packages.pip pyright ruff
+      (python3.withPackages (ps: [ ps.pip ]))
+      pyright ruff
       binutils
       meld
       unixtools.xxd
@@ -176,12 +178,14 @@
       atomicparsley
       mp3info mp3gain rsgain
       mpd-discord-rpc
-      python312Packages.pygobject3
-      python312Packages.musicbrainzngs
-      python312Packages.pyacoustid
-      python312Packages.requests
-      python312Packages.pylast
-      python312Packages.pyxdg
+      (python3.withPackages (ps: with ps; [
+        pygobject3
+        musicbrainzngs
+        pyacoustid
+        requests
+        pylast
+        pyxdg
+      ]))
       beets-unstable
 
       # Music production
