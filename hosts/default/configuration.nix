@@ -3,126 +3,11 @@
   imports =
     [
       ./hardware-configuration.nix
+      ../../modules/common
     ];
 
-  # Allow instaling non-free packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Use systemd-boot
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Network settings
-  networking.hostName = "nixhost";
-  networking.networkmanager.enable = true;
-
-  # Locale settings
-  time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "pl";
-    useXkbConfig = false;
-  };
-
-  # Use dash as /bin/sh
-  environment.binsh = "${pkgs.dash}/bin/dash";
-
-  # Enable services
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
-  services.libinput.enable = true;
-  services.ntp.enable = true;
-  services.printing.enable = true;
-
-  # XDG Desktop Portal for PipeWire screensharing etc.
-  xdg.portal = {
-    enable = true;
-    config.common.default = [ "wlr" ];
-  };
-
-  # Enable bluetooth support
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = false;
-    package = pkgs.bluez;
-  };
-
-  # Allow waylock to authenticate (https://github.com/swaywm/sway/issues/2773#issuecomment-427570877)
-  security.pam.services.waylock = {
-    text = "auth include login";
-  };
-
-  # Fonts
-  fonts.packages = with pkgs; [
-    jetbrains-mono
-    dejavu_fonts
-    texlivePackages.opensans
-    font-awesome
-    ipafont
-    liberation_ttf
-    carlito
-    libertinus
-    unifont
-  ];
-
-  # System-wide packages
-  environment.systemPackages = with pkgs; [
-    bash dash
-    firefox ungoogled-chromium
-    discord
-    thunderbird
-    sxiv oculante mpv
-    xarchiver
-    lf tmux tree jq ripgrep fzf
-    curl wget htop file
-    gnupg pinentry-curses pinentry-gtk2
-    iputils wpa_supplicant nettools wirelesstools
-    udisks
-    qpwgraph pulsemixer
-    dosfstools
-    inxi pciutils neofetch
-    zip unzip p7zip rar
-    bc libqalculate
-    rsync
-    trash-cli
-    imagemagick graphicsmagick
-    numix-icon-theme
-    ffmpeg sox
-    lm_sensors
-  ];
-
-  # Enable programs
-  programs.mtr.enable = true;
-  programs.zsh = {
-    enable = true;
-    syntaxHighlighting.enable = true;
-  };
-  programs.river = {
-    enable = true;
-    extraPackages = with pkgs; [
-      rivercarro
-      foot
-      swayidle
-      waylock
-      swww
-      yambar
-      bemenu
-      libnotify mako
-      gammastep
-      grim slurp swappy
-      wl-clipboard wlr-randr
-    ];
-  };
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-gtk2;
-  };
-  programs.ssh.startAgent = true;
+  # Set hostname
+  networking.hostName = "nixos";
 
   # User configuration
   users.users.pcache = {
@@ -147,7 +32,6 @@
       unixtools.xxd
 
       # Typesetting / presentation
-      zathura
       md4c graphviz gnuplot
       (texliveBasic.withPackages (ps: with ps; [
         collection-latexrecommended
@@ -197,6 +81,7 @@
       zynaddsubfx
 
       # Misc applications
+      discord
       syncthing
       pass-wayland
       yt-dlp
@@ -208,18 +93,6 @@
     shell = pkgs.zsh;
   };
 
-  nix = {
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-
-    settings = {
-      auto-optimise-store = true;
-      experimental-features = [ "nix-command" "flakes" ];
-    };
-  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
