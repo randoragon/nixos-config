@@ -5,5 +5,6 @@
     ./gammastep
     ./git
     ./gnupg
+    ./gtk
   ];
 }

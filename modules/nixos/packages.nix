@@ -31,7 +31,6 @@
     rsync
     trash-cli
     imagemagick graphicsmagick
-    numix-icon-theme
     ffmpeg sox
     lm_sensors
   ];
