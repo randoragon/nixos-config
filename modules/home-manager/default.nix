@@ -1,5 +1,6 @@
 {
   imports = [
+    ./beets
     ./foot
   ];
 }

@@ -41,18 +41,11 @@
     # Music listening
     mpd mpc-cli
     (ncmpcpp.override { visualizerSupport = true; clockSupport = true; taglibSupport = false; })
-    chromaprint
-    gst_all_1.gstreamer
-    gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad
-    gst_all_1.gst-plugins-ugly
-    atomicparsley
     mp3info mp3gain rsgain
     mpd-discord-rpc
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))
-    beets-unstable
 
     # Music production
     alsa-utils

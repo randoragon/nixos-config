@@ -1,0 +1,104 @@
+# RANDORAGON's BEETS CONFIG
+
+# Directory for beets to store raw data in
+library: ~/Music/beets.db
+
+# Directory to move amended items into
+directory: ~/Music
+
+# Formats used when producing output with beets list
+format_item: $artist - $title
+format_album: $albumartist - $album
+sort_item: artist+ album+ disc+ track+
+sort_album: albumartist+ album+
+sort_case_insensitive: yes
+
+# Import options
+import:
+  write: yes
+  move: yes
+  copy: no
+  resume: ask
+  incremental: no
+  incremental_skip_later: no
+  quiet: no
+  detail: yes
+  from_scratch: no
+  log: ~/.config/beets/import.log
+  languages: en pl
+  autotag: yes
+
+# Paths
+paths:
+  default: $albumartist/$album%aunique{}/$title
+  singleton: $artist/no album/$title
+  comp: Various Artists/$album%aunique{}/$title
+
+# PLUGINS ----------------------------------------------------
+# https://beets.readthedocs.io/en/stable/plugins/index.html
+# fetchart       : download album art
+# chroma         : enables matching by acoustic fingerprint instead of just tags
+# edit           : edit tags with any text editor
+# embedart       : embed album art directly into the music files
+# ftintitle      : converts tags like "artist feat. guest - title" to "artist - title feat. guest"
+# mbsync         : update MusicBrainz tags with "beet mbsync QUERY". Affects only items with MusicBrainzID
+# thumbnails     : adds metadata for displaying file thumbnails in thunar etc.
+# info           : enables listing quaried items' tag information
+# duplicates     : finds duplicate tracks or albums
+# fromfilename   : guesses missing artist/title from filename
+plugins: >
+  fetchart
+  edit
+  embedart
+  ftintitle
+  mbsync
+  thumbnails
+  info
+  fromfilename
+
+chroma:
+  auto: yes
+
+acoustid:
+  # Send local fingerprints to with "beet submit"
+  apikey: plCTgUVJgu
+
+edit:
+  itemfields: track title artist album
+  albumfields: album albumartist
+
+fetchart:
+  auto: yes
+  minwidth: 0
+  maxwidth: 500
+  enforce_ratio: no
+  sources: filesystem coverart itunes amazon albumart wikipedia
+  store_source: no
+
+embedart:
+  auto: yes
+  compare_threshold: 0
+  ifempty: no
+  maxwidth: 500
+  remove_art_file: yes
+
+ftintitle:
+  auto: yes
+  drop: no
+  format: feat. {0}
+
+thumbnails:
+  auto: yes
+  force: no
+  dolphin: no
+
+duplicates:
+  keys: [mb_trackid, mb_albumid]
+  album: no
+  count: no
+  delete: no
+  full: no
+  merge: no
+  path: yes
+
+# ENDOF PLUGINS ----------------------------------------------
