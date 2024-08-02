@@ -3,7 +3,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/common
+      ../../modules/nixos
     ];
 
   # Set hostname
