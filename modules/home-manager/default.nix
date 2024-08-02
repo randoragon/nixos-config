@@ -4,5 +4,6 @@
     ./foot
     ./gammastep
     ./git
+    ./gnupg
   ];
 }
