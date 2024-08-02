@@ -3,5 +3,6 @@
     ./beets
     ./foot
     ./gammastep
+    ./git
   ];
 }

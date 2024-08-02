@@ -8,7 +8,7 @@
 
   home.packages = with pkgs; [
     # Development tools
-    git lazygit patch
+    lazygit patch
     neovim tree-sitter nodejs
     gcc gdb valgrind gnumake cmake pkg-config
     bear
