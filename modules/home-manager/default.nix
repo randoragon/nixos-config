@@ -2,5 +2,6 @@
   imports = [
     ./beets
     ./foot
+    ./gammastep
   ];
 }

@@ -47,7 +47,6 @@
       yambar
       bemenu
       libnotify mako
-      gammastep
       grim slurp swappy
       wl-clipboard wlr-randr
     ];
