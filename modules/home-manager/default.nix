@@ -11,5 +11,6 @@
     ./ledger
     ./less
     ./lf
+    ./lua
   ];
 }
