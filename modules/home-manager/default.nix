@@ -10,5 +10,6 @@
     ./krita
     ./ledger
     ./less
+    ./lf
   ];
 }

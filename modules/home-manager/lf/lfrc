@@ -1,0 +1,493 @@
+# Y to copy file contents to clipboard
+map Y &{{
+    wl-copy <"$f"
+    fname="$(basename -- "$f")"
+    lf -remote "send $id echo \\\"$fname\\\" copied to clipboard."
+}}
+
+# Enable icons
+set icons
+
+# Enable period refresh
+set period 1
+
+# Define file separator
+set ifs "\n"
+
+# Remap find-prev
+map \\ :find-prev
+
+# Map "Leader" key
+map ,
+map ,p :set preview!
+
+# Make opened things appear in new windows
+cmd open $setsid xdg-open "$f" >/dev/null 2>&1 &
+
+# Trash and delete files
+map x :trash
+map X :delete
+cmd trash %{{
+    clear
+    printf "%s\n" "$fx"
+    printf "move to trash? [y/N] "
+    read ans
+    if [ $ans = "y" ] || [ $ans = "Y" ]; then
+        printf "%s\n" "$fx" | while read l; do
+            trash-put -- "$l"
+        done
+    else
+        lf -remote "send $id clear"
+    fi
+}} 
+
+# Alternate selection bindings
+map v :toggle
+map <c-v> :invert
+
+# Fuzzy Find
+cmd fuzzy-find ${{
+    match="$(find . -maxdepth 1 | fzf --bind=ctrl-d:half-page-down,ctrl-u:half-page-up | sed -E 's/(.)/\\\1/g')"
+    [ -n "$match" ] && {
+        [ "$(expr "$(basename -- "$match")" : "^\..*")" -ne 0 ] && lf -remote "send $id set hidden"
+        lf -remote "send $id select $match"
+    }
+}}
+cmd fuzzy-find-recursive ${{
+    match="$(find . | fzf --bind=ctrl-d:half-page-down,ctrl-u:half-page-up | sed -E 's/(.)/\\\1/g')"
+    [ -n "$match" ] && {
+        [ "$(expr "$(basename -- "$match")" : "^\..*")" -ne 0 ] && lf -remote "send $id set hidden"
+        lf -remote "send $id select $match"
+    }
+}}
+map o :fuzzy-find
+map O :fuzzy-find-recursive
+
+# Put to background
+map <c-z> $ kill -STOP $PPID
+
+# Bulk rename
+cmd bulk-rename ${{
+    old="$(mktemp)"
+    new="$(mktemp)"
+    [ -z "$fs" ] && fs="$(ls)"
+    printf "%s\n" "$fs" > "$old"
+    printf "%s\n" "$fs" > "$new"
+    "$EDITOR" "$new"
+    [ "$(cat -- "$new" | wc -l)" -ne "$(cat -- "$old" | wc -l)" ] && exit
+    paste "$old" "$new" | while read names; do
+        src="$(printf "%s" "$names" | cut -f1)"
+        dst="$(printf "%s" "$names" | cut -f2)"
+        [ "$src" = "$dst" ] && continue
+        [ -e "$dst" ] && continue
+        mv -- "$src" "$dst"
+    done
+    rm -- "$old" "$new"
+    lf -remote "send $id unselect"
+}}
+map R :bulk-rename
+
+# Change permission flags
+cmd chmod &{{
+    printf "%s\n" "$fx" | while read -r fpath; do
+        chmod "$@" -- "$fpath"
+    done
+    lf -remote "send $id reload"
+}}
+map P :push :chmod<space>
+
+# Print file information
+cmd info !{{
+    clear
+    printf "\n Computing..."
+    CONTENT="$(printf "%s\n" "$fx" | fls)"
+    clear
+    printf "\n%s" "$CONTENT"
+}}
+map I :info
+
+# Create/Open archives
+cmd tar ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vi -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-gz ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.gz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.gz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vzi -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-bz ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.bz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.bz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vji -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-xz ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.xz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.xz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vJi -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd zip ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.zip" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.zip" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vZi -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd rar ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.rar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.rar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vri -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd jar ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.jar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.jar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vRi -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd 7z ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.7z" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.7z" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -v7i -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-gz-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.gz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.gz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vzimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-bz-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.bz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.bz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vjimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd tar-xz-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.tar.xz" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.tar.xz" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vJimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd zip-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.zip" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.zip" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vZimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd rar-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.rar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.rar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vrimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd jar-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.jar" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.jar" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -vRimm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+cmd 7z-m ${{
+    clear
+    unset IFS
+    FILE="$*"
+    [ -z "$FILE" ] && lf -remote "send $id echo 'archive name required'" && exit
+    if [ -f "$FILE.7z" ]; then
+        lf -remote "send $id echo 'a file with this name already exists'"
+        exit
+    elif [ -d "$FILE.7z" ]; then
+        lf -remote "send $id echo 'a directory with this name already exists'"
+        exit
+    fi
+    printf "%s\n" "$fx" | mkar -v7imm -- "$FILE"
+    lf -remote "send $id reload"
+}}
+
+
+cmd extract ${{
+    clear
+    unset IFS
+    FILE="$*"
+    if [ -n "$FILE" ]; then
+        if [ -f "$FILE" ]; then
+            lf -remote "send $id echo 'a file with this name already exists'"
+            exit
+        elif [ -d "$FILE" ] && [ -n "$(ls -A "$FILE" 2>&-)" ]; then
+            lf -remote "send $id echo 'a non-empty directory with this name already exists'"
+            exit
+        fi
+        extract -v "$f" "$FILE"
+    else extract -v "$f"; fi
+    lf -remote "send $id reload"
+}}
+
+# Archive mappings
+map t
+map tct &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar<space>$parsed"
+}}
+map tcz &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-gz<space>$parsed"
+}}
+map tcj &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-bz<space>$parsed"
+}}
+map tcJ &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-xz<space>$parsed"
+}}
+map tcZ &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :zip<space>$parsed"
+}}
+map tcr &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :rar<space>$parsed"
+}}
+map tcR &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :jar<space>$parsed"
+}}
+map tc7 &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :7z<space>$parsed"
+}}
+map tcmt &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-m<space>$parsed"
+}}
+map tcmz &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-gz-m<space>$parsed"
+}}
+map tcmj &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-bz-m<space>$parsed"
+}}
+map tcmJ &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :tar-xz<space>$parsed"
+}}
+map tcmZ &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :zip-m<space>$parsed"
+}}
+map tcmr &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :rar-m<space>$parsed"
+}}
+map tcmR &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :jar-m<space>$parsed"
+}}
+map tcm7 &{{
+    selname="$(basename -- "$f")"
+    parsed="$(printf "%s" "$selname" | sed 's/ /<space>/g')"
+    lf -remote "send $id push :7z-m<space>$parsed"
+}}
+map te :push :extract<space>
+
+# Go to symlink directory
+map gl &{{
+    origin="$(realpath -s -- "$(readlink -- "$f")")"
+    lf -remote "send $id select '$origin'"
+}}
+
+# Echo current id
+cmd id %echo "$id"
+
+# Quick edit ratios
+map ,r :push :set<space>ratios<space>
+
+# Sxiv image previews
+map ,i &sxiv -qta .
+map ,I &sxiv -qtar .
+
+# Better previews and paging
+set previewer ~/.scripts/lf-previewer
+map i ${ highlight -O ansi -- "$f" || cat -- "$f"; } | less -R
+
+# Generate directory shortcuts from jumprc
+map c
+map cd<enter> :cd ~
+map cd/ :cd /
+$"$HOME/.scripts/genlfjmp"
+:source "/tmp/genlfjmp_maps"
