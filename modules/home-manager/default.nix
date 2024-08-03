@@ -13,5 +13,6 @@
     ./lf
     ./lua
     ./mako
+    ./xdg-mime
   ];
 }
