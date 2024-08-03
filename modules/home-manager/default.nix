@@ -7,5 +7,6 @@
     ./gnupg
     ./gtk
     ./krita
+    ./ledger
   ];
 }
