@@ -12,5 +12,6 @@
     ./less
     ./lf
     ./lua
+    ./mako
   ];
 }
