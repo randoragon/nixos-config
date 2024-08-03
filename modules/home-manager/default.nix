@@ -9,5 +9,6 @@
     ./gtk
     ./krita
     ./ledger
+    ./less
   ];
 }
