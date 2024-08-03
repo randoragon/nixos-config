@@ -6,5 +6,6 @@
     ./git
     ./gnupg
     ./gtk
+    ./krita
   ];
 }
