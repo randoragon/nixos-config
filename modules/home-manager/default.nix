@@ -18,6 +18,7 @@
     ./newsraft
     ./neovim
     ./python
+    ./R
     ./xdg-mime
     ./xdg-dirs
     ./zsh
