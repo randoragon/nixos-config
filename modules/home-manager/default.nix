@@ -16,5 +16,6 @@
     ./xdg-mime
     ./xdg-dirs
     ./zsh
+    ./pass
   ];
 }

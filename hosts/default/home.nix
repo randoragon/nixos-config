@@ -63,7 +63,6 @@
     # Misc applications
     discord
     syncthing
-    pass-wayland
     yt-dlp
     obs-studio
     figlet sl asciiquarium
