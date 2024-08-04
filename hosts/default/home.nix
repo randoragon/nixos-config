@@ -9,19 +9,14 @@
   home.packages = with pkgs; [
     # Development tools
     lazygit patch
-    neovim tree-sitter nodejs
     gcc gdb valgrind gnumake cmake pkg-config
     bear
-    vscode-langservers-extracted  # HTML, CSS, JSON, Markdown, ESLint
-    zig zls
-    lua lua-language-server
-    nodePackages.bash-language-server shellcheck
-    rustc cargo rustfmt clippy rust-analyzer
+    zig
+    lua
+    rustc cargo rustfmt clippy
     tokei highlight
-    pyright ruff
     binutils
     meld
-    unixtools.xxd
 
     # Typesetting / presentation
     md4c graphviz gnuplot
@@ -34,7 +29,7 @@
       collection-binextra
       collection-bibtexextra
     ])) texlab
-    typst typst-lsp
+    typst
     farbfeld
     mscgen
 

@@ -16,6 +16,7 @@
     ./mpd
     ./ncmpcpp
     ./newsraft
+    ./neovim
     ./xdg-mime
     ./xdg-dirs
     ./zsh
