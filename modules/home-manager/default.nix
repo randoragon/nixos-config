@@ -14,6 +14,7 @@
     ./lua
     ./mako
     ./xdg-mime
+    ./xdg-dirs
     ./zsh
   ];
 }
