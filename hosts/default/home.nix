@@ -40,7 +40,6 @@
 
     # Music listening
     mpc-cli
-    (ncmpcpp.override { visualizerSupport = true; clockSupport = true; taglibSupport = false; })
     mp3info mp3gain rsgain
     (python3.withPackages (ps: with ps; [
       musicbrainzngs

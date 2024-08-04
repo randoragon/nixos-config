@@ -14,6 +14,7 @@
     ./lua
     ./mako
     ./mpd
+    ./ncmpcpp
     ./xdg-mime
     ./xdg-dirs
     ./zsh
