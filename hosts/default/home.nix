@@ -39,10 +39,9 @@
     mscgen
 
     # Music listening
-    mpd mpc-cli
+    mpc-cli
     (ncmpcpp.override { visualizerSupport = true; clockSupport = true; taglibSupport = false; })
     mp3info mp3gain rsgain
-    mpd-discord-rpc
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))

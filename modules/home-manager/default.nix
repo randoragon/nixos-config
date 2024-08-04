@@ -13,6 +13,7 @@
     ./lf
     ./lua
     ./mako
+    ./mpd
     ./xdg-mime
     ./xdg-dirs
     ./zsh
