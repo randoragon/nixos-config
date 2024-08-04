@@ -15,6 +15,7 @@
     ./mako
     ./mpd
     ./ncmpcpp
+    ./newsraft
     ./xdg-mime
     ./xdg-dirs
     ./zsh
