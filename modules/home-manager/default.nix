@@ -31,6 +31,7 @@
     ./wine
     ./xdg-dirs
     ./xdg-mime
+    ./xorg
     ./yambar
     ./zathura
     ./zsh
