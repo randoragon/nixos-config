@@ -26,6 +26,7 @@
     ./rust
     ./river
     ./scripts
+    ./sqlite
     ./swappy
     ./sxiv
     ./tmux
