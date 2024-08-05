@@ -28,6 +28,7 @@
     ./xdg-mime
     ./xdg-dirs
     ./yambar
+    ./zathura
     ./zsh
     ./pass
   ];
