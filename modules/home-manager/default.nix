@@ -15,8 +15,9 @@
     ./mako
     ./mpd
     ./ncmpcpp
-    ./newsraft
     ./neovim
+    ./newsraft
+    ./pass
     ./python
     ./R
     ./river
@@ -25,11 +26,10 @@
     ./sxiv
     ./tmux
     ./wget
-    ./xdg-mime
     ./xdg-dirs
+    ./xdg-mime
     ./yambar
     ./zathura
     ./zsh
-    ./pass
   ];
 }
