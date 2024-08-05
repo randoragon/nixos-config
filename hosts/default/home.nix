@@ -7,6 +7,17 @@
   home.homeDirectory = "/home/${config.home.username}";
 
   home.packages = with pkgs; [
+    # Graphical session
+    foot
+    swayidle
+    waylock
+    swww
+    yambar
+    bemenu
+    libnotify mako
+    grim slurp swappy
+    wl-clipboard wlr-randr
+
     # Development tools
     lazygit patch
     gcc gdb valgrind gnumake cmake pkg-config

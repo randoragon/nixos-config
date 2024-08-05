@@ -19,6 +19,7 @@
     ./neovim
     ./python
     ./R
+    ./river
     ./xdg-mime
     ./xdg-dirs
     ./zsh

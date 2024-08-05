@@ -35,19 +35,12 @@
     lm_sensors
   ];
 
+  # River should ideally be installed at the user-level.
+  # However, I encountered NVIDIA-related crashes when removing this
+  # system-wide enable. I assume this does something Home Manager's enabling
+  # option doesn't, which is why I'm keeping it.
   programs.river = {
     enable = true;
-    extraPackages = with pkgs; [
-      rivercarro
-      foot
-      swayidle
-      waylock
-      swww
-      yambar
-      bemenu
-      libnotify mako
-      grim slurp swappy
-      wl-clipboard wlr-randr
-    ];
+    extraPackages = [];  # Don't use this; decide at the user-level
   };
 }
