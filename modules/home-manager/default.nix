@@ -23,6 +23,7 @@
     ./scripts
     ./swappy
     ./sxiv
+    ./tmux
     ./xdg-mime
     ./xdg-dirs
     ./zsh
