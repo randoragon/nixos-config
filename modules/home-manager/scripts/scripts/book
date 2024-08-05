@@ -1,0 +1,7 @@
+#!/bin/sh
+
+bookdir=~/Documents/Books
+
+book="$(find "$bookdir" -type f -name '*.pdf' -exec basename -- '{}' \; | bemenu -i -l10 -p "Open Book:")"
+
+[ -n "$book" ] && $PDF_READER "$(find "$bookdir" -type f -name "$book" -print -quit)"

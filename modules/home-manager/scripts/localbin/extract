@@ -1,0 +1,101 @@
+#!/bin/sh
+
+# Extracts any common archive format into a custom directory
+# Simple wrapper for tar, unzip, rar, jar and 7z.
+# It autodetects common archive extensions by filename, but you can also
+# pass an option to force a specific program to attempt extraction.
+#
+# Options:
+# -v, --verbose
+# -z, --gzip   \ 
+# -j, --bzip2  |- these 3 do the same thing (extract with tar)
+# -J, --xz     / 
+# -Z, --zip
+# -r, --rar
+# -R, --jar
+# -7, --7z
+#
+# Usage:
+# extract [OPTIONS] ARCHIVE [DIRECTORY]
+# if ARCHIVE is -, reads stdin
+# if no DIRECTORY, appends a tilda (ARCHIVE~)
+
+# Parse options
+OPTS="$(getopt -n extract -s sh -o vzjJZrR7 -l verbose,gzip,bzip2,xz,zip,rar,jar,7z -- "$@")"
+eval set -- "$OPTS"
+verbose=
+compress=
+while true; do
+    case "$1" in
+        -v|--verbose) verbose=1 ; shift ;;
+        -z|--gzip) compress=tar ; shift ;;
+        -j|--bzip2) compress=tar ; shift ;;
+        -J|--xz) compress=tar ; shift ;;
+        -Z|--zip) compress=zip ; shift ;;
+        -r|--rar) compress=rar ; shift ;;
+        -R|--jar) compress=jar ; shift ;;
+        -7|--7z) compress=7z ; shift ;;
+        --) shift ; break ;;
+        *) break ;;
+    esac
+done
+
+# Check argument count
+[ $# -eq 0 ] && echo "extract: Not enough arguments." && exit 1
+
+# Handle stdin
+[ "$1" = '-' ] && {
+    read -r line
+    "$0" "$line" "$2"
+    exit
+}
+
+# Parse arguments
+ar="$(realpath -- "$1")"
+[ $# -gt 1 ] && nm="$2" || nm="$(basename -- "$1")"'~'
+[ -f "$nm" ] || [ -d "$nm" ] && echo "extract: '$nm' already exists." && exit 2
+[ -z "$compress" ] && \
+    case "$ar" in
+        *.tar|*.tar.gz|*.tar.bz|*.tar.xz|*.tar.bz2|*.tbz|*.tbz2|*.tgz|*.txz)
+            compress=tar
+        ;;
+        *.zip|*.dvi)
+            compress=zip
+        ;;
+        *.rar)
+            compress=rar
+        ;;
+        *.jar)
+            compress=jar
+        ;;
+        *.7z)
+            compress=7z
+        ;;
+    esac
+
+# Extract
+case "$compress" in
+    tar)
+        mkdir -p -- "$nm"
+        [ -n "$verbose" ] && opts='-xvf' || opts='-xf'
+        tar "$opts" "$ar" -C "$nm"
+    ;;
+    zip)
+        if [ -n "$verbose" ]; then unzip "$ar" -d "$nm"; else unzip -q "$ar" -d "$nm"; fi
+    ;;
+    rar)
+        mkdir -p -- "$nm"
+        if [ -n "$verbose" ]; then rar x "$ar" "$nm"; else rar -idq x "$ar" "$nm"; fi
+    ;;
+    jar)
+        mkdir -p -- "$nm"
+        cd -- "$nm" || exit 3
+        [ -n "$verbose" ] && opts='xvf' || opts='xf'
+        jar "$opts" "$ar"
+        cd -- "$PWD" || exit 3
+    ;;
+    7z)
+        if [ -n "$verbose" ]; then 7z x "$ar" -o"$nm"; else 7z x "$ar" -o"$nm" >&-; fi
+    ;;
+esac
+

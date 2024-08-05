@@ -1,0 +1,7 @@
+#!/bin/sh
+
+confhome="${XDG_CONFIG_HOME:-$HOME/.config}/lmms"
+
+[ ! -d "$confhome" ] && mkdir -p "$confhome"
+/usr/bin/lmms -c "$confhome/lmmsrc.xml"
+

@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Intakes an absolute/relative song path, adds it after the current playing mpd song,
+# then skips the current playing song and plays the next one.
+
+# Quit if no arguments
+[ $# -eq 0 ] && exit 1
+
+# Run mpd if not running
+[ -z "$(pidof mpd)" ] && mpd && wait
+
+
+# Add to playlist
+song="$(realpath -- "$1")"
+if [ -z "$(mpc insert "file://$song" 2>&1)" ]; then
+    mpc next
+else
+    notify-send -u critical "mpdplay" "Failed to add song to queue"
+fi

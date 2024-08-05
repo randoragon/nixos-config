@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# NeatRoff PDF image generator script. Used by my vim configuration to
+# automatically embed screenshots in roff documents. In my own extension
+# pack of macros called "rnd" I've written a PDF request which simplifies
+# the process, but still needs pdf dimensions. This script generates that
+# request automatically by calling pdfinfo.
+#
+# Dependencies:
+# - pdfinfo
+# - grep
+# - cut
+
+[ $# -ne 1 ] && printf "ntpdfsp: exactly one argument required (pdf file)" >&2 && exit 1
+[ ! -r "$1" ] && printf "ntpdfsp: cannot open file \"%s\"" "$1" >&2 && exit 1
+
+geometry="$(pdfinfo "$1" | grep -ao '^Page size:.*')"
+w="$(echo "$geometry" | cut -d ' ' -f8)"
+h="$(echo "$geometry" | cut -d ' ' -f10)"
+
+printf ".PDF c \"%s\" %sp %sp" "$1" "$w" "$h"

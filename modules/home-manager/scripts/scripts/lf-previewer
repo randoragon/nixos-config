@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case "$1" in
+    *.tar|*.tar.gz|*.tar.bz|*.tar.xz) tar tf "$1" ;;
+    *.zip) unzip -l "$1" ;;
+    *.rar) unrar l "$1" ;;
+    *.7z) 7z l "$1" ;;
+    *.jar) jar tf "$1" ;;
+    *.pdf) pdftotext "$1" - ;;
+    *.mp3)
+        mp3info -x -- "$1"
+        artist="$(rsid3 --TPE1 -- "$1")"
+        albumartist="$(rsid3 --TPE2 -- "$1")"
+        title="$(rsid3 --TIT2 -- "$1")"
+        album="$(rsid3 --TALB -- "$1")"
+        track="$(rsid3 --TRCK -- "$1")"
+        printf 'artist: %s\ntitle:  %s\nalbum:  %s\ntrack:  %s\nalbum artist: %s\n' \
+            "$artist" "$title" "$album" "$track" "$albumartist"
+        ;;
+    *.iso) iso-info --no-header -l -- "$1" ;;
+    *) highlight -O ansi "$1" || cat "$1" ;;
+esac

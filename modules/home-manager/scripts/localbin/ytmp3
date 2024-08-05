@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# youtube-dl/yt-dlp wrapper for downloading single mp3 files in best quality.
+
+if [ -n "$(command -v yt-dlp)" ]; then
+    cmd=yt-dlp
+elif [ -n "$(command -v youtube-dl)" ]; then
+    cmd=youtube-dl
+else
+    echo "ytmp3: neither yt-dlp nor youtube-dl have been found" >&2
+    exit 1
+fi
+
+$cmd                                         \
+    -x                                       \
+    -o '~/Downloads/Music/%(title)s.%(ext)s' \
+    --audio-quality 0                        \
+    --audio-format mp3                       \
+    --no-playlist                            \
+    "$@"

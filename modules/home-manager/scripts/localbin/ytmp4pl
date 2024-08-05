@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# youtube-dl/yt-dlp wrapper for downloading mp4 playlists in best quality.
+
+if [ -n "$(command -v yt-dlp)" ]; then
+    cmd=yt-dlp
+elif [ -n "$(command -v youtube-dl)" ]; then
+    cmd=youtube-dl
+else
+    echo "ytmp3: neither yt-dlp nor youtube-dl have been found" >&2
+    exit 1
+fi
+
+$cmd                                                                          \
+    -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'             \
+    -o '~/Downloads/%(playlist_title)s/%(playlist_index)s. %(title)s.%(ext)s' \
+    --write-sub --embed-subs                                                  \
+    --yes-playlist -i                                                         \
+    "$@"

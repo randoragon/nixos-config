@@ -20,6 +20,7 @@
     ./python
     ./R
     ./river
+    ./scripts
     ./xdg-mime
     ./xdg-dirs
     ./zsh

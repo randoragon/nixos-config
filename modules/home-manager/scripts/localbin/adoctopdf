@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# This script converts a utf-8 encoded asciidoc file to a pdf
+#
+# USAGE
+# adoctopdf INPUT [OUTPUT]
+#
+# DEPENDENCIES
+# - asciidoctor
+# - asciidoctor-pdf (gem install asciidoctor-pdf)
+# - asciidoctor-diagram (gem install asciidoctor-diagram)
+
+in="$1"
+out="$2"
+
+[ -z "$out" ] && {
+    out="${in%.*}.pdf"
+    if [ -f "${in%.*}.pdf" ]; then
+        printf '"%s" already exists. Overwrite? [y/N] ' "$out"
+        read -r ans
+        [ "$ans" = y ] || [ "$ans" = Y ] || exit
+    fi
+}
+asciidoctor -r asciidoctor-pdf $ASCIIDOCTOR_OPTS -b pdf -o "$out" -- "$in"

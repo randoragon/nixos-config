@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Simple reflector wrapper that fetches the latest arch repository mirrors,
+# backups the old mirrorlist and replaces with the new version.
+#
+# DEPENDENCIES:
+# - reflector
+
+export MIRRORLIST='/etc/pacman.d/mirrorlist'
+
+# Backup old mirrorlist
+cmp -s -- "$MIRRORLIST" "$MIRRORLIST.bak" || cp -- "$MIRRORLIST" "$MIRRORLIST.bak"
+
+reflector >"$MIRRORLIST"

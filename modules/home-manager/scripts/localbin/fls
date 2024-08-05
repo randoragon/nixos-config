@@ -1,0 +1,188 @@
+#!/bin/sh
+
+# This script intakes a path and produces a comprehensive
+# view of a file or a directory's properties and details.
+# It's practically an xdg-mime and stat wrapper with some sugar.
+#
+# You can also invoke the command with multiple paths,
+# or pipe a newline-delimited string of paths. In those cases
+# the collective size of all inputs will be calculated
+# and printed as "bulk information".
+#
+# WARNING: newlines in filenames are not supported when
+# reading from stdin (piping). If a file has a newline,
+# the only way to handle it is to pass it as a parameter.
+
+# If no args, read from stdin
+if [ "$#" -eq 0 ]; then
+    f=
+    firstline=1
+    while read -r a; do
+        [ $firstline -eq 1 ] || f="$f
+"
+        f="$f$a"
+        firstline=0
+    done
+
+    # Now I have a newline-delimited string of paths
+    # stored inside $f. I want to convert those into
+    # parameters for the script. My attempt:
+    cmd="$0"
+    splitnewline () {
+        IFS='
+'
+        "$cmd" $@  # Does not split on newline!
+    }
+    splitnewline "$f"
+    exit 0
+else
+    # Validate input
+    for f in "$@"; do
+        [ ! -f "$f" ] && [ ! -d "$f" ] && [ ! -L "$f" ] && {
+            echo "Error: the input(s) must be a file, a symlink or a directory."
+            exit 1
+        }
+    done
+fi
+
+# The application dirs for default app detection
+USERAPP="$HOME/.local/share/applications"
+GLOBAPP="/usr/share/applications"
+
+# Default colors (used for bulk information)
+HFG=0  # Header foreground
+HBG=7  # Header background
+BC=7   # Border foreground
+EFC=11 # Extras foreground
+
+# Derive full path without following symlinks
+f="$(realpath -s "$1")"
+
+# Decorative wrappers
+b () { printf "%s" "$(tput bold)$*$(tput sgr0)"; } # Bold
+h () { printf "%s" "$(tput setaf $HFG && tput setab $HBG)$*$(tput setaf 7 && tput setab 0)"; } # Header
+f () { printf "%s" "$(tput setaf $BC)$*$(tput setaf 7)"; } # Frame
+e () { printf "%s" "$(tput bold)$(tput setaf $EFC)$*$(tput setaf 7)$(tput sgr0)"; } # Extras
+
+# If multiple paths, calculate just the total size
+if [ "$#" -gt 1 ]; then
+    FCOUNT=0; DCOUNT=0
+    for x in "$@"; do
+        [ -f "$x" ] && FCOUNT=$((FCOUNT + 1)) && continue
+        [ -d "$x" ] && DCOUNT=$((DCOUNT + 1)) && continue
+    done
+    printf "%s" \
+ " $(f ┏━)$(h " BULK INFORMATION ")$(f ━╍╍┅┉)
+ $(f ┃)  $(b Item Count:) $#
+ $(f ┃)       $(b Files:) $FCOUNT
+ $(f ┃) $(b Directories:) $DCOUNT
+ $(f ┃)  $(b Total Size:) $(du -csh "$@" 2>&- | awk 'END{ print $1 }')
+ $(f ┗━━━━━━━━━━━━━━━━━━━╍╍┅┉)
+"  && exit 0
+fi
+
+# Detect MIME type, desktop file and default application
+handle_mime () {
+    MIME="$(file -i "$1" 2>&- | sed 's/\(.*: \|;.*\)//g')"
+    if [ "$MIME" = None ]; then
+        MIME=N/A
+        OPENEDBY=N/A
+    else
+        DESK="$(xdg-mime query default "$MIME")"
+        OPENEDBY=None
+        [ -f "$GLOBAPP/$DESK" ] && OPENEDBY="$(sed -n 's/^Name=//p' "$GLOBAPP/$DESK" | head -n 1) (/.../$DESK)"
+        [ -f "$USERAPP/$DESK" ] && OPENEDBY="$(sed -n 's/^Name=//p' "$USERAPP/$DESK" | head -n 1) (~/.../$DESK)"
+    fi
+}
+
+# Handle symlink
+if [ -L "$f" ]; then
+    HBG=6
+    BC=6
+    LINK="-> $(readlink "$f")"
+    TARGET="$(readlink -f "$f")"
+    TYPE="SymLink (orphaned)"
+    [ -f "$f" ] && TYPE="File SymLink"
+    [ -d "$f" ] && TYPE="Directory SymLink"
+
+    handle_mime "$f"
+
+ printf "%s" \
+ " $(f ┏━)$(h " SYMLINK INFORMATION ")$(f ━╍╍┅┉)
+ $(f ┃)    $(b Location:) '$f'
+ $(f ┃)        $(b Type:) $TYPE
+ $(f ┃)   $(b Points To:) $LINK
+ $(f ┃)  $(b End Target:) '$TARGET'
+ $(f ┃)   $(b MIME Type:) $MIME
+ $(f ┃)   $(b Opened By:) $OPENEDBY
+ $(f ┃) $(b Owner/Group:) $(stat -c '%U/%G (%u/%g)' "$f")
+ $(f ┃) $(b Permissions:) $(stat -c '%A (%a)' "$f")
+ $(f ┃)    $(b Modified:) $(stat -c '%y' "$f" | sed 's/\..*//')
+ $(f ┃)    $(b Accessed:) $(stat -c '%x' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Changed:) $(stat -c '%z' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Created:) $(stat -c '%w' "$f" | sed 's/\..*//')
+ $(f ┗━━━━━━━━━━$([ "$TYPE" != "SymLink (orphaned)" ] && echo ┳ || echo ━)━━━━━━━━━━━╍╍┅┉)
+"
+    [ -f "$TARGET" ] || [ -d "$TARGET" ] && {
+        echo "            $(f ┃)"
+        "$0" "$(readlink -f "$f")" | sed '1s/\(FILE\|DIRECTORY\)/TARGET/ ; $s/━/━━━/'
+    }
+    exit 0
+
+# Handle file
+elif [ -f "$f" ]; then
+    HBG=2
+    BC=2
+    extras=
+    handle_mime "$f"
+    case "$MIME" in
+        audio/mpeg) data="$(ffmpeg -i "$f" 2>&1)" extras="
+ $(f ┃)      $(e Length:) $(printf "%s" "$data" | sed -n '/^\s\+Duration: /{s/^\s\+Duration: \|,.*//gp}')
+ $(f ┃)      $(e Artist:) $(printf "%s" "$data" | sed -n 's/^\s\+artist\s\+: //p')
+ $(f ┃)       $(e Title:) $(printf "%s" "$data" | sed -n 's/^\s\+title\s\+: //p')
+ $(f ┃)       $(e Album:) $(printf "%s" "$data" | sed -n 's/^\s\+album\s\+: //p')
+ $(f ┃)       $(e Genre:) $(printf "%s" "$data" | sed -n 's/^\s\+genre\s\+: //p')
+ $(f ┃)     $(e Bitrate:) $(printf "%s" "$data" | sed -n '/^\s\+Duration: /{s/^.*bitrate: //p}')" ;;
+    esac
+
+ printf "%s" \
+ " $(f ┏━)$(h " FILE INFORMATION ")$(f ━╍╍┅┉)
+ $(f ┃)    $(b Location:) '$f'
+ $(f ┃)        $(b Type:) File
+ $(f ┃)        $(b Size:) $(du -h "$f" 2>&- | awk '{ print $1 }')
+ $(f ┃)   $(b MIME Type:) $MIME
+ $(f ┃)   $(b Opened By:) $OPENEDBY
+ $(f ┃) $(b Owner/Group:) $(stat -c '%U/%G (%u/%g)' "$f")
+ $(f ┃) $(b Permissions:) $(stat -c '%A (%a)' "$f")
+ $(f ┃)    $(b Modified:) $(stat -c '%y' "$f" | sed 's/\..*//')
+ $(f ┃)    $(b Accessed:) $(stat -c '%x' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Changed:) $(stat -c '%z' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Created:) $(stat -c '%w' "$f" | sed 's/\..*//')$extras
+ $(f ┗━━━━━━━━━━━━━━━━━━━╍╍┅┉)
+"  && exit 0
+
+# Handle directory
+else 
+    HFG=7
+    HBG=4
+    BC=4
+    handle_mime "$f"
+
+ printf "%s" \
+ " $(f ┏━)$(h " DIRECTORY INFORMATION ")$(f ━╍╍┅┉)
+ $(f ┃)    $(b Location:) '$f'
+ $(f ┃)        $(b Type:) Directory
+ $(f ┃)  $(b Total Size:) $(du -sh "$f" 2>&- | awk '{ print $1 }')
+ $(f ┃)  $(b Item Count:) $(($(find "$f" -maxdepth 1 | wc -l)-1))
+ $(f ┃)   $(b MIME Type:) $MIME
+ $(f ┃)   $(b Opened By:) $OPENEDBY
+ $(f ┃) $(b Owner/Group:) $(stat -c '%U/%G (%u/%g)' "$f")
+ $(f ┃) $(b Permissions:) $(stat -c '%A (%a)' "$f")
+ $(f ┃)    $(b Modified:) $(stat -c '%y' "$f" | sed 's/\..*//')
+ $(f ┃)    $(b Accessed:) $(stat -c '%x' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Changed:) $(stat -c '%z' "$f" | sed 's/\..*//')
+ $(f ┃)     $(b Created:) $(stat -c '%w' "$f" | sed 's/\..*//')
+ $(f ┗━━━━━━━━━━━━━━━━━━━━━━━╍╍┅┉)
+"  && exit 0
+fi
+

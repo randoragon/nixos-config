@@ -1,0 +1,34 @@
+#!/bin/sh
+
+# This is a wrapper script for an RSS reader. It downloads a video or audio
+# file with youtube-dl without blocking the running RSS reader instance by
+# executing the command in a new terminal.
+#
+# The first argument must be either "v" or "a" for video or audio respectively.
+# The second argument must be the url.
+# All subsequent arguments are transparently passed to youtube-dl.
+#
+# Requires ytmp3 and ytmp3 wrapper scripts around youtube-dl.
+
+if [ -n "$(command -v yt-dlp)" ]; then
+    ytdl=yt-dlp
+elif [ -n "$(command -v youtube-dl)" ]; then
+    ytdl=youtube-dl
+else
+    echo "rss-youtube-dl: neither yt-dlp nor youtube-dl have been found" >&2
+    exit 1
+fi
+
+if [ "$1" = 'a' ]; then
+    shift
+    title='ytmp3'
+    dunstify -u low "$0" "downloading audio from <u>$1</u>..."
+    [ -n "$(command -v termtit)" ] && title="${title}: $($ytdl -e "$1" 2>/dev/null)"
+    alacritty -T "$title" -e ytmp3 "$@" >/dev/null 2>&1 &
+elif [ "$1" = 'v' ]; then
+    shift
+    title='ytmp4'
+    dunstify -u low "$0" "downloading video from <u>$1</u>..."
+    [ -n "$(command -v termtit)" ] && title="${title}: $($ytdl -e "$1" 2>/dev/null)"
+    alacritty -T "$title" -e ytmp4 "$@" >/dev/null 2>&1 &
+fi
