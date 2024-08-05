@@ -21,6 +21,7 @@
     ./R
     ./river
     ./scripts
+    ./swappy
     ./xdg-mime
     ./xdg-dirs
     ./zsh
