@@ -6,6 +6,7 @@
     ./gammastep
     ./git
     ./gnupg
+    ./go
     ./gtk
     ./krita
     ./ledger
