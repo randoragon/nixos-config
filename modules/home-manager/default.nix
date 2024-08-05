@@ -27,6 +27,7 @@
     ./sxiv
     ./tmux
     ./wget
+    ./wine
     ./xdg-dirs
     ./xdg-mime
     ./yambar
