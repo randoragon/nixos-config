@@ -22,6 +22,7 @@
     ./river
     ./scripts
     ./swappy
+    ./sxiv
     ./xdg-mime
     ./xdg-dirs
     ./zsh
