@@ -25,6 +25,11 @@
     ];
   };
 
+  home.sessionVariables = {
+    NVIM_SMOOTHIE_ENABLED = "1";
+    VIM_PREVIEW_HOME = "\${XDG_RUNTIME_DIR:-/run/user/$UID}/vim-preview";
+  };
+
   xdg.configFile."nvim" = {
     source = ./nvim;
     executable = true;
