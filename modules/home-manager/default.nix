@@ -18,6 +18,7 @@
     ./ncmpcpp
     ./neovim
     ./newsraft
+    ./node
     ./pass
     ./python
     ./R
