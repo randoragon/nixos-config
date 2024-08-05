@@ -5,6 +5,11 @@
     extraConfig = builtins.readFile ./mpd.conf;
   };
 
+  home.sessionVariables = {
+    MPD_HOST = "~/.local/share/mpd/socket";
+    MPD_PORT = "6601";
+  };
+
   services.mpd-discord-rpc = {
     enable = true;
     settings = {
