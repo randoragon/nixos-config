@@ -7,6 +7,7 @@
     ./git
     ./gnupg
     ./go
+    ./grim
     ./gtk
     ./krita
     ./ledger
