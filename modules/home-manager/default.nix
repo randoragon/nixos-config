@@ -24,6 +24,7 @@
     ./swappy
     ./sxiv
     ./tmux
+    ./wget
     ./xdg-mime
     ./xdg-dirs
     ./zsh
