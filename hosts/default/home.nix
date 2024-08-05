@@ -17,6 +17,7 @@
     libnotify mako
     grim slurp swappy
     wl-clipboard wlr-randr
+    wdisplays
 
     # Development tools
     lazygit patch
