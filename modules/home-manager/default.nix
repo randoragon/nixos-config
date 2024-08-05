@@ -22,6 +22,7 @@
     ./pass
     ./python
     ./R
+    ./rust
     ./river
     ./scripts
     ./swappy
