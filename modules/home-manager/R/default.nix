@@ -1,4 +1,8 @@
 { config, ... }: {
+  home.sessionVariables = {
+    R_ENVIRON_USER = "${config.xdg.configHome}/R/Renviron";
+  };
+
   xdg.configFile."R/Renviron" = {
     text = ''
       # User environment file for R
