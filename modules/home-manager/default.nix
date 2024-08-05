@@ -27,6 +27,7 @@
     ./wget
     ./xdg-mime
     ./xdg-dirs
+    ./yambar
     ./zsh
     ./pass
   ];

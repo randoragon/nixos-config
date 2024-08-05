@@ -12,7 +12,6 @@
     swayidle
     waylock
     swww
-    yambar
     bemenu
     libnotify mako
     grim slurp swappy
