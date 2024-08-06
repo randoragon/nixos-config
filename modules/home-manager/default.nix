@@ -11,6 +11,7 @@
     ./grim
     ./gtk
     ./krita
+    ./lazygit
     ./ledger
     ./less
     ./lf

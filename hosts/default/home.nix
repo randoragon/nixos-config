@@ -19,7 +19,7 @@
     wdisplays
 
     # Development tools
-    lazygit patch
+    patch
     gcc gdb valgrind gnumake cmake pkg-config
     bear
     zig
