@@ -65,7 +65,7 @@
     zynaddsubfx
 
     # Misc applications
-    discord
+    vesktop
     syncthing
     yt-dlp
     obs-studio

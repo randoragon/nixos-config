@@ -12,7 +12,7 @@ appmap Super+Control Y      'note --bemenu -e'
 appmap Super+Control equal  '~/.scripts/pladd_select'
 
 appmap Control+Alt H "$TERMINAL -W 150x45 -a floatme htop"
-appmap Control+Alt D 'discord'
+appmap Control+Alt D 'vesktop'
 appmap Control+Alt M "$TERMINAL ncmpcpp"
 appmap Control+Alt N "$TERMINAL newsraft"
 appmap Control+Alt Slash "$TERMINAL qalc"
