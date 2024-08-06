@@ -1,6 +1,7 @@
 {
   imports = [
     ./beets
+    ./bemenu
     ./carla
     ./foot
     ./gammastep
