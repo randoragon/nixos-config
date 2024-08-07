@@ -17,7 +17,6 @@ cd "$(dirname -- "$0")" || exit 1
 
 # Keyboard configuration
 riverctl set-repeat 30 250
-riverctl default-attach-mode below
 riverctl keyboard-layout-file "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/mykbd"
 
 # Mouse settings
@@ -31,6 +30,9 @@ riverctl border-color-focused 0xeeeeee
 riverctl border-color-unfocused 0x222222
 riverctl border-color-urgent 0xee2222
 riverctl border-width 1
+
+# Set attach mode
+riverctl default-attach-mode below
 
 # Basic keybindings
 riverctl map normal Super Return spawn "$TERMINAL"
