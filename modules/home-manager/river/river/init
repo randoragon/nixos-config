@@ -17,7 +17,7 @@ cd "$(dirname -- "$0")" || exit 1
 
 # Keyboard configuration
 riverctl set-repeat 30 250
-riverctl keyboard-layout-file "${XDG_CONFIG_HOME:-$HOME/.config}/xkb/keymap/mykbd"
+riverctl keyboard-layout pl
 
 # Mouse settings
 riverctl map-pointer normal Super BTN_LEFT move-view

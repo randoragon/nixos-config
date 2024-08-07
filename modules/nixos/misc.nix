@@ -15,4 +15,7 @@
     enable = true;
     pinentryPackage = pkgs.pinentry-gtk2;
   };
+
+  # Add group for kanata (https://github.com/jtroo/kanata/wiki/Avoid-using-sudo-on-Linux)
+  users.extraGroups."uinput" = {};
 }

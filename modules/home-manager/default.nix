@@ -10,6 +10,7 @@
     ./go
     ./grim
     ./gtk
+    ./kanata
     ./krita
     ./lazygit
     ./ledger
