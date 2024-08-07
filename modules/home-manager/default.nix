@@ -22,6 +22,7 @@
     ./neovim
     ./newsraft
     ./node
+    ./obs-studio
     ./pass
     ./python
     ./R

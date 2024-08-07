@@ -62,7 +62,6 @@
 
     # Misc applications
     vesktop
-    obs-studio
     figlet sl asciiquarium
     newsraft
     onedrive
