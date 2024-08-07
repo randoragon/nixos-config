@@ -30,6 +30,7 @@
     ./scripts
     ./sqlite
     ./swappy
+    ./swayidle
     ./sxiv
     ./tmux
     ./wget

@@ -8,7 +8,6 @@
 
   home.packages = with pkgs; [
     # Graphical session
-    swayidle
     waylock
     swww
     bemenu
