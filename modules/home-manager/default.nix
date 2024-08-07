@@ -40,6 +40,7 @@
     ./xdg-mime
     ./xorg
     ./yambar
+    ./yt-dlp
     ./zathura
     ./zsh
   ];

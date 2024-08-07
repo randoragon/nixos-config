@@ -62,7 +62,6 @@
 
     # Misc applications
     vesktop
-    yt-dlp
     obs-studio
     figlet sl asciiquarium
     newsraft
