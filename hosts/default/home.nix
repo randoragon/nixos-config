@@ -11,8 +11,8 @@
     waylock
     swww
     grim slurp swappy
-    wl-clipboard wlr-randr
-    wdisplays
+    wl-clipboard
+    wlr-randr wdisplays
 
     # Development tools
     patch
