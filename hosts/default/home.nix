@@ -62,7 +62,6 @@
 
     # Misc applications
     vesktop
-    syncthing
     yt-dlp
     obs-studio
     figlet sl asciiquarium

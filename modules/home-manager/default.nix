@@ -32,6 +32,7 @@
     ./swappy
     ./swayidle
     ./sxiv
+    ./syncthing
     ./tmux
     ./wget
     ./wine
