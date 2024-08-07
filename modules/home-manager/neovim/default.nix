@@ -22,6 +22,7 @@
       rust-analyzer
       pyright ruff
       typst-lsp
+      texlab
     ];
   };
 

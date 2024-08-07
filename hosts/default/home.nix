@@ -36,7 +36,7 @@
       collection-langcjk
       collection-binextra
       collection-bibtexextra
-    ])) texlab
+    ]))
     typst
     farbfeld
     mscgen
