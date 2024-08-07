@@ -10,7 +10,6 @@
     # Graphical session
     waylock
     swww
-    libnotify mako
     grim slurp swappy
     wl-clipboard wlr-randr
     wdisplays
