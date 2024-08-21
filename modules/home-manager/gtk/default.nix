@@ -14,8 +14,8 @@
 
     cursorTheme = {
       package = pkgs.simp1e-cursors;
-      name = "Simp1e Mix Dark";
-      size = 32;
+      name = "Simp1e-Adw-Dark";
+      size = 24;
     };
 
     font = {

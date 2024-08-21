@@ -3,6 +3,7 @@
     ./beets
     ./bemenu
     ./carla
+    ./cursor-theme
     ./foot
     ./gammastep
     ./git

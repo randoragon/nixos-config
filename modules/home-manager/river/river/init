@@ -30,6 +30,7 @@ riverctl border-color-focused 0xeeeeee
 riverctl border-color-unfocused 0x222222
 riverctl border-color-urgent 0xee2222
 riverctl border-width 1
+riverctl xcursor-theme Simp1e-Adw-Dark 24
 
 # Set attach mode
 riverctl default-attach-mode below
