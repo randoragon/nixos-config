@@ -32,7 +32,6 @@
     ./scripts
     ./sqlite
     ./swappy
-    ./swayidle
     ./sxiv
     ./syncthing
     ./tmux

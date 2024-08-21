@@ -8,7 +8,7 @@
 
   home.packages = with pkgs; [
     # Graphical session
-    waylock
+    swayidle waylock
     swww
     grim slurp swappy
     wl-clipboard

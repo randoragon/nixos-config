@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services.mpd = rec {
     enable = true;
     dbFile = null;  # Conflicts with the "database {}" construct that I use inside mpd.conf
@@ -11,8 +11,9 @@
     MPD_PORT = "6601";
   };
 
+  home.packages = with pkgs; [ mpd-discord-rpc ];
   services.mpd-discord-rpc = {
-    enable = true;
+    enable = false;  # Doesn't work on Wayland - https://github.com/NixOS/nixpkgs/issues/169143
     settings = {
       id = 677226551607033903;
       hosts = [ "localhost:6601" ];
