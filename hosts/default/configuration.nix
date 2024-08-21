@@ -16,6 +16,9 @@
     shell = pkgs.zsh;
   };
 
+  # Enable Steam system-wide, because there is no good way to do it per-user with HM
+  programs.steam.enable = true;
+
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
