@@ -16,6 +16,9 @@
     pinentryPackage = pkgs.pinentry-gtk2;
   };
 
-  # Add group for kanata (https://github.com/jtroo/kanata/wiki/Avoid-using-sudo-on-Linux)
+  # Add a group and a udev rule for kanata (https://github.com/jtroo/kanata/wiki/Avoid-using-sudo-on-Linux)
   users.extraGroups."uinput" = {};
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+  '';
 }

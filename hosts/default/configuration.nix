@@ -16,11 +16,6 @@
     shell = pkgs.zsh;
   };
 
-  # Add udev rule for kanata (https://github.com/jtroo/kanata/wiki/Avoid-using-sudo-on-Linux)
-  services.udev.extraRules = ''
-    KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
-  '';
-
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     useGlobalPkgs = true;
