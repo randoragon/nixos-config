@@ -4,6 +4,7 @@
     ./bemenu
     ./carla
     ./cursor-theme
+    ./direnv
     ./foot
     ./gammastep
     ./git
