@@ -15,15 +15,9 @@
     wlr-randr wdisplays
 
     # Development tools
-    patch
-    gcc gdb valgrind gnumake cmake pkg-config
-    bear
-    zig
-    lua
-    rustc cargo rustfmt clippy
     tokei highlight
+    patch meld
     binutils
-    meld
 
     # Typesetting / presentation
     md4c graphviz gnuplot
