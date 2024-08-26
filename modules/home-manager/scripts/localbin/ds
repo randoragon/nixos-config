@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Edit or create a new Nix devshell. Inspired by https://ayats.org/blog/nix-workflow.
+# Dependencies:
+# - direnv
+# - jq
+# - git
+
+set -e
+
+envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty')"
+[ -n "$envrc" ] && {
+    flake="$(dirname -- "$envrc")/flake.nix"
+    if [ -f "$flake" ]; then
+        $EDITOR '+call search("packages = ")' '+norm %kw' -- "$flake"
+    else
+        direnv edit
+    fi
+    exit
+}
+
+# If envrc does not exist and there is a flake.nix, assume 'use flake' is needed
+[ -f flake.nix ] || [ -f flake.lock ] && {
+    echo 'use flake' | $EDITOR .envrc
+    exit
+}
+
+# If there is no envrc and no flake, start a new flake with a default envrc
+cat >flake.nix <<EOF
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  };
+
+  outputs = { nixpkgs, ... }: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.\${system};
+  in {
+    devShells.\${system}.default = pkgs.mkShell {
+      packages = with pkgs; [
+        <,,>
+      ];
+    };
+  };
+}
+EOF
+$EDITOR flake.nix
+git add flake.nix
+echo 'Added flake.nix to git'
+printf 'Create and allow an .envrc? [Y/n]'
+read -r ans
+[ -z "$ans" ] || [ "$ans" = Y ] || [ "$ans" = y ] && {
+    echo 'use flake' >.envrc
+    direnv allow .
+}
