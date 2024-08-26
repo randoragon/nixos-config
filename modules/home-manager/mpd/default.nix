@@ -1,17 +1,13 @@
 { config, pkgs, ... }: {
-  services.mpd = rec {
-    enable = true;
-    dbFile = null;  # Conflicts with the "database {}" construct that I use inside mpd.conf
-    extraConfig = builtins.readFile ./mpd.conf;
-  };
+  home.packages = with pkgs; [ mpd mpd-discord-rpc ];
 
+  xdg.configFile."mpd/mpd.conf".source = ./mpd.conf;
   home.sessionVariables = {
     # Note: for ncmpcpp to work, MPD_HOST must begin with "/" if it points to a socket.
     MPD_HOST = "${config.xdg.dataHome}/mpd/socket";
     MPD_PORT = "6601";
   };
 
-  home.packages = with pkgs; [ mpd-discord-rpc ];
   services.mpd-discord-rpc = {
     enable = false;  # Doesn't work on Wayland - https://github.com/NixOS/nixpkgs/issues/169143
     settings = {

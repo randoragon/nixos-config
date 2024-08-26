@@ -55,6 +55,7 @@
     zynaddsubfx
 
     # Misc applications
+    syncthing
     vesktop
     figlet sl asciiquarium
     newsraft
