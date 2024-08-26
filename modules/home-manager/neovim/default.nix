@@ -19,7 +19,7 @@
       lua-language-server
       shellcheck
       nodePackages.bash-language-server
-      rust-analyzer
+      rust-analyzer rustc
       pyright ruff
       typst-lsp
       texlab
