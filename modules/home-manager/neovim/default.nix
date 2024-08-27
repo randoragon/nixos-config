@@ -12,6 +12,7 @@
     extraPackages = with pkgs; [
       tree-sitter
       unixtools.xxd
+      gcc ripgrep fd  # Needed by the Telescope plugin
 
       # LSP servers and language-specific tools
       vscode-langservers-extracted  # HTML, CSS, JSON, Markdown, ESLint

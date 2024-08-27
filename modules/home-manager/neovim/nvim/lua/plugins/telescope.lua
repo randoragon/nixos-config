@@ -1,0 +1,10 @@
+-- https://github.com/nvim-telescope/telescope.nvim?tab=readme-ov-file#usage
+local builtin = require("telescope.builtin")
+map("n", "<C-Space>", builtin.git_files)
+map("n", "<M-Space>", builtin.live_grep)
+map("n", "<Leader>ff", builtin.find_files)
+map("n", "<Leader>fl", builtin.current_buffer_fuzzy_find)
+map("n", "<Leader>fc", builtin.commands)
+map("n", "<Leader>fm", builtin.marks)
+map("n", "<Leader>fh", builtin.help_tags)
+map("n", "<Leader>fb", builtin.buffers)
