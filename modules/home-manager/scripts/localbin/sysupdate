@@ -18,13 +18,16 @@ sudo true
 
 snow=1
 
-section RUNNING 'pacman -Syu'
-sudo pacman -Syu
+set -e
+section UPDATING 'NixOS flake.lock'
+cd ~/nixos-config/
+nix flake update
 sectionend
 
-section RUNNING 'yay -Syua'
-yay -Syua
+section REBUILDING 'NixOS flake'
+sudo nixos-rebuild switch --flake ~/nixos-config#default
 sectionend
+set +e
 
 section UPDATING 'neovim plugins'
 nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
