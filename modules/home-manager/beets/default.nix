@@ -1,7 +1,7 @@
 { pkgs, ... }: {
-  programs.beets = {
-    enable = true;
-    package = pkgs.beets-unstable;
-    # settings = (builtins.readFile ./config.yaml);
-  };
+  home.packages = with pkgs; [
+    beets-unstable
+  ];
+
+  xdg.configFile."beets/config.yaml".source = ./config.yaml;
 }
