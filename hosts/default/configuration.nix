@@ -12,7 +12,7 @@
   # User configuration
   users.users.pcache = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "input" "uinput" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "uinput" ];
     shell = pkgs.zsh;
   };
 
