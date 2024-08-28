@@ -7,6 +7,7 @@
     ./nix.nix
     ./packages.nix
     ./shell.nix
+    ./sudo.nix
     ./wayland.nix
   ];
 }
