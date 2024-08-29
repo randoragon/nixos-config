@@ -8,20 +8,5 @@
     MPD_PORT = "6601";
   };
 
-  services.mpd-discord-rpc = {
-    enable = false;  # Doesn't work on Wayland - https://github.com/NixOS/nixpkgs/issues/169143
-    settings = {
-      id = 677226551607033903;
-      hosts = [ "localhost:6601" ];
-      format = {
-        details = "$title";
-        state = "$artist / $album";
-        timestamp = "elapsed";
-        large_image = "notes";
-        small_image = "";
-        large_text = "";
-        small_text = "";
-      };
-    };
-  };
+  xdg.configFile."mpd/discord-rpc/config.toml".source = ./config.toml;
 }
