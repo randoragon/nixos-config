@@ -13,6 +13,7 @@
     grim slurp swappy
     wl-clipboard
     wlr-randr wdisplays
+    brightnessctl
 
     # Development tools
     tokei highlight
