@@ -23,7 +23,7 @@
     ./mpd
     ./mpd-discord-rpc
     ./ncmpcpp
-    ./neovim
+    ./nvim
     ./newsraft
     ./node
     ./obs-studio
