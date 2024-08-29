@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./spush-spull.nix
+  ];
+
   home.file.".local/bin" = {
     source = ./localbin;
     executable = true;
