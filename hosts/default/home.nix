@@ -14,6 +14,7 @@
     wl-clipboard
     wlr-randr wdisplays
     brightnessctl
+    ripdrag
 
     # Development tools
     tokei highlight

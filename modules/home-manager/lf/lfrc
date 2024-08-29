@@ -485,6 +485,10 @@ map ,I &sxiv -qtar .
 set previewer ~/.scripts/lf-previewer
 map i ${ highlight -O ansi -- "$f" || cat -- "$f"; } | less -R
 
+# Ripdrag support
+map ,d &echo "$fx" | xargs ripdrag
+map ,D &find . -type f | xargs ripdrag
+
 # Generate directory shortcuts from jumprc
 map c
 map cd<enter> :cd ~
