@@ -1,8 +1,0 @@
-#!/bin/sh
-
-bms=~/.config/surf/bookmarks
-
-[ ! -f "$bms" ] && exit 1
-
-pick="$(bemenu -i -l10 -p surf <"$bms")"
-[ -n "$pick" ] && surf "$pick"

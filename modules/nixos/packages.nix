@@ -32,6 +32,7 @@
     imagemagick graphicsmagick
     ffmpeg sox
     lm_sensors
+    zenity
   ];
 
   # River should ideally be installed at the user-level.
