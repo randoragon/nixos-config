@@ -9,15 +9,15 @@ icon='/usr/share/icons/Adwaita/96x96/mimetypes/video-x-generic-symbolic.symbolic
 if printf "%s" "$@" | grep -qi 'youtube\.com'; then
     channel_id="$(printf "%s" "$@" | grep -o 'watch?v=.*')"
     channel_id="${channel_id##*=}"
-    dunstify -u low -i "$icon" "$0" "starting <u>$channel_id</u> on YouTube..."
+    notify-send -u low -i "$icon" "$0" "starting <u>$channel_id</u> on YouTube..."
     printf "channel id: %s\n" "$channel_id"
     ytlive "$channel_id"
 elif printf "%s" "$@" | grep -qi 'twitch\.tv'; then
     username="$(printf "%s" "$@" | grep -o 'tv\/.*')"
     username="${username##*/}"
-    dunstify -u low -i "$icon" "$0" "starting <u>$channel_id</u> on Twitch..."
+    notify-send -u low -i "$icon" "$0" "starting <u>$channel_id</u> on Twitch..."
     twitch "$username"
 else
-    dunstify -u low -i "$icon" "$0" "streaming service not recognized"
+    notify-send -u low -i "$icon" "$0" "streaming service not recognized"
     exit 1
 fi

@@ -6,7 +6,7 @@
 
 while true; do
     if [ -z "$(pidof Discord)" ]; then
-        dunstify "WARNING" "Discord crashed. Restarting..."
+        notify-send "WARNING" "Discord crashed. Restarting..."
         discord 1>&- 2>&- &
     fi
     sleep 2
