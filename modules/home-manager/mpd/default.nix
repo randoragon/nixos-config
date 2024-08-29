@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  home.packages = with pkgs; [ mpd mpd-discord-rpc ];
+  home.packages = with pkgs; [ mpd ];
 
   xdg.configFile."mpd/mpd.conf".source = ./mpd.conf;
   home.sessionVariables = {
@@ -7,6 +7,4 @@
     MPD_HOST = "${config.xdg.dataHome}/mpd/socket";
     MPD_PORT = "6601";
   };
-
-  xdg.configFile."mpd/discord-rpc/config.toml".source = ./config.toml;
 }

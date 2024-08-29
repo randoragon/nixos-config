@@ -21,6 +21,7 @@
     ./lua
     ./mako
     ./mpd
+    ./mpd-discord-rpc
     ./ncmpcpp
     ./neovim
     ./newsraft
