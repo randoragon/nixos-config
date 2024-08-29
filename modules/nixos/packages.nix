@@ -22,7 +22,6 @@
     curl wget htop file
     gnupg pinentry-curses pinentry-gtk2
     iputils wpa_supplicant nettools wirelesstools
-    udisks
     qpwgraph pulsemixer
     dosfstools
     inxi pciutils neofetch

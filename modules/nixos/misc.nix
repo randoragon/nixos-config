@@ -3,6 +3,7 @@
   services.libinput.enable = true;
   services.printing.enable = true;
   services.ntp.enable = true;
+  services.udisks2.enable = true;
   programs.ssh.startAgent = true;
 
   hardware.bluetooth = {
