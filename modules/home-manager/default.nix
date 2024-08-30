@@ -1,5 +1,7 @@
 {
   imports = [
+    ./alacritty
+    ./asciidoc
     ./beets
     ./bemenu
     ./carla
@@ -18,24 +20,28 @@
     ./ledger
     ./less
     ./lf
+    ./lmms
     ./lua
     ./mako
+    ./minecraft
     ./mpd
     ./mpd-discord-rpc
     ./ncmpcpp
-    ./nvim
     ./newsraft
     ./node
+    ./note-utils
+    ./nvim
     ./obs-studio
     ./pass
     ./python
     ./R
-    ./rust
     ./river
+    ./rust
     ./scripts
     ./sqlite
     ./swappy
     ./sxiv
+    ./syncthing
     ./tmux
     ./wget
     ./wine

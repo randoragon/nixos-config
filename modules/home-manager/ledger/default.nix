@@ -7,4 +7,9 @@
       strict = true;
     };
   };
+
+  home.file.".local/bin/pled" = {
+    source = ./pled;
+    executable = true;
+  };
 }

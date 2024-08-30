@@ -63,7 +63,7 @@ fi
 # A track is only considered if it plays for at least 50% of its duration.
 #
 # Uncomment the line(s) below to enable
-#keep_count=1
+# keep_count=1
 keep_hist=1
 if [ -n "$keep_count" ] || [ -n "$keep_hist" ]; then
     data="$(mpc current --format %file%%time%)"
