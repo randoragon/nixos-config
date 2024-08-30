@@ -16,7 +16,7 @@
     firefox ungoogled-chromium
     zathura
     thunderbird
-    sxiv oculante mpv
+    oculante mpv
     xarchiver
     lf tmux tree jq ripgrep fzf
     curl wget htop file
