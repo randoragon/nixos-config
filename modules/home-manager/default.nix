@@ -41,7 +41,7 @@
     ./sqlite
     ./swappy
     ./sxiv
-    ./syncthing
+    ./sync-utils
     ./tmux
     ./wget
     ./wine

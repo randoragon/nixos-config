@@ -57,11 +57,8 @@
     zynaddsubfx
 
     # Misc applications
-    syncthing
     vesktop
     figlet sl asciiquarium
-    newsraft
-    onedrive
   ];
 
   home.sessionVariables = {
