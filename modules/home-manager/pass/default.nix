@@ -9,4 +9,7 @@
       PASSWORD_STORE_CLIP_TIME = "30";
     };
   };
+
+  home.file.".local/bin/ppush".source = ./ppush;
+  home.file.".local/bin/ppull".source = ./ppull;
 }

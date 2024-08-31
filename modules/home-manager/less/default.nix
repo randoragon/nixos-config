@@ -12,4 +12,8 @@
       LESS=-MSWRi -j3 --use-color
     '';
   };
+
+  home.sessionVariables = {
+    PAGER = "less";
+  };
 }

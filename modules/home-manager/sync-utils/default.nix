@@ -1,11 +1,8 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [ syncthing onedrive ];
 
-  home.file.".local/bin" = {
-    source = ./localbin;
-    executable = true;
-    recursive = true;
-  };
+  home.file.".local/bin/spush".source = ./localbin/spush;
+  home.file.".local/bin/spull".source = ./localbin/spull;
 
   xdg.configFile."spush.list".text = ''
     # This file is a list of directories to sync by spush.

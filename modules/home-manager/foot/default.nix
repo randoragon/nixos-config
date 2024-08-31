@@ -45,4 +45,8 @@
     source = ./pipe-open.sh;
     executable = true;
   };
+
+  home.sessionVariables = {
+    TERMINAL = "foot";
+  };
 }

@@ -4,6 +4,11 @@
     [
       ./hardware-configuration.nix
       ../../modules/nixos
+      ../../modules/nixos/o-audio.nix
+      ../../modules/nixos/o-bluetooth.nix
+      ../../modules/nixos/o-gaming.nix
+      ../../modules/nixos/o-graphical.nix
+      ../../modules/nixos/o-printing.nix
     ];
 
   # Set hostname
@@ -15,9 +20,6 @@
     extraGroups = [ "wheel" "networkmanager" "input" "uinput" ];
     shell = pkgs.zsh;
   };
-
-  # Enable Steam system-wide, because there is no good way to do it per-user with HM
-  programs.steam.enable = true;
 
   home-manager = {
     extraSpecialArgs = { inherit inputs; };

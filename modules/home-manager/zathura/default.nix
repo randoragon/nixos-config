@@ -30,4 +30,8 @@
       "<Button9>" = "navigate previous";
     };
   };
+
+  home.sessionVariables = {
+    PDF_READER = "zathura";
+  };
 }

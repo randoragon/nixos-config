@@ -1,56 +1,42 @@
-{
+# The basis for all sub-configuration modules. Every system is built on top of this.
+{ pkgs, ... }: {
   imports = [
     ./alacritty
     ./asciidoc
-    ./beets
-    ./bemenu
-    ./carla
-    ./cursor-theme
     ./direnv
-    ./foot
-    ./gammastep
     ./git
     ./gnupg
-    ./go
-    ./grim
-    ./gtk
     ./kanata
-    ./krita
     ./lazygit
-    ./ledger
     ./less
     ./lf
-    ./lmms
-    ./lua
-    ./mako
-    ./minecraft
-    ./mpd
-    ./mpd-discord-rpc
-    ./ncmpcpp
-    ./newsraft
-    ./node
-    ./note-utils
     ./nvim
-    ./obs-studio
-    ./pass
-    ./python
-    ./R
-    ./river
-    ./rust
     ./scripts
     ./sqlite
-    ./swappy
-    ./sxiv
-    ./sync-utils
     ./tmux
     ./wget
     ./wine
     ./xdg-dirs
     ./xdg-mime
-    ./xorg
-    ./yambar
-    ./yt-dlp
-    ./zathura
     ./zsh
+  ];
+
+  # User packages that should always be installed.
+  home.packages = with pkgs; [
+    bash dash
+    iputils wpa_supplicant nettools wirelesstools
+    curl wget
+    binutils pciutils dosfstools
+    zip unzip p7zip rar
+    jq bc libqalculate
+    rsync
+    file patch highlight
+    tmux
+    lf tree ripgrep fzf
+    htop lm_sensors
+    trash-cli
+    tokei
+    inxi neofetch
+    figlet sl asciiquarium
   ];
 }

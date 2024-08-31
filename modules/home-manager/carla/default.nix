@@ -1,4 +1,6 @@
-{ config, lib, ... }: {
+{ pkgs, config, lib, ... }: {
+  home.packages = with pkgs; [ carla ];
+
   # Disable carla confirmation dialog on quit.
   # Use activation, because we want the config file to be writeable.
   home.activation = let
