@@ -1,16 +1,15 @@
 { pkgs, inputs, ... }: {
 
-  imports =
-    [
-      ./hardware-configuration.nix
-      ./nvidia.nix
-      ../../modules/nixos
-      ../../modules/nixos/o-audio.nix
-      ../../modules/nixos/o-bluetooth.nix
-      ../../modules/nixos/o-gaming.nix
-      ../../modules/nixos/o-graphical.nix
-      ../../modules/nixos/o-printing.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./nvidia.nix
+    ../../modules/nixos
+    ../../modules/nixos/o-audio.nix
+    ../../modules/nixos/o-bluetooth.nix
+    ../../modules/nixos/o-gaming.nix
+    ../../modules/nixos/o-graphical.nix
+    ../../modules/nixos/o-printing.nix
+  ];
 
   # Set hostname
   networking.hostName = "nixbox";
