@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
   programs.ncmpcpp = {
     enable = true;
     package = pkgs.ncmpcpp.override {
@@ -126,5 +126,12 @@
       window_border_color = "green";
       active_window_border = "red";
     };
+  };
+
+  # Create the data directory, because ncmpcpp is dumb and crashes if it doesn't exist.
+  home.activation = {
+    ncmpcppDataDir = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run mkdir -p -- "${config.xdg.dataHome}/ncmpcpp"
+    '';
   };
 }
