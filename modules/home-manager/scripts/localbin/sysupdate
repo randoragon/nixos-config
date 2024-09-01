@@ -4,6 +4,9 @@ col1=2
 col2=11
 scount=3
 
+# This file stores which flake profile to build
+NIXOS_FLAKE_PROFILE=~/.config/nixos-config-profile
+
 section () {
     printf "$(tput setaf $col1)$(tput bold)(%s/%s) %s $(tput setaf $col2)%s$(tput setaf $col1)...$(tput sgr0)\n" "$snow" "$scount" "$1" "$2"
 }
@@ -12,6 +15,17 @@ sectionend() {
     snow=$(( snow + 1 ))
     printf "\n"
 }
+
+# Figure out NixOS flake profile
+if [ ! -f "$NIXOS_FLAKE_PROFILE" ]; then
+    printf '~/.config/nixos-config-profile not found. Which one to use?\n> '
+    read -r profile
+    echo "$profile" >"$NIXOS_FLAKE_PROFILE"
+    printf "Stored '%s' in %s\n" "$profile" "$NIXOS_FLAKE_PROFILE"
+else
+    profile="$(cat -- "$NIXOS_FLAKE_PROFILE")"
+    printf "Using profile '%s' from %s\n" "$profile" "$NIXOS_FLAKE_PROFILE"
+fi
 
 # Refresh superuser privilages
 sudo true
@@ -25,7 +39,7 @@ nix flake update
 sectionend
 
 section REBUILDING 'NixOS flake'
-sudo nixos-rebuild switch --flake ~/nixos-config#default
+sudo nixos-rebuild switch --flake ~/nixos-config#"$profile"
 sectionend
 set +e
 
