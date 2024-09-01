@@ -40,12 +40,12 @@
     recursive = true;
   };
 
+  # Install plugin manager after a fresh install
   home.activation = let
     paq_dir = "${config.xdg.dataHome}/nvim/site/pack/paqs/start/paq-nvim";
     paq_upstream = "https://github.com/savq/paq-nvim.git";
     nvim = "PATH=${pkgs.git}/bin:$PATH ${config.programs.neovim.package}/bin/nvim";
   in {
-    # Install plugin manager after a fresh install
     nvimInstallPlugins = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run sh -c '
         if [ ! -d "${paq_dir}" ]; then
@@ -53,11 +53,6 @@
           ${nvim} --headless +"autocmd User PaqDoneSync qall" +PaqSync
         fi
       '
-    '';
-
-    # Ensure the preview directory exists
-    nvimCreatePreviewDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      run mkdir -p -- "${config.home.sessionVariables.VIM_PREVIEW_HOME}"
     '';
   };
 }
