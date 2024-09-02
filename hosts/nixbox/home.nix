@@ -19,6 +19,13 @@
   home.username = "pcache";
   home.homeDirectory = "/home/${config.home.username}";
 
+  home.sessionVariables = {
+    NCMPCPP_SWITCH_WALLPAPER = "1";
+    NCMPCPP_FANCY_TRANSITIONS = "1";
+    NCMPCPP_KEEP_PLAYCOUNT = "1";
+    NCMPCPP_KEEP_HISTORY = "1";
+  };
+
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";
 }

@@ -13,16 +13,12 @@ printf "%s" "$(mpc current --format '%album%    ·')    " \
     >"${XDG_CACHE_HOME:-~/.cache}/ncmpcpp-now-playing-album.txt"
 
 # SET ALBUM COVER AS WALLPAPER
-#
-# Uncomment the line below to activate:
-switch_wallpaper=1
-fancy_transitions=1
-if [ -n "$switch_wallpaper" ]; then
+if [ -n "$NCMPCPP_SWITCH_WALLPAPER" ]; then
     cachefile="${XDG_CACHE_HOME:-~/.cache}/ncmpcpp-albumart.jpg"
     mpdfpath="$(mpc current --format %file%)"
     mpc readpicture "$mpdfpath" >"$cachefile"
 
-    if [ -n "$fancy_transitions" ]; then
+    if [ -n "$NCMPCPP_FANCY_TRANSITIONS" ]; then
         # Fancy transition effect (eats some CPU)
         t_fps=$(($(wlr-randr --json | jq '.[0].modes.[] | select(.current==true).refresh | round')))
         t_effect="$(printf '%s\n' simple wipe any | shuf | head -n1)"
@@ -59,13 +55,8 @@ fi
 
 
 # KEEP TRACK OF PER-SONG PLAY COUNT AND HISTORY
-#
 # A track is only considered if it plays for at least 50% of its duration.
-#
-# Uncomment the line(s) below to enable
-# keep_count=1
-keep_hist=1
-if [ -n "$keep_count" ] || [ -n "$keep_hist" ]; then
+if [ -n "$NCMPCPP_KEEP_PLAYCOUNT" ] || [ -n "$NCMPCPP_KEEP_HISTORY" ]; then
     data="$(mpc current --format %file%%time%)"
     file="${data%*}"
     time="${data#*}"
@@ -91,8 +82,8 @@ if [ -n "$keep_count" ] || [ -n "$keep_hist" ]; then
         sleep $(( seconds / 2 ))
         [ "$(mpc current --format %file%)" != "$file" ] && exit
 
-        [ -n "$keep_count" ] && plrare bump "$HOME/Music/$file"
-        [ -n "$keep_hist" ] && {
+        [ -n "$NCMPCPP_KEEP_PLAYCOUNT" ] && plrare bump "$HOME/Music/$file"
+        [ -n "$NCMPCPP_KEEP_HISTORY" ] && {
             mkdir -p -- ~/Music/Playlists
             host="$(cat /etc/hostname)"
             sed -i "1i$file" "$HOME/Music/Playlists/hist.$host.m3u"
