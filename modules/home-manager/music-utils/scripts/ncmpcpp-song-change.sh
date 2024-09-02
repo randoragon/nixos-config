@@ -91,7 +91,7 @@ if [ -n "$keep_count" ] || [ -n "$keep_hist" ]; then
         sleep $(( seconds / 2 ))
         [ "$(mpc current --format %file%)" != "$file" ] && exit
 
-        [ -n "$keep_count" ] && plrare bump "$file"
+        [ -n "$keep_count" ] && plrare bump "$HOME/Music/$file"
         [ -n "$keep_hist" ] && {
             mkdir -p -- ~/Music/Playlists
             host="$(cat /etc/hostname)"
