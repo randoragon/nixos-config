@@ -1,8 +1,6 @@
 # The basis for all sub-configuration modules. Every system is built on top of this.
 { pkgs, ... }: {
   imports = [
-    ./alacritty
-    ./asciidoc
     ./direnv
     ./git
     ./gnupg
