@@ -5,7 +5,6 @@
     ./carla
     ./cursor-theme
     ./foot
-    ./gammastep
     ./grim
     ./gtk
     ./krita
@@ -13,6 +12,7 @@
     ./river
     ./swappy
     ./sxiv
+    ./wlsunset
     ./xorg
     ./yambar
     ./zathura
