@@ -21,7 +21,7 @@ printf "%s\n" "$chosen" | while read -r pl; do
     if [ "$pl" = "Fair Use" ]; then
         path="$mroot/$playing"
         printf "%s\n" "$path"
-        alacritty --class Alacritty,floatme -e addfairuse "$path"
+        $TERMINAL -e addfairuse "$path"
     else
         pladd "$pl"
     fi

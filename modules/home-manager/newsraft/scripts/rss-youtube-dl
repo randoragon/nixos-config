@@ -23,12 +23,12 @@ if [ "$1" = 'a' ]; then
     shift
     title='ytmp3'
     notify-send -u low "$0" "downloading audio from <u>$1</u>..."
-    [ -n "$(command -v termtit)" ] && title="${title}: $($ytdl -e "$1" 2>/dev/null)"
-    alacritty -T "$title" -e ytmp3 "$@" >/dev/null 2>&1 &
+    title="${title}: $($ytdl -e "$1" 2>/dev/null)"
+    $TERMINAL -T "$title" -e ytmp3 "$@" >/dev/null 2>&1 &
 elif [ "$1" = 'v' ]; then
     shift
     title='ytmp4'
     notify-send -u low "$0" "downloading video from <u>$1</u>..."
-    [ -n "$(command -v termtit)" ] && title="${title}: $($ytdl -e "$1" 2>/dev/null)"
-    alacritty -T "$title" -e ytmp4 "$@" >/dev/null 2>&1 &
+    title="${title}: $($ytdl -e "$1" 2>/dev/null)"
+    $TERMINAL -T "$title" -e ytmp4 "$@" >/dev/null 2>&1 &
 fi
