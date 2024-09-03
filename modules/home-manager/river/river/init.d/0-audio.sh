@@ -26,9 +26,9 @@ pwmap () {
 
 pwmap None  XF86AudioMute        set-mute toggle
 pwmap Super BackSpace            set-mute toggle
-pwmap None  XF86AudioRaiseVolume set-volume 1%+
-pwmap Super equal                set-volume 1%+
-pwmap None  XF86AudioLowerVolume set-volume 1%-
-pwmap Super minus                set-volume 1%-
+pwmap None  XF86AudioRaiseVolume set-volume 2%+
+pwmap Super equal                set-volume 2%+
+pwmap None  XF86AudioLowerVolume set-volume 2%-
+pwmap Super minus                set-volume 2%-
 
 riverctl map normal Super+Control P spawn "~/.scripts/choose_default_sink.sh"
