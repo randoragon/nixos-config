@@ -11,7 +11,6 @@
       musicbrainzngs
     ]))
 
-    alsa-utils
     carla
     x42-plugins
     helm

@@ -21,14 +21,14 @@ mpcmap Super+Shift apostrophe 'seek +5'
 
 pwmap () {
     riverctl map -repeat normal "$1" "$2" spawn \
-        "amixer sset Master $3"
+        "wpctl $3 @DEFAULT_AUDIO_SINK@ $4"
 }
 
-pwmap None  XF86AudioMute        toggle
-pwmap Super BackSpace            toggle
-pwmap None  XF86AudioRaiseVolume 1%+
-pwmap Super equal                1%+
-pwmap None  XF86AudioLowerVolume 1%-
-pwmap Super minus                1%-
+pwmap None  XF86AudioMute        set-mute toggle
+pwmap Super BackSpace            set-mute toggle
+pwmap None  XF86AudioRaiseVolume set-volume 1%+
+pwmap Super equal                set-volume 1%+
+pwmap None  XF86AudioLowerVolume set-volume 1%-
+pwmap Super minus                set-volume 1%-
 
 riverctl map normal Super+Control P spawn "~/.scripts/choose_default_sink.sh"

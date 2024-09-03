@@ -122,7 +122,7 @@
                 "~muted" = basic-string "> {cubic_volume}";
               };
               on-click = {
-                left = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+                left = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
                 right = "qpwgraph";
               };
             };
