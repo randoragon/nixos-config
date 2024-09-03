@@ -32,6 +32,7 @@
     zathura
     oculante mpv
     xarchiver
+    olive-editor
   ];
 
   home.sessionVariables = {
