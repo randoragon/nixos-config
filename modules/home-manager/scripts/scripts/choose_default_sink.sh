@@ -9,9 +9,11 @@
 # - bemenu
 # - jq
 
-current_sink="$(pactl get-default-sink)"
-
 pw_dump="$(pw-dump)"
+
+current_sink="$(printf '%s' "$pw_dump" | jq -r \
+    'map(select(.type == "PipeWire:Interface:Metadata" and .props."metadata.name" == "default")).[].metadata
+    | map(select(.key == "default.audio.sink")).[].value.name')"
 
 # List all sinks in an 'id   description' format, but with the current default sink at the very bottom.
 options="$(printf '%s' "$pw_dump" | jq -r \
