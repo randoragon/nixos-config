@@ -42,6 +42,7 @@
       { key = "V"; command = "select_range"; }
       { key = "escape"; command = "remove_selection"; }
       { key = "ctrl-c"; command = "remove_selection"; }
+      { key = "ctrl-v"; command = "reverse_selection"; }
 
       { key = "d"; command = "delete_playlist_items"; }
       { key = "ctrl-g"; command = "jump_to_position_in_song"; }
