@@ -29,5 +29,4 @@ sel="$(echo "$options" | bemenu -i -c -W0.5 -l20 -B5 -R10 -p 'Default Sink')"
 sink_id="${sel#*	}"
 sink_id=$((${sink_id%%	*}))
 
-new_sink_id="$(printf '%s' "$pw_dump" | jq -r "map(select(.id == $sink_id)).[0].id")"
-wpctl set-default -- "$new_sink"
+wpctl set-default -- $sink_id
