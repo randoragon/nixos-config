@@ -19,9 +19,24 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
     exit
 }
 
+# Determine flake type
+flake_type=git+file
+git status -s >/dev/null || {
+    echo 'Not inside a git repository. Choose action:'
+    echo '[g] Start a new repository here (default)'
+    echo '[p] Use "path:."'
+    echo '[q] Quit'
+    read -r ans
+    case "$ans" in
+        q) exit ;;
+        p) flake_type=path ;;
+        *) git init; echo '.direnv/' >.gitignore ;;
+    esac
+}
+
 # If envrc does not exist and there is a flake.nix, assume 'use flake' is needed
-[ -f flake.nix ] || [ -f flake.lock ] && {
-    echo 'use flake' | $EDITOR .envrc
+[ -f flake.nix ] && {
+    printf 'use flake %s:.\n' "$flake_type" | $EDITOR .envrc
     exit
 }
 
@@ -50,6 +65,6 @@ echo 'Added flake.nix to git'
 printf 'Create and allow an .envrc? [Y/n]'
 read -r ans
 [ -z "$ans" ] || [ "$ans" = Y ] || [ "$ans" = y ] && {
-    echo 'use flake' >.envrc
+    printf 'use flake %s:.\n' "$flake_type" >.envrc
     direnv allow .
 }
