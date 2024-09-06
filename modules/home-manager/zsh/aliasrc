@@ -53,6 +53,7 @@ alias gstp='git stash pop'
 alias gstl='git stash list'
 alias gf='git fetch'
 alias gfs='git fetch --recurse-submodules=on'
+alias gig='$EDITOR -- "$(git rev-parse --show-toplevel)/.gitignore"'
 
 # SSH
 alias sshp='ssh-add ~/.ssh/p'
