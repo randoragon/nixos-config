@@ -5,40 +5,8 @@
 # - direnv
 # - jq
 # - git
-#
-# Assuming the following directory structure:
-#
-#   tools
-#   |-- envrc
-#   |-- flake.lock
-#   `-- flake.nix
-#
-# Running `ds -l` will create symlinks to the project root.
-# Running `ds -i` will output relevant gitignore lines.
 
 set -e
-
-echo_gitignore () {
-    echo '# Ignore Nix flake and direnv files'
-    echo '/.direnv/'
-    echo '/.envrc'
-    echo '/flake.nix'
-    echo '/flake.lock'
-}
-
-[ "$1" = '-i' ] && {
-    echo_gitignore
-    exit
-}
-
-[ "$1" = '-l' ] && {
-    set -x
-    ln -s  tools/envrc       .envrc
-    ln -s  tools/flake.nix   flake.nix
-    ln -s  tools/flake.lock  flake.lock
-    set +x
-    exit
-}
 
 envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty')"
 [ -n "$envrc" ] && {
@@ -62,24 +30,18 @@ git status -s >/dev/null || {
     case "$ans" in
         q) exit ;;
         p) flake_type=path ;;
-        *) git init; echo_gitignore >.gitignore ;;
+        *) git init; echo '.direnv/' >.gitignore ;;
     esac
 }
 
 # If envrc does not exist and there is a flake.nix, assume 'use flake' is needed
-[ -f tools/flake.nix ] && {
-    printf 'use flake %s:.\n' "$flake_type" | $EDITOR tools/envrc
-    ln -s tools/envrc .envrc
-    exit
-}
 [ -f flake.nix ] && {
     printf 'use flake %s:.\n' "$flake_type" | $EDITOR .envrc
     exit
 }
 
 # If there is no envrc and no flake, start a new flake with a default envrc
-mkdir -p tools
-cat >tools/flake.nix <<EOF
+cat >flake.nix <<EOF
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -97,14 +59,12 @@ cat >tools/flake.nix <<EOF
   };
 }
 EOF
-$EDITOR tools/flake.nix
-ln -s tools/flake.nix flake.nix
+$EDITOR flake.nix
 git add flake.nix
 echo 'Added flake.nix to git'
 printf 'Create and allow an .envrc? [Y/n]'
 read -r ans
 [ -z "$ans" ] || [ "$ans" = Y ] || [ "$ans" = y ] && {
-    printf 'use flake %s:.\n' "$flake_type" >tools/envrc
-    ln -s tools/envrc .envrc
+    printf 'use flake %s:.\n' "$flake_type" >.envrc
     direnv allow .
 }
