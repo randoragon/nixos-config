@@ -28,6 +28,14 @@
 
 set -e
 
+status () {
+    tput bold setaf 3
+    printf 'ds) '
+    tput sgr0
+    # shellcheck disable=SC2059
+    printf "$@"
+}
+
 # Find the envrc, if inside a direnv project
 envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty')"
 
@@ -35,7 +43,7 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
     if [ -n "$envrc" ]; then
         proj_root="$(dirname -- "$envrc")"
     else
-        echo 'warning: could not find envrc, assuming project root is the current directory'
+        status 'could not find envrc, assuming project root is the current directory\n'
         proj_root=.
     fi
     for file in "$proj_root/.envrc" "$proj_root/flake.nix" "$proj_root/flake.lock"; do
@@ -43,14 +51,14 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
             mkdir -p tools
             new_file=tools/"${file#.}"
             if [ -f "$new_file" ] && ! cmp -s -- "$file" "$new_file"; then
-                printf "'%s' already exists and differs from '%s' -- resolve manually\n" "$new_file" "$file"
+                status "'%s' already exists and differs from '%s' -- resolve manually\n" "$new_file" "$file"
                 continue
             fi
-            printf "'%s' -> '%s'\n" "$file" "$new_file"
+            status "'%s' -> '%s'\n" "$file" "$new_file"
             mv .envrc tools/envrc
             ln -s tools/envrc .envrc
         else
-            printf "'%s' not found, skipping\n" "$file"
+            status "'%s' not found, skipping\n" "$file"
         fi
     done
     exit
@@ -68,11 +76,11 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
 
 # Determine flake type
 flake_type=git+file
-git status -s >/dev/null || {
-    echo 'Not inside a git repository. Choose action:'
-    echo '[g] Start a new repository here (default)'
-    echo '[p] Use "path:."'
-    echo '[q] Quit'
+git status -s >/dev/null 2>&1 || {
+    status 'Not inside a git repository. Choose action:\n'
+    status '[g] Start a new repository here (default)\n'
+    status '[p] Use "path:."\n'
+    status '[q] Quit\n'
     read -r ans
     case "$ans" in
         q) exit ;;
@@ -108,8 +116,9 @@ cat >flake.nix <<EOF
 EOF
 $EDITOR flake.nix
 git add flake.nix
-echo 'Added flake.nix to git'
-printf 'Create and allow an .envrc? [Y/n]'
+echo
+status 'Added flake.nix to git\n'
+status 'Create and allow an .envrc? [Y/n] '
 read -r ans
 [ -z "$ans" ] || [ "$ans" = Y ] || [ "$ans" = y ] && {
     printf 'use flake %s:.\n' "$flake_type" >.envrc
