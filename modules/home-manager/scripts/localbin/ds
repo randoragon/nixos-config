@@ -115,7 +115,7 @@ cat >flake.nix <<EOF
 }
 EOF
 $EDITOR flake.nix
-git add flake.nix
+git add --intent-to-add --force -- flake.nix
 echo
 status 'Added flake.nix to git\n'
 status 'Create and allow an .envrc? [Y/n] '
