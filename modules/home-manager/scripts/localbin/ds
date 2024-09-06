@@ -5,10 +5,57 @@
 # - direnv
 # - jq
 # - git
+#
+#
+# `ds -t` is a special subcommand that transforms this directory structure:
+#
+#   .envrc
+#   flake.nix
+#   flake.lock
+#
+# into this instead:
+#
+#   tools
+#   |-- envrc
+#   |-- flake.lock
+#   `-- flake.nix
+#   .envrc        -> tools/envrc        (symlink)
+#   flake.nix     -> tools/flake.nix    (symlink)
+#   flake.lock    -> tools/flake.lock   (symlink)
+#
+# The latter should be preferred if possible, because I find keeping Nix-specific
+# files in project root directory to be ugly and a little inconsiderate.
 
 set -e
 
+# Find the envrc, if inside a direnv project
 envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty')"
+
+[ "$1" = '-t' ] && {
+    if [ -n "$envrc" ]; then
+        proj_root="$(dirname -- "$envrc")"
+    else
+        echo 'warning: could not find envrc, assuming project root is the current directory'
+        proj_root=.
+    fi
+    for file in "$proj_root/.envrc" "$proj_root/flake.nix" "$proj_root/flake.lock"; do
+        if [ -f "$file" ] && [ ! -L "$file" ]; then
+            mkdir -p tools
+            new_file=tools/"${file#.}"
+            if [ -f "$new_file" ] && ! cmp -s -- "$file" "$new_file"; then
+                printf "'%s' already exists and differs from '%s' -- resolve manually\n" "$new_file" "$file"
+                continue
+            fi
+            printf "'%s' -> '%s'\n" "$file" "$new_file"
+            mv .envrc tools/envrc
+            ln -s tools/envrc .envrc
+        else
+            printf "'%s' not found, skipping\n" "$file"
+        fi
+    done
+    exit
+}
+
 [ -n "$envrc" ] && {
     flake="$(dirname -- "$envrc")/flake.nix"
     if [ -f "$flake" ]; then
