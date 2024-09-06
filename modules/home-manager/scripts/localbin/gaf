@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Unstage all changes to flake or direnv related files.
+# Add flake.nix and flake.lock to the staging area with --intent-to-add.
+# This script makes it so that flake.nix and flake.lock are in the git staging
+# area, but it's safe to commit without them being included.
+set -e
+
+git_root="$(git rev-parse --show-toplevel)"
+
+for fname in flake.nix flake.lock .direnv .envrc; do
+    fpath="$git_root/$fname"
+    [ -f "$fpath" ] && git reset --quiet -- "$fpath"
+done
+
+for fname in flake.nix flake.lock; do
+    fpath="$git_root/$fname"
+    [ -f "$fpath" ] && git add --intent-to-add --force -- "$fpath"
+done
