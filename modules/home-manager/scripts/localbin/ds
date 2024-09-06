@@ -46,20 +46,28 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
         status 'could not find envrc, assuming project root is the current directory\n'
         proj_root=.
     fi
-    for file in "$proj_root/.envrc" "$proj_root/flake.nix" "$proj_root/flake.lock"; do
-        if [ -f "$file" ] && [ ! -L "$file" ]; then
-            mkdir -p tools
-            new_file=tools/"${file#.}"
-            if [ -f "$new_file" ] && ! cmp -s -- "$file" "$new_file"; then
-                status "'%s' already exists and differs from '%s' -- resolve manually\n" "$new_file" "$file"
-                continue
-            fi
-            status "'%s' -> '%s'\n" "$file" "$new_file"
-            mv .envrc tools/envrc
-            ln -s tools/envrc .envrc
-        else
-            status "'%s' not found, skipping\n" "$file"
-        fi
+    for fname in .envrc flake.nix flake.lock; do
+        fpath="$proj_root/$fname"
+
+        [ ! -f "$fpath" ] && {
+            status "'%s' not found, skipping\n" "$fname"
+            continue
+        }
+        [ -L "$fpath" ] && {
+            status "'%s' already linked, skipping\n" "$fname"
+            continue
+        }
+
+        mkdir -p tools
+        new_rel_fpath="tools/${fname#.}"
+        new_fpath="$proj_root/$new_rel_fpath"
+        [ -f "$new_fpath" ] && ! cmp -s -- "$fpath" "$new_fpath" && {
+            status "'%s' already exists and differs from '%s' -- resolve manually\n" "$new_rel_fpath" "$fname"
+            continue
+        }
+        status "'%s' -> '%s'\n" "$fname" "$new_rel_fpath"
+        mv -- "$fpath" "$new_fpath"
+        ln -s -- "$new_rel_fpath" "$fpath"
     done
     exit
 }
@@ -85,7 +93,7 @@ git status -s >/dev/null 2>&1 || {
     case "$ans" in
         q) exit ;;
         p) flake_type=path ;;
-        *) git init; echo '.direnv/' >.gitignore ;;
+        *) git init; echo '/.direnv/' >.gitignore ;;
     esac
 }
 
@@ -118,9 +126,10 @@ $EDITOR flake.nix
 git add --intent-to-add --force -- flake.nix
 echo
 status 'Added flake.nix to git\n'
-status 'Create and allow an .envrc? [Y/n] '
-read -r ans
-[ -z "$ans" ] || [ "$ans" = Y ] || [ "$ans" = y ] && {
+if [ ! -f .envrc ]; then
+    status 'Creating and allowing .envrc'
     printf 'use flake %s:.\n' "$flake_type" >.envrc
     direnv allow .
-}
+else
+    status 'Found existing .envrc, skipping'
+fi
