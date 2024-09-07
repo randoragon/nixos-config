@@ -37,5 +37,6 @@
     tokei
     inxi neofetch
     figlet sl asciiquarium
+    gdu
   ];
 }
