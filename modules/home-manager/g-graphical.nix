@@ -33,6 +33,7 @@
     oculante mpv
     xarchiver
     olive-editor
+    pinta
   ];
 
   home.sessionVariables = {
