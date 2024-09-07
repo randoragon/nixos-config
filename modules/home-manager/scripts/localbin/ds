@@ -75,8 +75,10 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
 [ -n "$envrc" ] && {
     flake="$(dirname -- "$envrc")/flake.nix"
     if [ -f "$flake" ]; then
+        cksum="$(md5sum -- "$flake")"
         $EDITOR '+call search("packages = ")' '+norm %kw' -- "$flake"
-        direnv reload
+        [ "$(md5sum -- "$flake")" != "$cksum" ] && \
+            direnv reload
     else
         direnv edit
     fi
