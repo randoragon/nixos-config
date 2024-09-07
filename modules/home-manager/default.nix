@@ -9,6 +9,7 @@
     ./less
     ./lf
     ./nvim
+    ./nix-index
     ./scripts
     ./sqlite
     ./tmux
