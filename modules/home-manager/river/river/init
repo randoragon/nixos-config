@@ -55,6 +55,12 @@ done
 riverctl map -repeat normal Super Tab focus-previous-tags
 riverctl map -repeat normal Super+Shift Tab send-to-previous-tags
 
+# Output keybindings
+riverctl map -repeat normal Super comma focus-output previous
+riverctl map -repeat normal Super period focus-output next
+riverctl map -repeat normal Super+Shift comma send-to-output previous
+riverctl map -repeat normal Super+Shift period send-to-output next
+
 # View keybindings
 riverctl map normal Super Q close
 riverctl map -repeat normal Super J focus-view next
