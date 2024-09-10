@@ -5,11 +5,16 @@
   # Allow instaling non-free packages
   nixpkgs.config.allowUnfree = true;
 
-  # Clean up and optimize the store automatically
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
+  # Optimize the store automatically
   nix.settings.auto-optimise-store = true;
+
+  # Enable nh and auto-cleaning
+  programs.nh = {
+    enable = true;
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep 5 --keep-since 7w";
+    };
+  };
 }

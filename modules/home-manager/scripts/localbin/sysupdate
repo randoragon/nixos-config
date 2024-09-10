@@ -39,7 +39,11 @@ nix flake update
 sectionend
 
 section REBUILDING 'NixOS flake'
-sudo nixos-rebuild switch --flake ~/nixos-config#"$profile"
+if command -v nh >/dev/null; then
+    nh os switch --ask --hostname "$profile" ~/nixos-config/
+else
+    sudo nixos-rebuild switch --flake ~/nixos-config#"$profile"
+fi
 sectionend
 set +e
 
