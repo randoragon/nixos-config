@@ -8,5 +8,6 @@
     qpwgraph pulsemixer
     imagemagick graphicsmagick
     ffmpeg sox
+    poppler_utils
   ];
 }

@@ -34,6 +34,7 @@
     xarchiver
     olive-editor
     pinta
+    libreoffice
   ];
 
   home.sessionVariables = {
