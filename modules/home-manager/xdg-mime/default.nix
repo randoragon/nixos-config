@@ -32,6 +32,7 @@
       "image/jpeg" = [ "image.desktop" ];
       "image/svg" = [ "image.desktop" ];
       "image/svg+xml" = [ "image.desktop" ];
+      "image/webp" = [ "image.desktop" ];
 
       # Video
       "application/mpeg" = [ "mpv.desktop" ];
