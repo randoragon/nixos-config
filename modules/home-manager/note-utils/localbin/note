@@ -4,13 +4,12 @@
 # See "note -h" for more details.
 #
 # Dependencies:
-# - gpg, sha1sum
 # - bemenu, fzf
+# - rsync
 # - md2html (md4c)
 # - surf (html viewing)
 # - env: $PDF_READER (fallback to zathura)
 # - git
-# - tar
 # - asciidoctor, asciidoctor-diagram (for adoc support)
 # - lxmake (custom script for LaTeX support)
 # - typst (for typst support)
@@ -19,9 +18,8 @@
 set -e
 
 # CONFIG
-notedir="${XDG_DATA_HOME:-~/.local/share}/notes"
-gpgid_e="$(cat -- "$notedir/.gpgid-encrypt")"
-gpgid_s="$(cat -- "$notedir/.gpgid-sign")"
+NOTES="${XDG_DATA_HOME:-~/.local/share}/notes"
+SECRETS="$NOTES/secrets"
 nl='
 '
 
@@ -80,29 +78,10 @@ String Substitutions:
 "
 }
 
+# Computes a checksum of an entire directory recursively
 # Credit: https://stackoverflow.com/a/545413/10792539
 dir_cksum () {
     find "$1" -type f -print0 | sort -z | xargs -0 cat | sha1sum
-}
-
-# extract <archive> <dir>
-# Decrypts and extracts an archive into dir
-extract () {
-    tmp="$(mktemp --tmpdir note.XXXXX)"
-    gpg --yes --quiet --output "$tmp" --decrypt -- "$1"
-    tar -xzf "$tmp" -C "$2"
-    rm -f -- "$tmp"
-}
-
-# archive <basedir> <archive>
-# The opposite of extract
-# basedir is the root directory of the archive
-# dir must be the NAME (not path) of a directory within basedir
-archive () {
-    tmp="$(mktemp --tmpdir note.XXXXX)"
-    tar -C "$1" -czf "$tmp" -- NOTE
-    gpg --yes --quiet --output "$2" --encrypt --recipient "$gpgid_e" --sign --local-user "$gpgid_s" -- "$tmp"
-    rm -f -- "$tmp"
 }
 
 # strsub <source> <file> <use_current_time?>
@@ -114,9 +93,9 @@ archive () {
 # for the current time, instead of fetching the latest git commit.
 strsub () {
     # Update modified time according to git data
-    fpath="$(realpath --relative-to "$notedir" -- "$1")"
+    fpath="$(realpath --relative-to "$SECRETS" -- "$1")"
     if [ -z "$3" ]; then
-        epoch="$(git -C "$notedir" log -1 --format='%at' -- "$fpath")"
+        epoch="$(git -C "$SECRETS" log -1 --format='%at' -- "$fpath")"
     else
         epoch="$(date +%s)"
     fi
@@ -126,297 +105,215 @@ strsub () {
     sed -i -e "s/NOTE_MTIME/$mtime/g" "$2"
 }
 
-# get_filetype <dir>
-# Determines filetype by looking for existence of a NOTE file inside
-# the given directory.
-get_filetype () {
-    [ -f "$1/NOTE/NOTE.txt" ]  && { echo txt;  return; }
-    [ -f "$1/NOTE/NOTE.md" ]   && { echo md;   return; }
-    [ -f "$1/NOTE/NOTE.adoc" ] && { echo adoc; return; }
-    [ -f "$1/NOTE/NOTE.tex" ]  && { echo tex;  return; }
-    [ -f "$1/NOTE/NOTE.typ" ]  && { echo typ;  return; }
-    [ -f "$1/NOTE/NOTE.ldg" ]  && { echo ldg;  return; }
-    echo 'note: NOTE file not found within the archive' >&2 && exit 4
-}
-
-# edit <archive>
-# archive - path to the note archive file, relative to $notedir
+# edit <note>
+# note -  path to the note subdirectory, relative to $NOTES
 edit () {
-    tmpd="$(mktemp --tmpdir -d note.XXXXX)"
-    extract "$notedir/$1" "$tmpd"
-    target="$tmpd/NOTE/NOTE.$(get_filetype "$tmpd")"
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
 
     # Custom preprocessing based on file type.
     # The files variable holds a string of filenames to open.
-    files="$target"
-    case "${target##*.}" in
-        adoc) files="$files${nl}$tmpd/NOTE/docinfo.html" ;;
-        typ) export TYPST_ROOT="$tmpd/NOTE" ;;
+    files="$notemain"
+    case "$ext" in
+        adoc) files="$files${nl}$dir/docinfo.html" ;;
+        typ) export TYPST_ROOT="$dir" ;;
     esac
 
-    sum="$(dir_cksum "$tmpd/NOTE")"
+    sum="$(dir_cksum "$dir")"
     if [ -z "$interactive" ]; then
-        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $tmpd/NOTE" --
+        # shellcheck disable=SC2086
+        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
     else
-        echo "$files " | xargs $EDITOR "+cd $tmpd/NOTE" --
+        # shellcheck disable=SC2086
+        echo "$files " | xargs $EDITOR "+cd $dir" --
     fi
-    if [ "$(dir_cksum "$tmpd/NOTE")" = "$sum" ]; then
+    if [ "$(dir_cksum "$dir")" = "$sum" ]; then
         echo 'No changes were made, skipping.'
     else
         # Custom postprocessing based on file type.
-        case "${target##*.}" in
+        case "$ext" in
             tex)
                 # Cache the PDF for quick access
-                cachetarget="$(mktemp -p "$tmpd/NOTE" cachetarget.XXXXX)"
-                cp -- "$target" "$cachetarget"
-                strsub "$notedir/$1" "$cachetarget" 1
-                cache="$tmpd/NOTE/CACHE.pdf"
-                lxmake "$cachetarget" "$cache"
-                rm -f -- "$cachetarget"
+                notemain2="$(mktemp -p "$dir" tmp.XXXXX)"
+                cp -- "$notemain" "$notemain2"
+                strsub "$notemain" "$notemain2" 1
+                lxmake "$notemain2" "$dir/.cache.pdf"
+                rm -f -- "$notemain2"
                 ;;
             typ)
                 # Cache the PDF for quick access
-                cachetarget="$(mktemp -p "$tmpd/NOTE" cachetarget.XXXXX)"
-                cp -- "$target" "$cachetarget"
-                strsub "$notedir/$1" "$cachetarget" 1
-                cache="$tmpd/NOTE/CACHE.pdf"
-                typst compile -- "$cachetarget" "$cache"
-                rm -f -- "$cachetarget"
+                notemain2="$(mktemp -p "$dir" tmp.XXXXX)"
+                cp -- "$notemain" "$notemain2"
+                strsub "$notemain" "$notemain2" 1
+                typst compile -- "$notemain2" "$dir/.cache.pdf"
+                rm -f -- "$notemain2"
                 ;;
         esac
 
-        archive "$tmpd" "$notedir/$1"
-        git -C "$notedir" add "$1"
-        git -C "$notedir" commit -o "$1" -m "Edit $1"
+        git -C "$SECRETS" commit -m "Edit $1" -- "$1"
     fi
-    rm -rf -- "$tmpd"
 }
 
-# edit_ledger <file>
-# file - path to the note text file, relative to $notedir
-edit_ledger () {
-    target="$(mktemp --tmpdir note.XXXXX."$(basename -- "$1")")"
-    gpg --yes --quiet --output "$target" --decrypt -- "$notedir/$1"
-
-    sum="$(sha1sum -- "$target")"
-    if [ -z "$interactive" ]; then
-        $TERMINAL -e $EDITOR "+cd $tmpd" -- "$target"
-    else
-        $EDITOR "+cd $tmpd" -- "$target"
-    fi
-    if [ "$(sha1sum -- "$target")" = "$sum" ]; then
-        echo 'No changes were made, skipping.'
-    else
-        gpg --yes --quiet --output "$notedir/$1" --encrypt --recipient "$gpgid_e" --sign --local-user "$gpgid_s" -- "$target"
-        git -C "$notedir" add "$1"
-        git -C "$notedir" commit -o "$1" -m "Edit $1"
-    fi
-    rm -f -- "$target"
-}
-
-# view <archive>
-# archive - path to the note archive file, relative to $notedir
+# view <note>
+# note -  path to the note subdirectory, relative to $NOTES
 view () {
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
     tmpd="$(mktemp --tmpdir -d note.XXXXX)"
-    extract "$notedir/$1" "$tmpd"
-
-    fmt="$(get_filetype "$tmpd")"
-    target="$tmpd/NOTE/NOTE.$fmt"
+    tmpdmain="$tmpd/$(basename -- "$note")"
+    rsync -a --delete -- "$dir"/ "$tmpd"/
 
     # Perform string substitutions
-    strsub "$notedir/$1" "$target"
+    strsub "$notemain" "$tmpdmain"
 
-    case "$fmt" in
+    case "$ext" in
         txt|ldg)
             if [ -z "$interactive" ]; then
-                $TERMINAL -e $PAGER -- "$target"
+                # shellcheck disable=SC2086
+                $TERMINAL -e $PAGER -- "$tmpdmain"
             else
-                $PAGER -- "$target"
+                $PAGER -- "$tmpdmain"
             fi
             ;;
         md)
-            tmp="$(mktemp -p "$tmpd/NOTE" note.XXXXX.html)"
+            tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
             printf '%s' "$HTML_MD_STYLE" >"$tmp"
-            md2html --github -- "$target" >>"$tmp"
+            md2html --github -- "$tmpdmain" >>"$tmp"
             [ -s "$tmp" ] && surf -- file://"$tmp"
             ;;
         adoc)
-            tmp="$(mktemp -p "$tmpd/NOTE" note.XXXXX.html)"
-            asciidoctor $ASCIIDOCTOR_OPTS -o "$tmp" -- "$target"
+            tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
+            # shellcheck disable=SC2086
+            asciidoctor $ASCIIDOCTOR_OPTS -o "$tmp" -- "$tmpdmain"
             [ -s "$tmp" ] && surf -- file://"$tmp"
             ;;
         tex)
-            cache="$tmpd/NOTE/CACHE.pdf"
+            cache="$tmpd/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
-                lxmake "$target" "$cache"
-                archive "$tmpd" "$notedir/$1"
-                git -C "$notedir" add "$1"
-                git -C "$notedir" commit -o "$1" -m "Cache $1"
+                lxmake "$tmpdmain" "$cache"
+                git -C "$SECRETS" commit -m "Cache $1" -- "$cache"
             }
             ${PDF_READER:-zathura} - <"$cache"
             ;;
         typ)
-            cache="$tmpd/NOTE/CACHE.pdf"
+            cache="$tmpd/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
-                typst compile -- "$target" "$cache"
-                archive "$tmpd" "$notedir/$1"
-                git -C "$notedir" add "$1"
-                git -C "$notedir" commit -o "$1" -m "Cache $1"
+                typst compile -- "$tmpdmain" "$cache"
+                git -C "$SECRETS" commit -m "Cache $1" -- "$cache"
             }
             ${PDF_READER:-zathura} - <"$cache"
             ;;
         *)
-            printf "note: unknown note format '%s'\n" "$fmt" >&2
+            printf "note: unknown note format '%s'\n" "$ext" >&2
     esac
     rm -rf -- "$tmpd"
 }
 
-# view_ledger <file>
-# file - path to the note text file, relative to $notedir
-view_ledger () {
-    target="$(mktemp --tmpdir note.XXXXX."$(basename -- "$1")")"
-    gpg --yes --quiet --output "$target" --decrypt -- "$notedir/$1"
-
-    # Perform string substitutions
-    strsub "$notedir/$1" "$target"
-
-    if [ -z "$interactive" ]; then
-        $TERMINAL -e $PAGER -- "$target"
-    else
-        $PAGER -- "$target"
-    fi
-
-    rm -f -- "$target"
-}
-
 # create <note> <ext>
-# note is a path of a new note relative to notedir
+# note is a path of a new note relative to NOTES
 # ext is the target NOTE file extension
 create () {
-    tmpd="$(mktemp --tmpdir -d note.XXXXX)"
-    mkdir -p -- "$tmpd/NOTE"
-    target="$tmpd/NOTE/NOTE$2"
+    note="$1$2"
+    ext="$2"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
+
+    mkdir -p -- "$dir"
+    :>"$notemain"
 
     # Customizable setup for every file type.
     # The files variable holds a string of filenames to open.
-    :>"$target"
-    files="$target"
+    files="$notemain"
     case "$2" in
         .adoc)
-            docinfo="$tmpd/NOTE/docinfo.html"
-            printf '=\n:docinfo: shared\n' >"$target"
+            docinfo="$dir/docinfo.html"
+            printf '=\n:docinfo: shared\n' >"$notemain"
             printf '<style>\n</style>' >"$docinfo"
             files="$files$nl$docinfo"
             ;;
     esac
 
-    sum="$(dir_cksum "$tmpd/NOTE")"
+    sum="$(dir_cksum "$dir")"
     if [ -z "$interactive" ]; then
-        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $tmpd/NOTE" --
+        # shellcheck disable=SC2086
+        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
     else
-        echo "$files" | xargs $EDITOR "+cd $tmpd/NOTE" --
+        # shellcheck disable=SC2086
+        echo "$files" | xargs $EDITOR "+cd $dir" --
     fi
-    if [ "$(dir_cksum "$tmpd/NOTE")" = "$sum" ]; then
+    if [ "$(dir_cksum "$dir")" = "$sum" ]; then
         echo 'Note directory unchanged, cancelling.'
     else
-        mkdir -p -- "$notedir/$(dirname -- "$1")"
-        archive "$tmpd" "$notedir/$1"
-        git -C "$notedir" add "$1"
-        git -C "$notedir" commit -o "$1" -m "Create $1"
+        git -C "$SECRETS" commit -m "Create $note" -- "$note"
     fi
     rm -rf -- "$tmpd"
 }
 
-# create_ledger <note>
-# note is a path of a new note relative to notedir
-create_ledger () {
-    target="$(mktemp --tmpdir note.XXXXX."$(basename -- "$1")")"
-
-    if [ -z "$interactive" ]; then
-        $TERMINAL -e $EDITOR "+cd ${TMPDIR:-/tmp}" -- "$target"
-    else
-        $EDITOR "+cd ${TMPDIR:-/tmp}" -- "$target"
-    fi
-    if [ ! -s "$target" ]; then
-        echo 'Note unchanged, cancelling.'
-    else
-        mkdir -p -- "$notedir/$(dirname -- "$1")"
-        gpg --yes --quiet --output "$notedir/$1" --encrypt --recipient "$gpgid_e" --sign --local-user "$gpgid_s" -- "$target"
-        git -C "$notedir" add "$1"
-        git -C "$notedir" commit -o "$1" -m "Create $1"
-    fi
-    rm -f -- "$target"
-}
-
-# output <archive> <output>
-# archive -  path to the note archive file, relative to $notedir
+# output <note> <output>
+# note -  path to the note subdirectory, relative to $NOTES
 # output - path to the file to export to, or - for stdout
 output () {
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    output="$2"
+
     [ -n "$raw" ] && {
-        output="$2"
         [ -e "$output" ] && {
             [ ! -d "$output" ] && printf "note: '%s' exists and is not a directory\n" "$output" >&2 && exit 1
             [ -n "$(ls -qA -- "$output")" ] && printf "note: '%s' exists and is not empty\n" "$output" >&2 && exit 1
         }
-        mkdir -p -- "$output"
-        extract "$notedir/$1" "$output"
-        find "$output/NOTE" -maxdepth 1 ! -name 'NOTE' -exec mv -f -- '{}' "$output/" \;
-        [ -e "$output/NOTE/NOTE" ] && {
-            tmp="$(mktemp -p "$output" NOTE.XXXXX)"
-            mv -f -- "$output/NOTE/NOTE" "$tmp"
-            rm -rf -- "$output/NOTE"
-            mv -f -- "$tmp" "$output/NOTE"
-        }
-        rm -rf -- "$output/NOTE"
+        rsync -a --delete -- "$SECRETS/$note"/ "$output"/
         return
     }
 
     tmpd="$(mktemp --tmpdir -d note.XXXXX)"
-    extract "$notedir/$1" "$tmpd"
-    output="$2"
+    tmpdmain="$tmpd/$(basename -- "$note")"
+    rsync -a --delete -- "$dir"/ "$tmpd"/
     stdout=
     [ "$output" = '-' ] && stdout=1
 
-    fmt="$(get_filetype "$tmpd")"
-    target="$tmpd/NOTE/NOTE.$fmt"
-
     # Perform string substitutions
-    strsub "$notedir/$1" "$target"
+    strsub "$SECRETS/$note" "$tmpdmain"
 
-    case "$fmt" in
+    case "$ext" in
         txt|ldg)
             if [ $stdout ]; then
-                cat -- "$target"
+                cat -- "$tmpdmain"
             else
-                cp -- "$target" "$output"
+                cp -- "$tmpdmain" "$output"
             fi
             ;;
         md)
             if [ $stdout ]; then
                 printf "%s" "$HTML_MD_STYLE"
-                md2html --github -- "$target"
+                md2html --github -- "$tmpdmain"
             else
                 printf "%s" "$HTML_MD_STYLE" >"$output"
-                md2html --github -- "$target" >>"$output"
+                md2html --github -- "$tmpdmain" >>"$output"
             fi
             ;;
         adoc)
             if [ $stdout ]; then
-                asciidoctor $ASCIIDOCTOR_OPTS -o - -- "$target"
+                # shellcheck disable=SC2086
+                asciidoctor $ASCIIDOCTOR_OPTS -o - -- "$tmpdmain"
             else
-                asciidoctor $ASCIIDOCTOR_OPTS -o "$output" -- "$target"
+                # shellcheck disable=SC2086
+                asciidoctor $ASCIIDOCTOR_OPTS -o "$output" -- "$tmpdmain"
             fi
             ;;
         tex)
-            cache="$tmpd/NOTE/CACHE.pdf"
+            cache="$tmpd/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
-                lxmake "$target" "$cache"
-                archive "$tmpd" "$notedir/$1"
-                git -C "$notedir" add "$1"
-                git -C "$notedir" commit -o "$1" -m "Cache $1"
+                lxmake "$tmpdmain" "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$note"
             }
             if [ $stdout ]; then
                 cat -- "$cache"
@@ -425,13 +322,11 @@ output () {
             fi
             ;;
         typ)
-            cache="$tmpd/NOTE/CACHE.pdf"
+            cache="$tmpd/NOTE/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
-                typst compile -- "$target" "$cache"
-                archive "$tmpd" "$notedir/$1"
-                git -C "$notedir" add "$1"
-                git -C "$notedir" commit -o "$1" -m "Cache $1"
+                typst compile -- "$tmpdmain" "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$note"
             }
             if [ $stdout ]; then
                 cat -- "$cache"
@@ -440,37 +335,10 @@ output () {
             fi
             ;;
         *)
-            printf "note: unknown note format '%s'\n" "$fmt" >&2
+            printf "note: unknown note format '%s'\n" "$ext" >&2
+            ;;
     esac
     rm -rf -- "$tmpd"
-}
-
-# output_ledger <file> <output>
-# file - path to the note text file, relative to $notedir
-# output - path to the file to export to, or - for stdout
-output_ledger () {
-    [ -n "$raw" ] && {
-        [ -e "$output" ] && printf "note: '%s' exists\n" "$output" >&2 && exit 1
-        mkdir -p -- "$(dirname -- "$2")"
-        gpg --yes --quiet --output "$2" --decrypt -- "$notedir/$1"
-        return
-    }
-
-    target="$(mktemp --tmpdir note.XXXXX)"
-    gpg --yes --quiet --output "$target" --decrypt -- "$notedir/$1"
-    output="$2"
-    stdout=
-    [ "$output" = '-' ] && stdout=1
-
-    # Perform string substitutions
-    strsub "$notedir/$1" "$target"
-
-    if [ $stdout ]; then
-        cat -- "$target"
-    else
-        cp -- "$target" "$output"
-    fi
-    rm -f -- "$target"
 }
 
 note=
@@ -481,7 +349,7 @@ force_bemenu=
 force_fzf=
 while true; do
     case "$1" in
-        -h|--help) help ; exit ; shift ;;
+        -h|--help) help ; exit ;;
         -e|--edit) edit=1 ; shift ;;
         -r|--raw) raw=1 ; shift ;;
         -o|--output)
@@ -502,10 +370,6 @@ if [ $# -eq 1 ]; then
     note="$1"
     [ -z "$(basename -- "$note")" ] && {
         echo 'note: cannot create a note with empty filename' >&2
-        exit 2
-    }
-    [ -e "$note" ] && [ ! -f "$note" ] && {
-        printf "note: '%s' already exists but is not a file\n" "$note" >&2
         exit 2
     }
 elif [ $# -ne 0 ]; then
@@ -531,7 +395,17 @@ fi
     exit 5
 }
 
-[ ! -d "$notedir" ] && echo 'note: notes dir not found' >&2 && exit 1
+[ ! -L "$SECRETS" ] && {
+    if [ -n "$interactive" ]; then
+        [ "$(printf 'yes\nno' | fzf --no-sort --no-multi --prompt 'Decrypt notes?')" != 'yes' ] && \
+            exit
+    else
+        [ "$(printf 'yes\nno' | bemenu -p 'Decrypt notes?')" != 'yes' ] && \
+            exit
+    fi
+    cd -- "$NOTES"
+    ./decrypt.sh
+}
 
 # Check if shell is interactive
 if [ -n "$force_bemenu" ]; then
@@ -556,10 +430,10 @@ if [ -z "$note" ]; then
     # For interactive shells use fzf, otherwise use bemenu.
     set +e
     if [ -n "$interactive" ]; then
-        note="$(cd "$notedir" && find . -type f \! -path '\./\.*' -exec realpath --relative-to "$notedir" '{}' \; \
+        note="$(cd "$SECRETS" && find . -type d -name '*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
             | fzf --no-sort --no-multi --prompt "$prompt ")"
     else
-        note="$(cd "$notedir" && find . -type f \! -path '\./\.*' -exec realpath --relative-to "$notedir" '{}' \; \
+        note="$(cd "$SECRETS" && find . -type d -name '*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
             | bemenu -l 20 -p "$prompt")"
     fi
     set -e
@@ -568,53 +442,29 @@ if [ -z "$note" ]; then
 fi
 
 # Handle targeting non-existent notes (which is only allowed when editing)
-[ ! -f "$notedir/$note" ] && [ -z "$edit" ] && {
+[ ! -d "$SECRETS/$note" ] && [ -z "$edit" ] && {
     printf "note: '%s' does not exist\n" "$note" >&2
     exit 1
 }
 
 # Execute the right action
-#
-# All notes except ledger ones are encrypted directories consisting of a main
-# NOTE.ext file and optionally other files.
-# Ledger notes are simply encrypted text files, to cooperate with ledger's
-# GPGME support (https://passingcuriosity.com/2024/ledger-with-gnupg/). This
-# unfortunately means that they require separate handling from all other note
-# types.
-case "$note" in
-    *.ldg)
-        if [ -n "$output" ]; then
-            output_ledger "$note" "$output"
-        elif [ -n "$edit" ]; then
-            if [ ! -f "$notedir/$note" ]; then
-                create_ledger "$note"
-            else
-                edit_ledger "$note"
-            fi
-        else
-            view_ledger "$note"
-        fi
-        ;;
-    *)
-        if [ -n "$output" ]; then
-            output "$note" "$output"
-        elif [ -n "$edit" ]; then
-            if [ ! -f "$notedir/$note" ]; then
-                ext=
-                case "$note" in
-                    *.md)   ext=.md   ;;
-                    *.adoc) ext=.adoc ;;
-                    *.txt)  ext=.txt  ;;
-                    *.tex)  ext=.tex  ;;
-                    *.typ)  ext=.typ  ;;
-                    *) echo 'note: missing or unsupported extension' >&2 && exit 2 ;;
-                esac
-                create "$note" "$ext"
-            else
-                edit "$note"
-            fi
-        else
-            view "$note"
-        fi
-        ;;
-esac
+if [ -n "$output" ]; then
+    output "$note" "$output"
+elif [ -n "$edit" ]; then
+    if [ ! -d "$SECRETS/$note" ]; then
+        ext=
+        case "$note" in
+            *.md)   ext=.md   ;;
+            *.adoc) ext=.adoc ;;
+            *.txt)  ext=.txt  ;;
+            *.tex)  ext=.tex  ;;
+            *.typ)  ext=.typ  ;;
+            *) echo 'note: missing or unsupported extension' >&2 && exit 2 ;;
+        esac
+        create "$note" "$ext"
+    else
+        edit "$note"
+    fi
+else
+    view "$note"
+fi
