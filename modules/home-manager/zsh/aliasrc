@@ -27,7 +27,7 @@ alias bt='bluetoothctl'
 alias rgf='rg --files | rg'
 alias dmpd='setsid mpd-discord-rpc >/dev/null 2>&1 &'
 alias plhist='$PAGER ~/Music/Playlists/hist.$HOST.m3u'
-alias led='ledger -f "${XDG_DATA_HOME:-$HOME/.local/share}/notes/ledger/main.ldg"'
+alias led='secrets "${XDG_DATA_HOME:-$HOME/.local/share}/ledger" decrypt && ledger -f "${XDG_DATA_HOME:-$HOME/.local/share}/ledger/secrets/main.ldg"'
 alias update='nh os switch --ask --hostname "$(cat -- ~/.config/nixos-config-profile)" ~/nixos-config/'
 alias der='direnv reload'
 
