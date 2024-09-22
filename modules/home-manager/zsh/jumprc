@@ -10,7 +10,6 @@ alias vrc='(cd ~/nixos-config/modules/home-manager/nvim/nvim && $EDITOR init.lua
 alias rss='$EDITOR ~/.config/newsraft/feeds'
 alias snip='$EDITOR ~/.config/snippetrc'
 alias todo='$EDITOR ~/Sync/todo'
-alias le='note -e "ledger/entries/$(date +%Y.ldg)"'
 
 # Directories
 alias cdni='cd ~/nixos-config && ls'
@@ -33,6 +32,7 @@ alias cdot='cd ~/dotfiles && ls'
 alias cdow='cd ~/Downloads && ls'
 alias cdpa='cd ~/.local/share/pass && ls'
 alias cdno='cd ~/.local/share/notes && ls'
+alias cdle='cd ~/.local/share/ledger && ls'
 alias cdpi='cd ~/Pictures && ls'
 alias cdput='cd ~/Documents/put/sem8 && ls'
 alias cdsc='cd ~/.scripts && ls'

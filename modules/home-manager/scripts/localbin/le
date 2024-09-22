@@ -1,0 +1,25 @@
+#!/bin/sh
+# Edit the ledger journal
+set -e
+
+LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
+SECRETS="$LEDGER/secrets"
+
+# Credit: https://stackoverflow.com/a/545413/10792539
+dir_cksum () {
+    find "$1" -type f -print0 \! -path '*/.git/*' \
+        | sort -z | xargs -0 cat | sha1sum
+}
+
+secrets "$LEDGER" decrypt
+
+mkdir -p -- "$SECRETS/$(date +%Y)"
+fpath="$SECRETS/$(date +%Y/%Y-%m.ldg)"
+cksum_old="$(dir_cksum "$SECRETS")"
+$EDITOR "+cd $SECRETS" -- "$fpath"
+if [ "$(dir_cksum "$SECRETS")" != "$cksum_old" ]; then
+    git -C "$SECRETS" commit -m "Update $fpath" -- "$fpath"
+    secrets "$LEDGER" save
+else
+    echo 'No changes were made, skipping.'
+fi
