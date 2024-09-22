@@ -208,12 +208,11 @@ view () {
     rm -rf -- "$tmpd"
 }
 
-# create <note> <ext>
+# create <note>
 # note is a path of a new note relative to NOTES
-# ext is the target NOTE file extension
 create () {
-    note="$1$2"
-    ext="$2"
+    note="$1"
+    ext="${note##*.}"
     dir="$SECRETS/$note"
     notemain="$dir/$(basename -- "$note")"
 
@@ -240,8 +239,9 @@ create () {
         # shellcheck disable=SC2086
         echo "$files" | xargs $EDITOR "+cd $dir" --
     fi
-    if [ -s "$notemain" ]; then
+    if [ ! -s "$notemain" ]; then
         echo 'Note left empty, cancelling.'
+        rm -rf -- "${SECRETS:?}/${note:?}"
     else
         git -C "$SECRETS" commit -m "Create $note" -- "$note"
     fi
@@ -435,16 +435,11 @@ if [ -n "$output" ]; then
     output "$note" "$output"
 elif [ -n "$edit" ]; then
     if [ ! -d "$SECRETS/$note" ]; then
-        ext=
         case "$note" in
-            *.md)   ext=.md   ;;
-            *.adoc) ext=.adoc ;;
-            *.txt)  ext=.txt  ;;
-            *.tex)  ext=.tex  ;;
-            *.typ)  ext=.typ  ;;
+            *.txt|*.md|*.adoc|*.tex|*.typ) ;;
             *) echo 'note: missing or unsupported extension' >&2 && exit 2 ;;
         esac
-        create "$note" "$ext"
+        create "$note"
     else
         edit "$note"
     fi
