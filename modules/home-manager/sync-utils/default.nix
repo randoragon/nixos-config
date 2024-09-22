@@ -16,8 +16,8 @@
     ~/.local/share/wallpapers/
     ~/Documents/Books/
     ~/Documents/sheet-music/
-    ~/Music/
     ~/Videos/clips/
+    ~/Music/
   '';
 
   xdg.configFile."spull.list".text = ''
@@ -31,7 +31,7 @@
     LMMS/ ~/.local/share/lmms/
     wallpapers/ ~/.local/share/wallpapers/
     Books/ ~/Documents/Books/
-    Music/ ~/Music/
     clips/ ~/Videos/clips/
+    Music/ ~/Music/
   '';
 }
