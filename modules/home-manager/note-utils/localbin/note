@@ -79,12 +79,6 @@ String Substitutions:
 "
 }
 
-# Computes a checksum of an entire directory recursively
-# Credit: https://stackoverflow.com/a/545413/10792539
-dir_cksum () {
-    find "$1" -type f -print0 | sort -z | xargs -0 cat | sha1sum
-}
-
 # strsub <source> <file> <use_current_time?>
 # Does in-place string substitution, as described in --help.
 # source is the file that will be stat'ted for information
@@ -122,7 +116,6 @@ edit () {
         typ) export TYPST_ROOT="$dir" ;;
     esac
 
-    sum="$(dir_cksum "$dir")"
     if [ -z "$interactive" ]; then
         # shellcheck disable=SC2086
         echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
@@ -130,7 +123,7 @@ edit () {
         # shellcheck disable=SC2086
         echo "$files " | xargs $EDITOR "+cd $dir" --
     fi
-    if [ "$(dir_cksum "$dir")" = "$sum" ]; then
+    if ! secrets "$NOTES" modified >/dev/null; then
         echo 'No changes were made, skipping.'
     else
         # Custom postprocessing based on file type.
@@ -226,6 +219,7 @@ create () {
     dir="$SECRETS/$note"
     notemain="$dir/$(basename -- "$note")"
 
+    [ -d "$dir" ] && echo "note: $dir already exists" >&2 && exit 6
     mkdir -p -- "$dir"
     :>"$notemain"
 
@@ -241,7 +235,6 @@ create () {
             ;;
     esac
 
-    sum="$(dir_cksum "$dir")"
     if [ -z "$interactive" ]; then
         # shellcheck disable=SC2086
         echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
@@ -249,8 +242,8 @@ create () {
         # shellcheck disable=SC2086
         echo "$files" | xargs $EDITOR "+cd $dir" --
     fi
-    if [ "$(dir_cksum "$dir")" = "$sum" ]; then
-        echo 'Note directory unchanged, cancelling.'
+    if [ -s "$notemain" ]; then
+        echo 'Note left empty, cancelling.'
     else
         git -C "$SECRETS" commit -m "Create $note" -- "$note"
     fi
