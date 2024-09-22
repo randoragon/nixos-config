@@ -69,8 +69,6 @@ NAME Extensions:
 
     *.typ       Typst. See https://github.com/typst/typst
 
-    *.ldg       Ledger journal. See https://ledger-cli.org
-
 String Substitutions:
     Inside a note in any format, the following strings will be
     substituted before compilation:
