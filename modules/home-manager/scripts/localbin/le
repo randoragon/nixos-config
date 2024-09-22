@@ -11,7 +11,8 @@ mkdir -p -- "$SECRETS/$(date +%Y)"
 fpath="$SECRETS/$(date +%Y/%Y-%m.ldg)"
 $EDITOR "+cd $SECRETS" -- "$fpath"
 if secrets "$LEDGER" modified >/dev/null; then
-    git -C "$SECRETS" commit -m "Update $fpath" -- "$fpath"
+    git -C "$SECRETS" add .
+    git -C "$SECRETS" commit -m "Update $fpath"
     secrets "$LEDGER" save
 else
     echo 'No changes were made, skipping.'
