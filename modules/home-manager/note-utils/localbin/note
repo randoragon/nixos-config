@@ -6,6 +6,7 @@
 # Dependencies:
 # - bemenu, fzf
 # - rsync
+# - secrets (custom script for encrypted directories)
 # - md2html (md4c)
 # - surf (html viewing)
 # - env: $PDF_READER (fallback to zathura)
@@ -153,6 +154,7 @@ edit () {
         esac
 
         git -C "$SECRETS" commit -m "Edit $1" -- "$1"
+        secrets "$NOTES" save
     fi
 }
 
@@ -395,18 +397,6 @@ fi
     exit 5
 }
 
-[ ! -L "$SECRETS" ] && {
-    if [ -n "$interactive" ]; then
-        [ "$(printf 'yes\nno' | fzf --no-sort --no-multi --prompt 'Decrypt notes?')" != 'yes' ] && \
-            exit
-    else
-        [ "$(printf 'yes\nno' | bemenu -p 'Decrypt notes?')" != 'yes' ] && \
-            exit
-    fi
-    cd -- "$NOTES"
-    ./decrypt.sh
-}
-
 # Check if shell is interactive
 if [ -n "$force_bemenu" ]; then
     interactive=
@@ -416,6 +406,8 @@ else
     interactive=
     [ -t 0 ] && interactive=1
 fi
+
+secrets "$NOTES" decrypt
 
 # If the NAME argument was not specified, ask interactively
 if [ -z "$note" ]; then
