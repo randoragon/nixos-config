@@ -422,10 +422,10 @@ if [ -z "$note" ]; then
     # For interactive shells use fzf, otherwise use bemenu.
     set +e
     if [ -n "$interactive" ]; then
-        note="$(cd "$SECRETS" && find . -type d -name '*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
+        note="$(cd "$SECRETS" && find . -type d -name '?*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
             | fzf --no-sort --no-multi --prompt "$prompt ")"
     else
-        note="$(cd "$SECRETS" && find . -type d -name '*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
+        note="$(cd "$SECRETS" && find . -type d -name '?*.*' -exec realpath --relative-to "$SECRETS" '{}' \; \
             | bemenu -l 20 -p "$prompt")"
     fi
     set -e
