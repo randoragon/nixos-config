@@ -8,7 +8,6 @@
   home.file.".local/bin/plcategorize".source = ./localbin/plcategorize;
   home.file.".local/bin/pldel".source = ./localbin/pldel;
   home.file.".local/bin/plfilter".source = ./localbin/plfilter;
-  home.file.".local/bin/plgen".source = ./localbin/plgen;
   home.file.".local/bin/regain".source = ./localbin/regain;
   home.file.".local/bin/scanfairuse".source = ./localbin/scanfairuse;
 
@@ -23,7 +22,5 @@
   home.file.".scripts/now-playing".source = ./scripts/now-playing;
   home.file.".scripts/pladd_select".source = ./scripts/pladd_select;
   home.file.".scripts/plfilter_filter.lua".source = ./scripts/plfilter_filter.lua;
-  home.file.".scripts/plgen_available.lua".source = ./scripts/plgen_available.lua;
-  home.file.".scripts/plgen_generate.lua".source = ./scripts/plgen_generate.lua;
   home.file.".scripts/rate-playing".source = ./scripts/rate-playing;
 }

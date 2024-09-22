@@ -8,7 +8,7 @@ case "$1" in
     *.jar) jar tf "$1" ;;
     *.pdf) pdftotext "$1" - ;;
     *.mp3)
-        mp3info -x -- "$1"
+        soxi -- "$1"
         artist="$(rsid3 --TPE1 -- "$1")"
         albumartist="$(rsid3 --TPE2 -- "$1")"
         title="$(rsid3 --TIT2 -- "$1")"

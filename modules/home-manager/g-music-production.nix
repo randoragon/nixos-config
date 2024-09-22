@@ -6,7 +6,7 @@
 
   home.packages = with pkgs; [
     sox
-    mp3info mp3gain rsgain
+    mp3gain rsgain
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))
