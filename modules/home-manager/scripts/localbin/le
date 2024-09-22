@@ -12,7 +12,7 @@ fpath="$SECRETS/$(date +%Y/%Y-%m.ldg)"
 $EDITOR "+cd $SECRETS" -- "$fpath"
 if secrets "$LEDGER" modified >/dev/null; then
     git -C "$SECRETS" add .
-    git -C "$SECRETS" commit -m "Update $fpath"
+    git -C "$SECRETS" commit -m "Update $(realpath --relative-to "$SECRETS" -- "$fpath")"
     secrets "$LEDGER" save
 else
     echo 'No changes were made, skipping.'
