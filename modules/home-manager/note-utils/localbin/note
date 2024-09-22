@@ -191,7 +191,7 @@ view () {
             [ ! -f "$cache" ] && {
                 lxmake "$tmpdmain" "$cache"
                 git -C "$SECRETS" add -- "$cache"
-                git -C "$SECRETS" commit -m "Cache $1" -- "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
             ${PDF_READER:-zathura} - <"$cache"
             ;;
@@ -201,7 +201,7 @@ view () {
             [ ! -f "$cache" ] && {
                 typst compile -- "$tmpdmain" "$cache"
                 git -C "$SECRETS" add -- "$cache"
-                git -C "$SECRETS" commit -m "Cache $1" -- "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
             ${PDF_READER:-zathura} - <"$cache"
             ;;
