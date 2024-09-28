@@ -96,7 +96,7 @@
       data_fetching_delay = false;
       media_library_primary_tag = "artist";
       media_library_albums_split_by_date = false;
-      lyrics_fetchers = "justsomelyrics, sing365, metrolyrics, jahlyrics, plyrics, tekstowo, internet, genius, azlyrics";
+      lyrics_fetchers = "tekstowo, justsomelyrics, jahlyrics, plyrics, genius, internet";
       allow_for_physical_item_deletion = true;
       screen_switcher_mode = "playlist, media_library";
       startup_screen = "playlist";
