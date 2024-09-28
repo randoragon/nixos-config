@@ -2,8 +2,9 @@
   programs.ncmpcpp = {
     enable = true;
     package = pkgs.ncmpcpp.override {
-      visualizerSupport = true;
-      clockSupport = true;
+      outputsSupport = false;
+      visualizerSupport = false;
+      clockSupport = false;
       taglibSupport = false;
     };
 
@@ -59,14 +60,6 @@
       # Connection settings
       mpd_connection_timeout = 5;
       mpd_crossfade_time = 3;
-
-      # Visualizer settings
-      visualizer_data_source = "/tmp/mpd_ncmpcpp.fifo";
-      visualizer_output_name = "Visualizer feed";
-      visualizer_in_stereo = true;
-      visualizer_type = "spectrum";
-      visualizer_look = "■■";
-      visualizer_color = "blue, cyan, green, yellow, magenta, red";
 
       # Delays
       playlist_disable_highlight_delay = 0;
