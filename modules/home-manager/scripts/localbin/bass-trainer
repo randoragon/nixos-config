@@ -1,0 +1,78 @@
+#!/bin/sh
+
+set -e
+
+usage () {
+    echo 'Usage:  bass-trainer [OPTION] BPM'
+    echo 'bass-trainer prints random notes to play on a 4-string bass in standard tuning.'
+    echo 'Each note is displayed for the duration of 1 bar. Each bar consists of 4 beats.'
+    echo 'The speed of the beat is controlled by the BPM.'
+    echo
+    echo 'Options:'
+    echo '  -h, --help          Print this help message and exit.'
+    echo '  -b, --bpm           Set bpm (default 60).'
+    echo '  -t, --time          Set the number of beats per bar (default 4).'
+    echo '  -o, --octave        Print notes in a specific octave (e.g. E2).'
+}
+
+# random_note [INCLUDE_OCTAVE]
+# shellcheck disable=SC2120
+random_note () {
+    if [ -z "$1" ]; then
+        printf '%s\n' \
+             D♭ E♭    G♭ A♭ B♭   \
+             C♯ D♯    F♯ G♯ A♯   \
+            C  D  E  F  G  A  B
+    else
+        printf '%s\n' \
+                      G1♭  A1♭  B1♭     \
+                      F1♯  G1♯  A1♯     \
+                E1  F1   G1   A1   B1   \
+            \
+              D2♭  E2♭       G2♭  A2♭  B2♭   \
+              C2♯  D2♯       F2♯  G2♯  A2♯   \
+            C2   D2   E2   F2   G2   A2   B2 \
+            \
+              D3♭  E3♭       G3♭  A3♭  B3♭   \
+              C3♯  D3♯       F3♯  G3♯  A3♯   \
+            C3   D3   E3   F3   G3   A3   B3 \
+            \
+              D4♭  E4♭       G4♭    \
+              C4♯  D4♯       F4♯    \
+            C4   D4   E4   F4   G4
+    fi | shuf -n1
+}
+
+# Parse command-line arguments
+OPTS="$(getopt -n bass-trainer -s sh -o hb:t:o -l help -l bpm: -l time: -l octave -- "$@")"
+eval set -- "$OPTS"
+BPM=60
+TIME=4
+OCTAVE=
+while true; do
+    case "$1" in
+        -h|--help) usage && exit ;;
+        -b|--bpm) BPM="$2"; shift 2 ;;
+        -t|--time) TIME="$2"; shift 2 ;;
+        -o|--octave) OCTAVE=1; shift ;;
+        *) break ;;
+    esac
+done
+
+# Compute beat duration
+BEAT_DURATION="$(echo "scale=5;60/$BPM" | bc)"
+
+beat=0
+bar=0
+while true; do
+    [ $((beat % TIME)) -eq 0 ] && {
+        bar=$((bar + 1))
+        note="$(random_note "$OCTAVE")"
+    }
+
+    printf '\r[%-3d %d/%d]\t%s ... ' $bar $((1 + beat % TIME)) "$TIME" \
+        "$(tput bold setab 7 setaf 0) $note $(tput sgr0)"
+
+    beat=$((beat + 1))
+    sleep "$BEAT_DURATION"
+done
