@@ -8,6 +8,7 @@
     ../../modules/nixos/o-gaming.nix
     ../../modules/nixos/o-graphical.nix
     # ../../modules/nixos/o-printing.nix
+    ../../modules/nixos/o-work.nix
   ];
 
   # Set hostname
