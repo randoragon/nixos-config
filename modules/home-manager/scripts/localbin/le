@@ -5,15 +5,15 @@ set -e
 LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 SECRETS="$LEDGER/secrets"
 
-secrets "$LEDGER" decrypt
+secrets decrypt "$LEDGER"
 
 mkdir -p -- "$SECRETS/$(date +%Y)"
 fpath="$SECRETS/$(date +%Y/%Y-%m.ldg)"
 $EDITOR "+cd $SECRETS" -- "$fpath"
-if secrets "$LEDGER" modified >/dev/null; then
+if secrets modified "$LEDGER" >/dev/null; then
     git -C "$SECRETS" add .
     git -C "$SECRETS" commit -m "Update $(realpath --relative-to "$SECRETS" -- "$fpath")"
-    secrets "$LEDGER" save
+    secrets save "$LEDGER"
 else
     echo 'No changes were made, skipping.'
 fi

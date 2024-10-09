@@ -121,7 +121,7 @@ edit () {
         # shellcheck disable=SC2086
         echo "$files " | xargs $EDITOR "+cd $dir" --
     fi
-    if ! secrets "$NOTES" modified >/dev/null; then
+    if ! secrets modified "$NOTES" >/dev/null; then
         echo 'No changes were made, skipping.'
     else
         # Custom postprocessing based on file type.
@@ -146,7 +146,7 @@ edit () {
 
         git -C "$SECRETS" add -- "$note"
         git -C "$SECRETS" commit -m "Edit $note" -- "$note"
-        secrets "$NOTES" save
+        secrets save "$NOTES"
     fi
 }
 
@@ -404,7 +404,7 @@ else
     [ -t 0 ] && interactive=1
 fi
 
-secrets "$NOTES" decrypt
+secrets decrypt "$NOTES"
 
 # If the NAME argument was not specified, ask interactively
 if [ -z "$note" ]; then
