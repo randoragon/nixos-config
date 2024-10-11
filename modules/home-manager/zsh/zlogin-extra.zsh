@@ -6,5 +6,6 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     export XDG_CURRENT_DESKTOP=river  # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
     river
 elif command -v tmux; then
+    export VIM_TTY_COLORSCHEME=1  # Tell (Neo)Vim to use a tty-suitable colorscheme. This is my own convention.
     tmux
 fi

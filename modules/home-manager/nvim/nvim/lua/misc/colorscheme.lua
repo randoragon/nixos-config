@@ -1,9 +1,8 @@
-if os.getenv("DISPLAY") then
+if os.getenv("VIM_TTY_COLORSCHEME") then
+	vim.cmd.colorscheme("default")
+else
 	o.background = "dark"
 	vim.cmd.colorscheme("flexoki-dark")
-else
-	-- Fallback colorscheme for TTY
-	vim.cmd.colorscheme("ron")
 end
 
 -- local function transparent_bg()
