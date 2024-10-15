@@ -165,7 +165,7 @@ view () {
     strsub "$notemain" "$tmpdmain"
 
     case "$ext" in
-        txt|ldg)
+        txt)
             if [ -z "$interactive" ]; then
                 # shellcheck disable=SC2086
                 $TERMINAL -e $PAGER -- "$tmpdmain"
@@ -280,7 +280,7 @@ output () {
     strsub "$SECRETS/$note" "$tmpdmain"
 
     case "$ext" in
-        txt|ldg)
+        txt)
             if [ $stdout ]; then
                 cat -- "$tmpdmain"
             else

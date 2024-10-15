@@ -1,5 +1,5 @@
 #!/bin/sh
-# Edit the ledger journal
+# Edit the hledger journal
 set -e
 
 LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
@@ -8,7 +8,7 @@ SECRETS="$LEDGER/secrets"
 secrets decrypt "$LEDGER"
 
 mkdir -p -- "$SECRETS/$(date +%Y)"
-fpath="$SECRETS/$(date +%Y/%Y-%m.ldg)"
+fpath="$SECRETS/$(date +%Y/%Y-%m.journal)"
 $EDITOR "+cd $SECRETS" -- "$fpath"
 if secrets modified "$LEDGER" >/dev/null; then
     git -C "$SECRETS" add .
