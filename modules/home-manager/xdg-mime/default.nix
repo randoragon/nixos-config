@@ -7,6 +7,7 @@
       # Documents
       "application/pdf" = [ "pdf.desktop" ];
       "text/plain" = [ "text.desktop" ];
+      "text/markdown" = [ "text.desktop" ];
       "text/troff" = [ "text.desktop" ];
       "text/x-tex" = [ "text.desktop" ];
       "text/html" = [ "surf.desktop" ];
@@ -45,9 +46,10 @@
       "application/octet-stream" = [ "text.desktop" ];
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "libreoffice-writer.desktop" ];
       "application/zip" = [ "xarchiver.desktop" ];
+      "application/xml" = [ "text.desktop" "firefox.desktop" ];
       "application/rss+xml" = [ "text.desktop" "firefox.desktop" ];
       "application/atom+xml" = [ "text.desktop" "firefox.desktop" ];
-      "application/json" = [ "text.desktop" ];
+      "application/json" = [ "text.desktop" "firefox.desktop" ];
 
       # URL Schemes
       "x-scheme-handler/http" = [ "firefox.desktop" ];
