@@ -11,6 +11,7 @@
       musicbrainzngs
     ]))
 
+    audacity
     carla
     x42-plugins
     helm
