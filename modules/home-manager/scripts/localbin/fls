@@ -45,10 +45,6 @@ else
     done
 fi
 
-# The application dirs for default app detection
-USERAPP="$HOME/.local/share/applications"
-GLOBAPP="/usr/share/applications"
-
 # Default colors (used for bulk information)
 HFG=0  # Header foreground
 HBG=7  # Header background
@@ -90,8 +86,15 @@ handle_mime () {
     else
         DESK="$(xdg-mime query default "$MIME")"
         OPENEDBY=None
-        [ -f "$GLOBAPP/$DESK" ] && OPENEDBY="$(sed -n 's/^Name=//p' "$GLOBAPP/$DESK" | head -n 1) (/.../$DESK)"
-        [ -f "$USERAPP/$DESK" ] && OPENEDBY="$(sed -n 's/^Name=//p' "$USERAPP/$DESK" | head -n 1) (~/.../$DESK)"
+        IFS=:
+        for DATA_DIR in $XDG_DATA_DIRS; do
+            FPATH="$DATA_DIR/applications/$DESK"
+            [ -f "$FPATH" ] && {
+                OPENEDBY="$(sed -n 's/^Name=//p' "$FPATH" | head -n 1) ($DESK)"
+                break
+            }
+        done
+        unset IFS
     fi
 }
 
@@ -185,4 +188,3 @@ else
  $(f ┗━━━━━━━━━━━━━━━━━━━━━━━╍╍┅┉)
 "  && exit 0
 fi
-
