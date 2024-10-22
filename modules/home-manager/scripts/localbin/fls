@@ -79,7 +79,7 @@ fi
 
 # Detect MIME type, desktop file and default application
 handle_mime () {
-    MIME="$(file -i "$1" 2>&- | sed 's/\(.*: \|;.*\)//g')"
+    MIME="$(xdg-mime query filetype "$1")"
     if [ "$MIME" = None ]; then
         MIME=N/A
         OPENEDBY=N/A
