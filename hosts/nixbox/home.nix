@@ -19,6 +19,10 @@
   home.username = "pcache";
   home.homeDirectory = "/home/${config.home.username}";
 
+  home.packages = with pkgs; [
+    spotify
+  ];
+
   home.sessionVariables = {
     NCMPCPP_SWITCH_WALLPAPER = "1";
     NCMPCPP_FANCY_TRANSITIONS = "1";
