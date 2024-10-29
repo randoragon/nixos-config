@@ -10,6 +10,7 @@
       "text/markdown" = [ "text.desktop" ];
       "text/troff" = [ "text.desktop" ];
       "text/x-tex" = [ "text.desktop" ];
+      "text/x-typst" = [ "text.desktop" ];
       "text/html" = [ "surf.desktop" ];
       "text/csv" = [ "text.desktop" ];
 
