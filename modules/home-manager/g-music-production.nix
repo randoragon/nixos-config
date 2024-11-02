@@ -1,5 +1,5 @@
 # Config group for systems with music production support.
-{ pkgs, ... }: {
+{ pkgs, spkgs, ... }: {
   imports = [
     ./lmms
   ];
@@ -16,7 +16,6 @@
     x42-plugins
     helm
     geonkick
-    distrho
     sfizz
     vmpk
     ardour
@@ -24,6 +23,9 @@
     zynaddsubfx
     linuxsampler qsampler
     setbfree
+  ] ++ [
+    # Package temporarily broken (https://github.com/NixOS/nixpkgs/issues/348871)
+    spkgs.distrho
   ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
