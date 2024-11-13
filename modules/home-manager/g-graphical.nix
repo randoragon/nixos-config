@@ -9,9 +9,9 @@
     ./gtk
     ./krita
     ./mako
+    ./nsxiv
     ./river
     ./swappy
-    ./sxiv
     ./wlsunset
     ./xorg
     ./yambar
@@ -30,7 +30,7 @@
 
     firefox ungoogled-chromium
     zathura
-    oculante mpv
+    mpv
     xarchiver
     olive-editor
     pinta

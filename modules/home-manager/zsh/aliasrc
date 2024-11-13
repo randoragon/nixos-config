@@ -8,7 +8,7 @@ alias rmdir="printf '%s\n' 'Please use \\rmdir for permanent deletion and tp for
 alias tp='trash-put'
 alias trm='trash-rm'
 alias tls='trash-list'
-alias sxiv='sxiv -qab'
+alias nsxiv='nsxiv -qab'
 alias fzf='fzf --bind=ctrl-d:half-page-down,ctrl-u:half-page-up'
 alias xo='xdg-open'
 alias xpo='setsid >/dev/null 2>&1 xdg-open'

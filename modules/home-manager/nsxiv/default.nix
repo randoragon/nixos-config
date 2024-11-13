@@ -1,7 +1,7 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ sxiv ];
+  home.packages = with pkgs; [ nsxiv ];
 
-  xdg.configFile."sxiv/exec" = {
+  xdg.configFile."nsxiv/exec" = {
     source = ./exec;
     executable = true;
     recursive = true;

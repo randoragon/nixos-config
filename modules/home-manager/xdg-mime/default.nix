@@ -75,9 +75,9 @@
 
     image = {
       type = "Application";
-      name = "Oculante";
+      name = "nsxiv";
       genericName = "Image Viewer";
-      exec = "${pkgs.oculante}/bin/oculante -- %F";
+      exec = "${pkgs.nsxiv}/bin/nsxiv -- %F";
       terminal = false;
       mimeType = [
         "image/bmp" "image/gif" "image/jpeg" "image/jpg"

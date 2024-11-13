@@ -477,9 +477,9 @@ cmd id %echo "$id"
 # Quick edit ratios
 map ,r :push :set<space>ratios<space>
 
-# Sxiv image previews
-map ,i &sxiv -qta .
-map ,I &sxiv -qtar .
+# nsxiv image previews
+map ,i &nsxiv -qta .
+map ,I &nsxiv -qtar .
 
 # Better previews and paging
 set previewer ~/.scripts/lf-previewer

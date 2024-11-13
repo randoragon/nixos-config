@@ -9,5 +9,5 @@ video_id="${link##*\?v=}"
 
 tmpf="$(mktemp --tmpdir rss-thumbnail.XXXXX)"
 wget -q -O "$tmpf" "https://img.youtube.com/vi/$video_id/hqdefault.jpg"
-sxiv "$tmpf"
+nsxiv -- "$tmpf"
 rm -- "$tmpf"
