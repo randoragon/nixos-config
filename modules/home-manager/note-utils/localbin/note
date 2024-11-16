@@ -186,7 +186,7 @@ view () {
             [ -s "$tmp" ] && surf -- file://"$tmp"
             ;;
         tex)
-            cache="$tmpd/.cache.pdf"
+            cache="$dir/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
                 lxmake "$tmpdmain" "$cache"
@@ -196,7 +196,7 @@ view () {
             ${PDF_READER:-zathura} - <"$cache"
             ;;
         typ)
-            cache="$tmpd/.cache.pdf"
+            cache="$dir/.cache.pdf"
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
                 typst compile -- "$tmpdmain" "$cache"
