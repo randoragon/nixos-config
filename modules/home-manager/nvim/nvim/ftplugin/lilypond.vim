@@ -5,7 +5,19 @@ nnoremap <buffer> <Leader>m :write \| AsyncRun lilypond -o "$VIM_PREVIEW_HOME/vi
 nnoremap <buffer> <Leader>.m :view $VIM_PREVIEW_HOME/vim-preview.log"<CR>:syn match Error '[Ee]rror:'<CR>:syn match DbgBreakPt '[Ww]arning:'<CR>GM
 nnoremap <buffer> <Leader>p :AsyncRun setsid xdg-open "$VIM_PREVIEW_HOME/vim-preview.pdf"<CR>
 
-inoremap <buffer> <Leader>r \relative 
-inoremap <buffer> <Leader>t \time 
-inoremap <buffer> <Leader>.t \tempo 
-inoremap <buffer> <Leader>c \clef 
+" Commands
+inoremap <buffer> <Leader>r \relative
+inoremap <buffer> <Leader>t \time
+inoremap <buffer> <Leader>.t \tempo
+inoremap <buffer> <Leader>c \clef
+inoremap <buffer> <Leader>k \key
+
+" Common words
+inoremap <buffer> <Leader>V Verse
+inoremap <buffer> <Leader>C Chorus
+inoremap <buffer> <Leader>P Prechorus
+inoremap <buffer> <Leader>B Bridge
+inoremap <buffer> <Leader>O Outro
+inoremap <buffer> <Leader>I Intro
+inoremap <buffer> <Leader>S Solo
+inoremap <buffer> <Leader>R Breakdown
