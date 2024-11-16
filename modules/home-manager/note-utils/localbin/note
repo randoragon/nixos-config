@@ -168,6 +168,7 @@ view () {
     ext="${note##*.}"
     dir="$SECRETS/$note"
     notemain="$dir/$(basename -- "$note")"
+    # TODO?: this is unnecessary for cached notes
     tmpd="$(mktemp --tmpdir -d note.XXXXX)"
     tmpdmain="$tmpd/$(basename -- "$note")"
     rsync -a --delete -- "$dir"/ "$tmpd"/
