@@ -14,6 +14,7 @@
 # - asciidoctor, asciidoctor-diagram (for adoc support)
 # - lxmake (custom script for LaTeX support)
 # - typst (for typst support)
+# - lilypond (for lilypond support)
 #
 # For the lxmake script see https://github.com/Randoragon/dotfiles/blob/master/scripts/.local/bin/lxmake
 set -e
@@ -68,6 +69,8 @@ NAME Extensions:
     *.tex       XeLaTeX.
 
     *.typ       Typst. See https://github.com/typst/typst
+
+    *.ly        Lilypond. See https://lilypond.org/
 
 String Substitutions:
     Inside a note in any format, the following strings will be
@@ -142,6 +145,14 @@ edit () {
                 typst compile -- "$notemain2" "$dir/.cache.pdf"
                 rm -f -- "$notemain2"
                 ;;
+            ly)
+                # Cache the PDF for quick access
+                notemain2="$(mktemp -p "$dir" tmp.XXXXX)"
+                cp -- "$notemain" "$notemain2"
+                strsub "$notemain" "$notemain2" 1
+                lilypond -s -o "$dir/.cache" "$notemain2"
+                rm -f -- "$notemain2"
+                ;;
         esac
 
         git -C "$SECRETS" add -- "$note"
@@ -200,6 +211,16 @@ view () {
             # Ensure PDF cache exists
             [ ! -f "$cache" ] && {
                 typst compile -- "$tmpdmain" "$cache"
+                git -C "$SECRETS" add -- "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
+            }
+            ${PDF_READER:-zathura} - <"$cache"
+            ;;
+        ly)
+            cache="$dir/.cache.pdf"
+            # Ensure PDF cache exists
+            [ ! -f "$cache" ] && {
+                lilypond -s -o "${cache%.pdf}" "$tmpdmain"
                 git -C "$SECRETS" add -- "$cache"
                 git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
@@ -333,6 +354,20 @@ output () {
                 cp -- "$cache" "$output"
             fi
             ;;
+        ly)
+            cache="$tmpd/NOTE/.cache.pdf"
+            # Ensure PDF cache exists
+            [ ! -f "$cache" ] && {
+                lilypond -s -o "${cache%.pdf}" "$tmpdmain"
+                git -C "$SECRETS" add -- "$cache"
+                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
+            }
+            if [ $stdout ]; then
+                cat -- "$cache"
+            else
+                cp -- "$cache" "$output"
+            fi
+            ;;
         *)
             printf "note: unknown note format '%s'\n" "$ext" >&2
             ;;
@@ -442,7 +477,7 @@ if [ -n "$output" ]; then
 elif [ -n "$edit" ]; then
     if [ ! -d "$SECRETS/$note" ]; then
         case "$note" in
-            *.txt|*.md|*.adoc|*.tex|*.typ) ;;
+            *.txt|*.md|*.adoc|*.tex|*.typ|*.ly) ;;
             *) echo 'note: missing or unsupported extension' >&2 && exit 2 ;;
         esac
         create "$note"
