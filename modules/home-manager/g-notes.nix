@@ -18,6 +18,7 @@
     typst
     farbfeld
     mscgen
+    lilypond
   ];
 
   home.sessionVariables = {

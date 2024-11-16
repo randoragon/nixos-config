@@ -23,6 +23,7 @@
     zynaddsubfx
     linuxsampler qsampler
     setbfree
+    lilypond
   ] ++ [
     # Package temporarily broken (https://github.com/NixOS/nixpkgs/issues/348871)
     spkgs.distrho
