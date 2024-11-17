@@ -9,11 +9,15 @@
 # Run mpd if not running
 [ -z "$(pidof mpd)" ] && mpd && wait
 
-
 # Add to playlist
 song="$(realpath -- "$1")"
-if [ -z "$(mpc insert "file://$song" 2>&1)" ]; then
-    mpc next
-else
+
+[ ! -f "$song" ] && {
+    notify-send -u critical "mpdplay" "\"$song\" not found"
+    exit 1
+}
+mpc insert "file://$song" >/dev/null 2>&1 || {
     notify-send -u critical "mpdplay" "Failed to add song to queue"
-fi
+    exit 1
+}
+mpc next >/dev/null 2>&1 || mpc play >/dev/null 2>&1
