@@ -135,3 +135,17 @@ add_buffer_config_for_filetype("typst", {
 		},
 	},
 })
+
+add_buffer_config_for_filetype("lilypond", {
+	surrounds = {
+		["r"] = {
+			add = function()
+				local n = config.get_input("\\repeat unfold <N>: ")
+				return n and {{"\\repeat unfold " .. n .. " { "}, {" }"}} or nil
+			end,
+			find = "\\repeat%s+unfold%s+%d+%s+{.-}",
+			delete = "(\\repeat%s+unfold%s+%d+%s+{%s*)().-(%s*})()",
+		},
+	}
+})
+
