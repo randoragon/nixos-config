@@ -42,14 +42,6 @@ for f in "$@"; do
             surf -z 1.5 -- file://"$tmp"
             shred -u -- "$tmp"
             ;;
-        adoc) # Asciidoc
-            tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
-            dirname="$(dirname -- "$f")"
-            # shellcheck disable=SC2086
-            asciidoctor $ASCIIDOCTOR_OPTS -a imagesdir="$dirname" -a stylesdir="$dirname" -o "$tmp" -- "$f"
-            surf -S -- file://"$tmp"
-            shred -u -- "$tmp"
-            ;;
         mom) # groff -mom
             pdfmom -ket -- "$f" | $PDF_READER -
             ;;

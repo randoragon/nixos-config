@@ -20,15 +20,6 @@ function! sshot#LaTeXScreenshot(imgpath)
     endif
 endfunction
 
-" Asciidoc
-function! sshot#AsciidocScreenshot(imgpath)
-    if strlen(getline('.')) > 0
-        call append('.', 'image::'.a:imgpath.'[]')
-    else
-        call setline('.', 'image::'.a:imgpath.'[]')
-    endif
-endfunction
-
 " NeatRoff
 function! sshot#NeatRoffScreenshot(imgpath)
     let ntpdfsp = expand('~').'/.scripts/ntpdfsp'

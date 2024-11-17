@@ -11,7 +11,6 @@
 # - surf (html viewing)
 # - env: $PDF_READER (fallback to zathura)
 # - git
-# - asciidoctor, asciidoctor-diagram (for adoc support)
 # - lxmake (custom script for LaTeX support)
 # - typst (for typst support)
 # - lilypond (for lilypond support)
@@ -22,8 +21,6 @@ set -e
 # CONFIG
 NOTES="${XDG_DATA_HOME:-~/.local/share}/notes"
 SECRETS="$NOTES/secrets"
-nl='
-'
 
 help () {
     printf "\
@@ -63,8 +60,6 @@ NAME Extensions:
     *.txt       Plain text.
 
     *.md        Markdown.
-
-    *.adoc      Asciidoc. See https://asciidoc.org/
 
     *.tex       XeLaTeX.
 
@@ -113,7 +108,6 @@ edit () {
     # The files variable holds a string of filenames to open.
     files="$notemain"
     case "$ext" in
-        adoc) files="$files${nl}$dir/docinfo.html" ;;
         typ) export TYPST_ROOT="$dir" ;;
     esac
 
@@ -191,12 +185,6 @@ view () {
             md2html --github -- "$tmpdmain" >>"$tmp"
             [ -s "$tmp" ] && surf -- file://"$tmp"
             ;;
-        adoc)
-            tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
-            # shellcheck disable=SC2086
-            asciidoctor $ASCIIDOCTOR_OPTS -o "$tmp" -- "$tmpdmain"
-            [ -s "$tmp" ] && surf -- file://"$tmp"
-            ;;
         tex)
             cache="$dir/.cache.pdf"
             # Ensure PDF cache exists
@@ -244,18 +232,6 @@ create () {
     [ -d "$dir" ] && echo "note: $dir already exists" >&2 && exit 6
     mkdir -p -- "$dir"
     :>"$notemain"
-
-    # Customizable setup for every file type.
-    # The files variable holds a string of filenames to open.
-    files="$notemain"
-    case "$2" in
-        .adoc)
-            docinfo="$dir/docinfo.html"
-            printf '=\n:docinfo: shared\n' >"$notemain"
-            printf '<style>\n</style>' >"$docinfo"
-            files="$files$nl$docinfo"
-            ;;
-    esac
 
     if [ -z "$interactive" ]; then
         # shellcheck disable=SC2086
@@ -316,15 +292,6 @@ output () {
             else
                 printf "%s" "$HTML_MD_STYLE" >"$output"
                 md2html --github -- "$tmpdmain" >>"$output"
-            fi
-            ;;
-        adoc)
-            if [ $stdout ]; then
-                # shellcheck disable=SC2086
-                asciidoctor $ASCIIDOCTOR_OPTS -o - -- "$tmpdmain"
-            else
-                # shellcheck disable=SC2086
-                asciidoctor $ASCIIDOCTOR_OPTS -o "$output" -- "$tmpdmain"
             fi
             ;;
         tex)
@@ -478,7 +445,7 @@ if [ -n "$output" ]; then
 elif [ -n "$edit" ]; then
     if [ ! -d "$SECRETS/$note" ]; then
         case "$note" in
-            *.txt|*.md|*.adoc|*.tex|*.typ|*.ly) ;;
+            *.txt|*.md|*.tex|*.typ|*.ly) ;;
             *) echo 'note: missing or unsupported extension' >&2 && exit 2 ;;
         esac
         create "$note"
