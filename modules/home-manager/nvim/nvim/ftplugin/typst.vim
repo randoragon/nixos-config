@@ -28,10 +28,12 @@ inoremap <buffer> <Leader>e $$ <,,><C-o>F$
 inoremap <buffer> <Leader>E $  $<Left><Left>
 
 " Figures
-inoremap <buffer> <Leader>F #figure(<CR><Tab>image("", width: 80%),<CR>caption: [<,,>],<CR>) <<,,>><Esc>2k$F"i
+inoremap <buffer> <Leader>F #figure(<CR><CR><Tab>caption: [<,,>],<CR>) <,,><Esc>2kS
+inoremap <buffer> <Leader>I image("", width: 100%),<C-o>F"
+nnoremap <buffer> <Leader>is :call sshot#ImportScreenshot(function('sshot#TypstScreenshot'), '.png')<CR>
 
 " Tables
-inoremap <buffer> <Leader>tt #table(<CR><Tab>columns: (),<CR>align: (<,,>),<CR>table.header[<,,>],<CR>)<Esc><<3kf)i
+inoremap <buffer> <Leader>tt #table(<CR><Tab>columns: (),<CR><Tab>align: (<,,>),<CR><Tab>table.header[<,,>],<CR>)<Esc><<3kf)i
 inoremap <buffer> <Leader>th table.hline()
 inoremap <buffer> <Leader>tv table.vline()
 inoremap <buffer> <Leader>tc table.cell(colspan: , [<,,>])<C-o>8h

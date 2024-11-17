@@ -20,6 +20,15 @@ function! sshot#LaTeXScreenshot(imgpath)
     endif
 endfunction
 
+" Typst
+function! sshot#TypstScreenshot(imgpath)
+    if strlen(getline('.')) > 0
+        call append('.', '	image("'.a:imgpath.'", width: 100%),')
+    else
+        call setline('.', '	image("'.a:imgpath.'", width: 100%),')
+    endif
+endfunction
+
 " NeatRoff
 function! sshot#NeatRoffScreenshot(imgpath)
     let ntpdfsp = expand('~').'/.scripts/ntpdfsp'
