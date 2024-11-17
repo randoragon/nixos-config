@@ -17,6 +17,7 @@
 # - env: TERMINAL, EDITOR, PDF_READER, BROWSER
 # - env (optional): HTML_MD_STYLE
 
+PDF_READER="${PDF_READER:-zathura}"
 BROWSER="${BROWSER:-firefox}"
 
 for f in "$@"; do

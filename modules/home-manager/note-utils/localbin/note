@@ -21,6 +21,7 @@ set -e
 # CONFIG
 NOTES="${XDG_DATA_HOME:-~/.local/share}/notes"
 SECRETS="$NOTES/secrets"
+PDF_READER="${PDF_READER:-zathura}"
 BROWSER="${BROWSER:-firefox}"
 
 help () {
@@ -194,7 +195,7 @@ view () {
                 git -C "$SECRETS" add -- "$cache"
                 git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
-            ${PDF_READER:-zathura} - <"$cache"
+            $PDF_READER - <"$cache"
             ;;
         typ)
             cache="$dir/.cache.pdf"
@@ -204,7 +205,7 @@ view () {
                 git -C "$SECRETS" add -- "$cache"
                 git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
-            ${PDF_READER:-zathura} - <"$cache"
+            $PDF_READER - <"$cache"
             ;;
         ly)
             cache="$dir/.cache.pdf"
@@ -214,7 +215,7 @@ view () {
                 git -C "$SECRETS" add -- "$cache"
                 git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
             }
-            ${PDF_READER:-zathura} - <"$cache"
+            $PDF_READER - <"$cache"
             ;;
         *)
             printf "note: unknown note format '%s'\n" "$ext" >&2
