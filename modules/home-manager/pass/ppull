@@ -34,6 +34,3 @@ ppull 'misc/rss' ~/.config/newsraft/feeds
 
 heading "Copying misc/playlist-mappings.tsv..."
 ppull 'misc/playlist-mappings.tsv' ~/.config/playlist-mappings.tsv
-
-heading "Copying misc/surf-bookmarks..."
-ppull 'misc/surf-bookmarks' ~/.config/surf/bookmarks

@@ -8,7 +8,7 @@
 # - rsync
 # - secrets (custom script for encrypted directories)
 # - md2html (md4c)
-# - surf (html viewing)
+# - env: $BROWSER (fallback to firefox)
 # - env: $PDF_READER (fallback to zathura)
 # - git
 # - lxmake (custom script for LaTeX support)
@@ -21,6 +21,7 @@ set -e
 # CONFIG
 NOTES="${XDG_DATA_HOME:-~/.local/share}/notes"
 SECRETS="$NOTES/secrets"
+BROWSER="${BROWSER:-firefox}"
 
 help () {
     printf "\
@@ -183,7 +184,7 @@ view () {
             tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
             printf '%s' "$HTML_MD_STYLE" >"$tmp"
             md2html --github -- "$tmpdmain" >>"$tmp"
-            [ -s "$tmp" ] && surf -- file://"$tmp"
+            [ -s "$tmp" ] && $BROWSER file://"$tmp" && sleep 2  # Browsers tend to be non-blocking, so wait a bit before deleting
             ;;
         tex)
             cache="$dir/.cache.pdf"

@@ -14,9 +14,10 @@
 # DEPENDENCIES
 # - md2html (md4c)
 # - rst2html (python-docutils)
-# - surf (http://surf.suckless.org/)
-# - env: TERMINAL, EDITOR, PDF_READER
+# - env: TERMINAL, EDITOR, PDF_READER, BROWSER
 # - env (optional): HTML_MD_STYLE
+
+BROWSER="${BROWSER:-firefox}"
 
 for f in "$@"; do
 
@@ -33,13 +34,15 @@ for f in "$@"; do
             tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
             printf "%s" "$HTML_MD_STYLE" >"$tmp"
             md2html --github -- "$f" >>"$tmp"
-            surf -- file://"$tmp"
+            $BROWSER file://"$tmp"
+            sleep 2  # Browsers tend to be non-blocking, so wait a bit
             shred -u -- "$tmp"
             ;;
         rst) # reStructuredText
             tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
             rst2html -- "$f" "$tmp"
-            surf -z 1.5 -- file://"$tmp"
+            $BROWSER file://"$tmp"
+            sleep 2  # Browsers tend to be non-blocking, so wait a bit
             shred -u -- "$tmp"
             ;;
         mom) # groff -mom

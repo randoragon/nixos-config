@@ -34,7 +34,6 @@ bind b select-prev-page
 
 # Custom keybinds
 bind E exec $EDITOR ~/.config/newsraft/feeds
-bind O exec setsid surf -- '%l' >/dev/null 2>&1 &
 bind L exec setsid ~/.scripts/rss-stream-browser '%l' &
 bind m exec setsid ~/.scripts/rss-mpv-browser '%l' &
 bind w exec setsid ~/.scripts/rss-youtube-dl a '%l' &
