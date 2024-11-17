@@ -12,14 +12,19 @@
       "text/x-tex" = [ "text.desktop" ];
       "text/x-typst" = [ "text.desktop" ];
       "text/html" = [ "surf.desktop" ];
-      "text/csv" = [ "text.desktop" ];
 
       # Code
-      "text/x-shellscript" = [ "text.desktop" ];
+      "application/x-shellscript" = [ "text.desktop" ];
       "text/x-script.python" = [ "text.desktop" ];
+      "text/x-python3" = [ "text.desktop" ];
       "text/x-c" = [ "text.desktop" ];
+      "text/x-csrc" = [ "text.desktop" ];
+      "text/x-chdr" = [ "text.desktop" ];
       "text/x-makefile" = [ "text.desktop" ];
+      "text/x-lua" = [ "text.desktop" ];
       "text/x-ruby" = [ "text.desktop" ];
+      "text/rust" = [ "text.desktop" ];
+      "text/x-lilypond" = [ "text.desktop" ];
 
       # Audio
       "audio/mpeg" = [ "mpv.desktop" ];
@@ -51,6 +56,11 @@
       "application/rss+xml" = [ "text.desktop" "firefox.desktop" ];
       "application/atom+xml" = [ "text.desktop" "firefox.desktop" ];
       "application/json" = [ "text.desktop" "firefox.desktop" ];
+      "application/x-xbel" = [ "text.desktop" ];
+      "application/toml" = [ "text.desktop" ];
+      "text/csv" = [ "text.desktop" ];
+      "text/tab-separated-values" = [ "text.desktop" ];
+      "text/x-log" = [ "text.desktop" ];
 
       # URL Schemes
       "x-scheme-handler/http" = [ "firefox.desktop" ];
