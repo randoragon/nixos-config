@@ -6,7 +6,7 @@ FILE=~/links.txt
 
 prev=
 while true; do
-    sel="$(xclip -sel clip -o)"
+    sel="$(wl-paste)"
     [ "$sel" != "$prev" ] && {
         echo "$sel" >>"$FILE"
         prev="$sel"

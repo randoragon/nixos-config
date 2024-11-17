@@ -67,12 +67,7 @@ function! sshot#ImportScreenshot(screenshotfunc, extension)
         endif
     endif
     if overwrite
-        call system('xclip -selection clipboard -t TARGETS -o | grep -q image/png')
-        if v:shell_error
-            echo 'No image in clipboard detected'
-            return
-        endif
-        call system('xclip -selection clipboard -t image/png -o | convert - "'.img_dir.filename.'"')
+        call system('wl-paste -t image/png >"'.img_dir.filename.'"')
         if v:shell_error
             echo 'ImportScreenshot: failed to save screenshot'
             return
