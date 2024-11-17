@@ -30,20 +30,20 @@ for f in "$@"; do
     fname="$(basename -- "$f")"
     case "${fname##*.}" in
         md|MD) # markdown
-            tmp="$(mktemp -p /tmp -- open-plain-text.XXXXX.html)"
+            tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
             printf "%s" "$HTML_MD_STYLE" >"$tmp"
             md2html --github -- "$f" >>"$tmp"
             surf -- file://"$tmp"
             shred -u -- "$tmp"
             ;;
         rst) # reStructuredText
-            tmp="$(mktemp -p /tmp -- open-plain-text.XXXXX.html)"
+            tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
             rst2html -- "$f" "$tmp"
             surf -z 1.5 -- file://"$tmp"
             shred -u -- "$tmp"
             ;;
         adoc) # Asciidoc
-            tmp="$(mktemp -p /tmp -- open-plain-text.XXXXX.html)"
+            tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.html)"
             dirname="$(dirname -- "$f")"
             # shellcheck disable=SC2086
             asciidoctor $ASCIIDOCTOR_OPTS -a imagesdir="$dirname" -a stylesdir="$dirname" -o "$tmp" -- "$f"
@@ -69,7 +69,7 @@ for f in "$@"; do
             lxmake "$f" - | $PDF_READER -
             ;;
         typ)
-            tmp="$(mktemp -p /tmp -- open-plain-text.XXXXX.pdf)"
+            tmp="$(mktemp --tmpdir -- open-plain-text.XXXXX.pdf)"
             typst compile -- "$f" "$tmp"
             $PDF_READER -- "$tmp"
             shred -u -- "$tmp"
