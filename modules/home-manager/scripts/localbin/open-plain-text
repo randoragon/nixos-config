@@ -46,6 +46,9 @@ for f in "$@"; do
             sleep 2  # Browsers tend to be non-blocking, so wait a bit
             shred -u -- "$tmp"
             ;;
+        html)
+            $BROWSER file://"$f"
+            ;;
         mom) # groff -mom
             pdfmom -ket -- "$f" | $PDF_READER -
             ;;

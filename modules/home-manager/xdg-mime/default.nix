@@ -11,7 +11,7 @@
       "text/troff" = [ "text.desktop" ];
       "text/x-tex" = [ "text.desktop" ];
       "text/x-typst" = [ "text.desktop" ];
-      "text/html" = [ "text.desktop" ];
+      "text/html" = [ "firefox.desktop" "text.desktop" ];
 
       # Code
       "application/x-shellscript" = [ "text.desktop" ];
