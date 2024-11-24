@@ -35,6 +35,7 @@
     olive-editor
     pinta
     libreoffice
+    android-file-transfer
   ];
 
   home.sessionVariables = {
