@@ -5,9 +5,15 @@
   ];
 
   home.packages = with pkgs; [
+    # Audio
     qpwgraph pulsemixer
-    imagemagick graphicsmagick
     ffmpeg sox
     poppler_utils
+
+    # Video / images
+    imagemagick graphicsmagick
+    olive-editor
+    mpv
+    pinta
   ];
 }

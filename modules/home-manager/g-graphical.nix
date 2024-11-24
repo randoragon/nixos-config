@@ -30,10 +30,7 @@
 
     firefox ungoogled-chromium
     zathura
-    mpv
     xarchiver
-    olive-editor
-    pinta
     libreoffice
     android-file-transfer
   ];
