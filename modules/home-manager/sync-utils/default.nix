@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ syncthing onedrive ];
+  home.packages = with pkgs; [ syncthing rclone ];
 
   home.file.".local/bin/spush".source = ./localbin/spush;
   home.file.".local/bin/spull".source = ./localbin/spull;
