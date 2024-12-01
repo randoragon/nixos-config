@@ -6,5 +6,6 @@
   users.users.pcache.extraGroups = [ "libvirtd" ];
   environment.systemPackages = with pkgs; [
     qemu qemu_kvm
+    virtiofsd
   ];
 }
