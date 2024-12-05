@@ -17,6 +17,10 @@
     signing.key = "0x033330609EB240A515E4B5BDFE00DCDB97D196C1!";
     signing.signByDefault = true;
 
+    aliases = {
+      gc-reflog = "!git reflog expire --all --expire=now && git gc --prune=now";
+    };
+
     extraConfig = {
       diff.submodule = "log";
       merge.conflictstyle = "diff3";
