@@ -14,6 +14,7 @@
     audacity
     carla
     x42-plugins
+    distrho-ports
     helm
     geonkick
     sfizz
@@ -24,9 +25,6 @@
     linuxsampler qsampler
     setbfree
     lilypond
-  ] ++ [
-    # Package temporarily broken (https://github.com/NixOS/nixpkgs/issues/348871)
-    spkgs.distrho
   ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
