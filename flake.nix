@@ -9,9 +9,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # https://github.com/nix-community/nix-index-database
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }: let
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-index-database, ... }: let
     system = "x86_64-linux";
     spkgs = nixpkgs-stable.legacyPackages.${system};
   in {
@@ -20,6 +24,7 @@
       modules = [
         ./hosts/default/configuration.nix
         home-manager.nixosModules.home-manager
+        nix-index-database.nixosModules.nix-index
       ];
     };
 
@@ -28,6 +33,7 @@
       modules = [
         ./hosts/nixbox/configuration.nix
         home-manager.nixosModules.home-manager
+        nix-index-database.nixosModules.nix-index
       ];
     };
   };
