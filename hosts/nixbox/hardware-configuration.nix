@@ -6,7 +6,7 @@
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
-    ./fancontrol.nix
+    ./coolercontrol.nix
   ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "sd_mod" ];
