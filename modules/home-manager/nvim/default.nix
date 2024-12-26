@@ -17,6 +17,7 @@
       gcc ripgrep fd  # Needed by the Telescope plugin
 
       # LSP servers and language-specific tools
+      clang-tools
       vscode-langservers-extracted  # HTML, CSS, JSON, Markdown, ESLint
       zls
       lua-language-server
