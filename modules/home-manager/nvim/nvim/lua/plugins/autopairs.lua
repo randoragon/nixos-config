@@ -57,3 +57,8 @@ function autopairs_coq_bs()
 end
 vim.api.nvim_set_keymap("i", "<CR>", "v:lua.autopairs_coq_cr()", {expr=true, noremap=true})
 vim.api.nvim_set_keymap("i", "<BS>", "v:lua.autopairs_coq_bs()", {expr=true, noremap=true})
+
+-- Code blocks in typst
+autopairs.add_rule(
+	rule("```", "```", {"typst"})
+)
