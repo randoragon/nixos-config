@@ -3,6 +3,7 @@
     ../../modules/home-manager
     ../../modules/home-manager/g-accounting.nix
     ../../modules/home-manager/g-devtools.nix
+    ../../modules/home-manager/g-ebooks.nix
     ../../modules/home-manager/g-graphical.nix
     ../../modules/home-manager/g-media.nix
     ../../modules/home-manager/g-messaging.nix
