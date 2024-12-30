@@ -1,6 +1,7 @@
 # Config group for systems with music production support.
 { config, pkgs, spkgs, ... }: {
   imports = [
+    ./carla
     ./lmms
   ];
 
@@ -12,7 +13,6 @@
     ]))
 
     audacity
-    carla
     x42-plugins
     distrho-ports
     helm
