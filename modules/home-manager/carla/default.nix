@@ -10,6 +10,9 @@
       [Main]
       ConfirmExit=false
 
+      [Engine]
+      AudioDriver=JACK
+
       [Paths]
       DSSI=${builtins.replaceStrings [":"] [", "] config.home.sessionVariables.DSSI_PATH}
       LADSPA=${builtins.replaceStrings [":"] [", "] config.home.sessionVariables.LADSPA_PATH}
