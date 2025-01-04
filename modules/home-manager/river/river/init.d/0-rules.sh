@@ -12,6 +12,11 @@ riverctl rule-add -title 'Load SFZ file' float  # sfizz dialog
 riverctl rule-add -title 'Rename Track' float  # Ardour dialog
 riverctl rule-add -title 'Color Selection:*' float  # Ardour dialog
 riverctl rule-add -title '* - Meterbridge - Ardour' float  # Ardour dialog
+riverctl rule-add -title 'Customize port name' float  # Ardour dialog
+riverctl rule-add -title 'New Playlist for ALL Tracks' float  # Ardour dialog
+riverctl rule-add -title 'New Playlist for *' float  # Ardour dialog
+riverctl rule-add -title 'Copy Playlist for *' float  # Ardour dialog
+riverctl rule-add -title 'Rename Playlist' float  # Ardour dialog
 
 # Server-side decorations
 riverctl rule-add -app-id 'firefox' ssd
