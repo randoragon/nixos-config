@@ -1,6 +1,7 @@
 # Config group for systems with music production support.
 { config, pkgs, spkgs, ... }: {
   imports = [
+    ./ardour
     ./carla
     ./lmms
   ];
@@ -19,7 +20,6 @@
     geonkick
     sfizz
     vmpk
-    ardour
     hydrogen
     zynaddsubfx
     linuxsampler qsampler
