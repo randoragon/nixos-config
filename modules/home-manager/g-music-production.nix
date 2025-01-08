@@ -22,7 +22,6 @@
     vmpk
     hydrogen
     zynaddsubfx
-    linuxsampler qsampler
     setbfree
     lilypond
   ];
