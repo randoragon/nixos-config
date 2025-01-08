@@ -33,15 +33,12 @@ sudo true
 snow=1
 
 set -e
-section UPDATING 'NixOS flake.lock'
-cd ~/nixos-config/
-nix flake update
-sectionend
-
-section REBUILDING 'NixOS flake'
+section UPDATING 'NixOS flake'
 if command -v nh >/dev/null; then
-    nh os switch --ask --hostname "$profile" ~/nixos-config/
+    nh os switch --update --ask --hostname "$profile" ~/nixos-config/
 else
+    cd ~/nixos-config/
+    nix flake update
     sudo nixos-rebuild switch --flake ~/nixos-config#"$profile"
 fi
 sectionend
