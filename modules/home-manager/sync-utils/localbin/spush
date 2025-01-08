@@ -42,7 +42,7 @@ push () {
     rsync -vrptgoD --delete -- "$src" "$syncroot/$dest" | tee -a "$log_rsync"
     printf '\n%s\n' "$(tput bold)Uploading $(tput setaf 2)$syncroot/$dest$(tput setaf 15) to $(tput setaf 3)onedrive://$(basename -- "$syncroot")/$dest$(tput setaf 7)...$(tput sgr0)"
     if command -v 'rclone'; then
-        rclone sync --progress --combined "$log_rclone_tmp" "$syncroot/$dest" onedrive:"$syncroot/$dest"
+        rclone sync --progress --combined "$log_rclone_tmp" "$syncroot/$dest" onedrive:"$(basename -- "$syncroot")/$dest"
         cat "$log_rclone_tmp" >>"$log_rclone"
         if grep -q '^!' "$log_rclone"; then
             notify-send -u critical 'spush' "An error occurred while uploading to OneDrive.\nSee <b>$(printf "%s" "$log_rclone" | sed "s/\/home\/[^/]*/\~/")</b>\nfor more information."
