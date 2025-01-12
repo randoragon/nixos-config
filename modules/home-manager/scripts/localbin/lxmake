@@ -5,10 +5,6 @@
 # "\nofiles" line is found, otherwise it is compiled thrice if a
 # "\bibliography{}" line is found, otherwise it is compiled two times.
 #
-# As a convention to circumvent some troubles with paths, the latex source may
-# use the "\x13OUTDIR\x13" placeholder anywhere, and it will be substituted for
-# the full path to the output directory before compiling.
-#
 # Usage:
 #   lxmake [-d DIR] [-m] INPUT [OUTPUT]
 #
@@ -185,22 +181,6 @@ done
 
 # Copy bibtex file to the output directory
 [ -n "$use_biblatex" ] && [ -f "$bibfile" ] && cp -- "$bibfile" "$dir/$jobname.bib"
-
-# Substitute \x13OUTDIR\x13 into output dir path.
-# If input is a subfile, this also has to be run on the main file!
-sed -i "s\x13OUTDIR\x13$dirg" "$tinput"
-maintex="$(grep -o '^\\documentclass\[.*\]{subfiles}' "$tinput")"
-[ -n "$maintex" ] && {
-    # Create a mock copy of the main file, run substitutions on it and relink
-    # the input file to treat the mock file as the main. This should work for
-    # arbitrarily nested subfiles, because all subfiles, regardless of their
-    # nesting level, always point to the same root document.
-    maintex="${maintex##*[}"
-    maintex="${maintex%]*}"
-    mockmain="$(mktemp --tmpdir lxmake.main.XXXXX)"
-    sed "s\x13OUTDIR\x13$dirg" "$maintex" >"$mockmain"
-    sed -i 's^\(\\documentclass\[\).*\(\]{subfiles}.*\)\1'"$mockmain"'\2' "$tinput"
-}
 
 # Compile
 [ -n "$interactive" ] && {
