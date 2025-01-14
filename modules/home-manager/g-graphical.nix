@@ -33,6 +33,7 @@
     xarchiver
     libreoffice
     android-file-transfer
+    anki
   ];
 
   home.sessionVariables = {
