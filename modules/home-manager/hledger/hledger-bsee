@@ -1,0 +1,12 @@
+#!/bin/sh
+# An improved accounting equation report.
+# https://hledger.org/balancing-the-accounting-equation.html
+set -e
+
+hledger \
+    --real \
+    --infer-equity \
+    --alias '/^(revenue|income|expenses)\b/=equity' \
+    --file "${XDG_DATA_HOME:-$HOME/.local/share}/ledger/secrets/main.journal" \
+    bse not:desc:'closing balances' \
+    "$@"
