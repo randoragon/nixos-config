@@ -3,10 +3,14 @@
 # https://hledger.org/balancing-the-accounting-equation.html
 set -e
 
+LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
+
+secrets decrypt "$LEDGER"
+
 hledger \
     --real \
     --infer-equity \
     --alias '/^(revenue|income|expenses)\b/=equity' \
-    --file "${XDG_DATA_HOME:-$HOME/.local/share}/ledger/secrets/main.journal" \
+    --file "$LEDGER/secrets/main.journal" \
     bse not:desc:'closing balances' \
     "$@"
