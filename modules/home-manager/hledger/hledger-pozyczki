@@ -1,0 +1,43 @@
+#!/bin/sh
+# Print a markdown report of the most recent pozyczki.
+set -e
+
+LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
+
+secrets decrypt "$LEDGER"
+
+hl () {
+    hledger --auto --strict "$@" --file ~/.local/share/ledger/secrets/main.journal
+}
+
+# Get starting date for the unaccounted-for Pozyczki period.
+# This assumes that the last transaction is marked with Pozyczki-PAID tag.
+# Warning: Pozyczki-PAID tag must be the last tag of the day, any
+# Pozyczki transactions coming after it still on the same day will be skipped!
+final_date="$(hl reg tag:Pozyczki-PAID -O tsv | tail -n1 | cut -f2)"
+final_date_epoch="$(date -d "$final_date" +%s)"
+begin_date="$(date -d @$((final_date_epoch + 24*3600)) +%Y-%m-%d)"
+
+{
+    echo 'Remember to move the :Pozyczki-PAID: tag afterwards.'
+    echo
+
+    total="$(hl bal --begin "$begin_date" liabilities:pozyczki not:note:pocket -O tsv \
+        | tail -n1 \
+        | cut -f2)"
+    printf '**SUMA** | %s\n' "$total"
+
+    hl reg --begin "$begin_date" liabilities:pozyczki not:note:pocket -O tsv \
+        | tail -n+2 \
+        | awk -F'\t' '{
+            amount = $6;
+            desc = $4;
+            sub(/[[:space:]]*\|.*/, "", desc);
+            date = $2;
+            printf("Rodzice | %s | %s | %s\n", amount, desc, date);
+        }' | tac
+
+    echo
+    printf 'hlv reg --begin "%s" liabilities:pozyczki not:note:pocket\n' "$begin_date"
+    hl reg --begin "$begin_date" liabilities:pozyczki not:note:pocket
+} | $EDITOR
