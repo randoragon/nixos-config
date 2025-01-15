@@ -11,6 +11,5 @@ hledger \
     --real \
     --infer-equity \
     --alias '/^(revenue|income|expenses)\b/=equity' \
-    --file "$LEDGER/secrets/main.journal" \
     bse not:desc:'closing balances' \
     "$@"
