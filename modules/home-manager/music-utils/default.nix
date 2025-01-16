@@ -5,7 +5,7 @@
   home.file.".local/bin/normalize".source = ./localbin/normalize;
   home.file.".local/bin/pl2wavs".source = ./localbin/pl2wavs;
   home.file.".local/bin/pladd".source = ./localbin/pladd;
-  home.file.".local/bin/plcategorize".source = ./localbin/plcategorize;
+  home.file.".local/bin/_plcategorize".source = ./localbin/plcategorize;
   home.file.".local/bin/pldel".source = ./localbin/pldel;
   home.file.".local/bin/plfilter".source = ./localbin/plfilter;
   home.file.".local/bin/regain".source = ./localbin/regain;
