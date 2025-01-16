@@ -39,5 +39,5 @@ begin_date="$(date -d @$((final_date_epoch + 24*3600)) +%Y-%m-%d)"
 
     echo
     printf 'hlv reg --begin "%s" liabilities:pozyczki not:note:pocket\n' "$begin_date"
-    hl reg --begin "$begin_date" liabilities:pozyczki not:note:pocket
+    hl reg --begin "$begin_date" --width 100 liabilities:pozyczki not:note:pocket
 } | $EDITOR
