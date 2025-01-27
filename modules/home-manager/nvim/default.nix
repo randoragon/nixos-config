@@ -25,7 +25,7 @@
       nodePackages.bash-language-server
       rust-analyzer rustc
       pyright ruff
-      typst-lsp
+      tinymist
       texlab
     ];
   };

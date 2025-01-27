@@ -64,14 +64,14 @@ nnoremap <silent> <buffer> <Leader>if :silent let _newsubfile = NewSubfileTypst(
     \ exec 'buf '._newsubfile[0] \| endif<CR>
 
 command LSPFileToggleTypst    lua lsp_toggle({
-            \   name = "typst-lsp",
-            \   cmd  = {"typst-lsp"},
-            \   settings = require("lsp.settings.typst_lsp"),
+            \   name = "tinymist",
+            \   cmd  = {"tinymist"},
+            \   settings = require("lsp.settings.tinymist"),
             \ })
 command LSPProjectToggleTypst lua lsp_toggle({
-            \   name = "typst-lsp",
-            \   cmd  = {"typst-lsp"},
-            \   settings = require("lsp.settings.typst_lsp"),
+            \   name = "tinymist",
+            \   cmd  = {"tinymist"},
+            \   settings = require("lsp.settings.tinymist"),
             \ },
             \ {
             \  ".git",
