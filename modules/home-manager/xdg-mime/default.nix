@@ -132,5 +132,14 @@
       ];
     };
 
+    magick-display = {
+      type = "Application";
+      name = "ImageMagick Display";
+      genericName = "Image Viewer";
+      exec = "${pkgs.imagemagick}/bin/display -- %f";
+      terminal = false;
+      mimeType = [ "font/ttf" ];
+    };
+
   };
 }
