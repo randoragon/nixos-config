@@ -6,10 +6,10 @@
     ./mpd-discord-rpc
     ./music-utils
     ./ncmpcpp
+    ./sox
   ];
 
   home.packages = with pkgs; [
-    sox
     mpc-cli
     mp3gain rsgain
     (python3.withPackages (ps: with ps; [

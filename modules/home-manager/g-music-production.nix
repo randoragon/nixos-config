@@ -4,10 +4,10 @@
     ./ardour
     ./carla
     ./lmms
+    ./sox
   ];
 
   home.packages = with pkgs; [
-    sox
     mp3gain rsgain
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
