@@ -27,6 +27,7 @@
       pyright ruff
       tinymist
       texlab
+      neocmakelsp
     ];
   };
 
