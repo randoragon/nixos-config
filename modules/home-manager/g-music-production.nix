@@ -8,7 +8,7 @@
   ];
 
   home.packages = with pkgs; [
-    mp3gain rsgain
+    mp3gain rsgain mp3splt
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))
