@@ -104,7 +104,7 @@ inoremap <buffer> <Leader>o \item
 
 " Code
 inoremap <buffer> <Leader>C \begin{listing}[H]<CR>\begin{minted}[highlightlines={}]{}<CR><Tab><,,><CR>\end{minted}<CR>\end{listing}<Esc>3k$i
-inoremap <buffer> <Leader>c \mintinline{}{<,,>}<C-o>2F}
+inoremap <buffer> <Leader>c \mintinline{}{<,,>} <,,><C-o>2F}
 inoremap <buffer> <Leader>v \texttt{}<Left>
 inoremap <buffer> <Leader>.v \verb``<Left>
 
