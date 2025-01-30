@@ -21,6 +21,9 @@
   services.openssh.enable = true;
   systemd.services.sshd.wantedBy = lib.mkForce [ ];
 
+  # https://github.com/nix-community/nix-ld
+  programs.nix-ld.enable = true;
+
   programs.gnupg.agent = {
     enable = true;
     pinentryPackage = pkgs.pinentry-gtk2;
