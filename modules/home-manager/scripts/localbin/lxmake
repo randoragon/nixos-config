@@ -229,6 +229,6 @@ elif [ -f "$dir/$jobname.pdf" ] && [ "$output" != "$dir/$jobname.pdf" ]; then
     mv -- "$dir/$jobname.pdf" "$output"
 fi
 
-[ -z "$interactive" ] && notify-send -C $notif_id
+[ -z "$interactive" ] && makoctl dismiss -n $notif_id
 
 true

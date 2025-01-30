@@ -46,7 +46,7 @@ if grep -qsF 'Premieres in' -- "$fout"; then
 elif grep -qsF 'ERROR' -- "$fout"; then
     notify-send -r "$notif" -u low 'youtube-dl' "$(grep -o 'ERROR:.*$' -- "$fout")"
 else
-    notify-send -C "$notif"
+    makoctl dismiss -n "$notif"
 fi
 
 shred -u -- "$fout"
