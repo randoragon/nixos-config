@@ -38,5 +38,6 @@
     inxi neofetch
     figlet sl asciiquarium
     gdu
+    usbutils
   ];
 }
