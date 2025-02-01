@@ -24,6 +24,7 @@
     zynaddsubfx
     setbfree
     lilypond
+    tonelib-zoom
   ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
