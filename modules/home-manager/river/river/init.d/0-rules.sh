@@ -25,6 +25,10 @@ riverctl rule-add -title 'Choose session to import metadata from' float
 riverctl rule-add -title 'Ardour: Log' float
 riverctl rule-add -title 'Rename Mark' float
 
+# Hydrogen
+riverctl rule-add -title 'Audio File Browser' float
+riverctl rule-add -title 'Mixer' float
+
 # Server-side decorations
 riverctl rule-add -app-id 'firefox' ssd
 riverctl rule-add -app-id 'zathura*' ssd
