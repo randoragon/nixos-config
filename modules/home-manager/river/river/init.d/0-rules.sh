@@ -22,6 +22,7 @@ riverctl rule-add -title 'Rename Playlist' float
 riverctl rule-add -title 'Rename Session' float
 riverctl rule-add -title 'Ardour: Locked' float
 riverctl rule-add -title 'Choose session to import metadata from' float
+riverctl rule-add -title 'Choose export folder' float
 riverctl rule-add -title 'Ardour: Log' float
 riverctl rule-add -title 'Rename Mark' float
 
