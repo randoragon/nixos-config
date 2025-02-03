@@ -1,6 +1,7 @@
 # Config group for systems that support various types of media.
 { pkgs, ... }: {
   imports = [
+    ./olive
     ./sox
     ./yt-dlp
   ];
@@ -13,7 +14,6 @@
 
     # Video / images
     imagemagick graphicsmagick
-    olive-editor
     mpv
     pinta
   ];

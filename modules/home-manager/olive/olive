@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+url='https://github.com/olive-editor/olive/releases/download/0.2.0-nightly/Olive-8ac191ce-Linux-x86_64.AppImage'
+fname="$(basename -- "$url")"
+appimage="${XDG_SOFTWARE_DIR:-$HOME/Software}/$fname"
+
+if [ ! -f "$appimage" ]; then
+    wget -O "$appimage" -- "$url"
+    chmod +x -- "$appimage"
+fi
+
+appimage-run "$appimage"
