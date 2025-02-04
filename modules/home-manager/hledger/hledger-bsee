@@ -8,6 +8,9 @@ LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 secrets decrypt "$LEDGER"
 
 hledger \
+    --strict \
+    --pretty \
+    --color=always \
     --real \
     --infer-equity \
     --alias '/^(revenue|income|expenses)\b/=equity' \

@@ -7,7 +7,7 @@ LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 secrets decrypt "$LEDGER"
 
 hl () {
-    hledger --auto --strict "$@" --file ~/.local/share/ledger/secrets/main.journal
+    hledger --auto --strict "$@"
 }
 
 # Get starting date for the unaccounted-for Pozyczki period.
