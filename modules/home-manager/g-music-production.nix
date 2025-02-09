@@ -16,6 +16,7 @@
     audacity
     x42-plugins
     distrho-ports
+    gxplugins-lv2
     helm
     geonkick
     sfizz
