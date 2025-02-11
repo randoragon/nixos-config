@@ -17,6 +17,7 @@
     x42-plugins
     distrho-ports
     gxplugins-lv2
+    lsp-plugins
     helm
     geonkick
     sfizz
