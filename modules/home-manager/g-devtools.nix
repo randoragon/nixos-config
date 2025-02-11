@@ -1,4 +1,4 @@
-# Config group for systems with accounting support.
+# Config group for systems with software development support.
 { pkgs, ... }: {
   imports = [
     ./go
@@ -7,5 +7,9 @@
     ./python
     ./R
     ./rust
+  ];
+
+  home.packages = with pkgs; [
+    unixtools.xxd
   ];
 }
