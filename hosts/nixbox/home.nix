@@ -22,6 +22,7 @@
 
   home.packages = with pkgs; [
     spotify
+    davinci-resolve
     nvtopPackages.full
   ];
 
