@@ -8,6 +8,6 @@
     powerManagement.finegrained = false;
     open = false;  # GTX 1060 is not supported
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 }

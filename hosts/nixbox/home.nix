@@ -22,6 +22,7 @@
 
   home.packages = with pkgs; [
     spotify
+    nvtopPackages.full
   ];
 
   home.sessionVariables = {
