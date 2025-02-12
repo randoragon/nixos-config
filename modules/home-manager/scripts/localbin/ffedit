@@ -25,18 +25,21 @@ if [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
 fi
 
 convert () {
-    if [ -z "$1" ] || [ -z "$2" ]; then
+    target="$1"
+    output="$2"
+    output_dir="$3"
+    if [ -z "$target" ] || [ -z "$output" ]; then
         echo 'ffedit: convert: target or output empty' >&2
         return 1
     fi
-    info="$(ffprobe -hide_banner -- "$1" 2>&1)"
-    ffmpeg_flags='-map 0'
+    info="$(ffprobe -hide_banner -- "$target" 2>&1)"
+    ffmpeg_flags='-map 0 -sn -dn'
     ffmpeg_ext=
     work_to_do=
 
     video_codec="$(echo "$info" | grep -o 'Stream #.*: Video: .*')" || true
     video_codec="${video_codec##*Video: }"
-    if [ -n "$video_codec" ]; then
+    if [ -n "$video_codec" ] && echo "$video_codec" | grep -Fvqi 'attached pic'; then
         ffmpeg_ext=mov
         case "$video_codec" in
             dnxhd*)
@@ -48,6 +51,7 @@ convert () {
                 ;;
         esac
     else
+        ffmpeg_flags="$ffmpeg_flags -vn"
         ffmpeg_ext=wav
     fi
 
@@ -66,14 +70,14 @@ convert () {
     fi
 
     output_path=
-    if [ -n "$3" ]; then
-        output_path="$3/$(basename -- "$2").$ffmpeg_ext"
+    if [ -n "$output_dir" ]; then
+        output_path="$output_dir/$(basename -- "$output").$ffmpeg_ext"
     else
-        output_path="$2.$ffmpeg_ext"
+        output_path="$output.$ffmpeg_ext"
     fi
 
     if [ -n "$work_to_do" ];  then
-        if [ "$output_path" = "$1" ]; then
+        if [ "$output_path" = "$target" ]; then
             echo 'ffedit: output and input filenames cannot be the same' >&2
             return 1
         elif [ -f "$output_path" ]; then
@@ -85,10 +89,14 @@ convert () {
             return 1
         fi
 
+        tput setaf 0 setab 7 bold
+        printf '>> ffmpeg -i "%s" %s -- "%s" ' "$target" "$ffmpeg_flags" "$output_path"
+        tput sgr0
+        echo
         # shellcheck disable=SC2086
-        ffmpeg -hide_banner -y -i "$1" $ffmpeg_flags -- "$output_path"
+        ffmpeg -loglevel warning -stats -y -i "$target" $ffmpeg_flags -- "$output_path"
     else
-        printf '%s: there is nothing to do\n' "$1"
+        printf '%s: there is nothing to do\n' "$target"
     fi
 }
 
