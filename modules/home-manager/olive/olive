@@ -11,4 +11,4 @@ if [ ! -f "$appimage" ]; then
     chmod +x -- "$appimage"
 fi
 
-appimage-run "$appimage"
+appimage-run "$appimage" "$@"
