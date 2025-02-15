@@ -1,0 +1,177 @@
+# https://yazi-rs.github.io/docs/configuration/theme
+
+[icon]
+globs = [
+	{ name = "**/LICENSE-*",          text = "©️" },
+]
+dirs = []
+files = [
+	{ name = "Makefile",              text = "⚒️" },
+	{ name = "makefile",              text = "⚒️" },
+	{ name = "GNUmakefile",           text = "⚒️" },
+	{ name = "CMakeLists.txt",        text = "⚒️" },
+	{ name = "justfile",              text = "⚒️" },
+	{ name = "Dockerfile",            text = "🐋" },
+	{ name = "Cargo.lock",            text = "🦀" },
+	{ name = "Cargo.toml",            text = "🦀" },
+	{ name = "clippy.toml",           text = "🦀" },
+	{ name = "rustfmt.toml",          text = "🦀" },
+	{ name = "requirements.txt",      text = "🐍" },
+
+	# Files recognized by GitHub (https://gist.github.com/jakebrinkmann/c63eaedbe384516e4a7bc133c1e1066b)
+	{ name = "README",                text = "📝" },
+	{ name = "LICENSE",               text = "©️" },
+	{ name = "CHANGELOG",             text = "📝" },
+	{ name = "CONTRIBUTING",          text = "📝" },
+	{ name = "SUPPORT",               text = "📝" },
+	{ name = "CONTRIBUTORS",          text = "📝" },
+	{ name = "AUTHORS",               text = "📝" },
+	{ name = "ACKNOWLEDGEMENTS",      text = "📝" },
+	{ name = "ISSUE_TEMPLATE",        text = "📝" },
+	{ name = "PULL_REQUEST_TEMPLATE", text = "📝" },
+	{ name = "CODEOWNERS",            text = "📝" },
+	{ name = "OWNERS",                text = "📝" },
+	{ name = "COPYING",               text = "📝" },
+]
+exts = [
+	# Documents
+	{ name = "txt",         text = "📝" },
+	{ name = "md",          text = "📝" },
+	{ name = "MD",          text = "📝" },
+	{ name = "journal",     text = "🧾" },
+	{ name = "ldg",         text = "🧾" },
+	{ name = "bib",         text = "📜" },
+	{ name = "pdf",         text = "📚" },
+	{ name = "djvu",        text = "📚" },
+	{ name = "epub",        text = "📚" },
+	{ name = "srt",         text = "📜" },
+	{ name = "vtt",         text = "📜" },
+
+	# Images
+	{ name = "png",         text = "🖼 " },
+	{ name = "gif",         text = "🖼 " },
+	{ name = "ico",         text = "🖼 " },
+	{ name = "svg",         text = "🧬" },
+	{ name = "eps",         text = "🧬" },
+	{ name = "jpg",         text = "📸" },
+	{ name = "jpeg",        text = "📸" },
+
+	# Audio
+	{ name = "wav",         text = "🎵" },
+	{ name = "mp3",         text = "🎵" },
+	{ name = "opus",        text = "🎵" },
+	{ name = "ogg",         text = "🎵" },
+	{ name = "m4a",         text = "🎵" },
+	{ name = "flac",        text = "🎵" },
+
+	# Video
+	{ name = "mp4",         text = "🎥" },
+	{ name = "mkv",         text = "🎥" },
+	{ name = "webm",        text = "🎥" },
+	{ name = "mpeg",        text = "🎥" },
+	{ name = "mpg",         text = "🎥" },
+	{ name = "avi",         text = "🎥" },
+	{ name = "mov",         text = "🎥" },
+	{ name = "wmv",         text = "🎥" },
+	{ name = "asf",         text = "🎥" },
+	{ name = "flv",         text = "🎥" },
+	{ name = "m4v",         text = "🎥" },
+	{ name = "qt",          text = "🎥" },
+	{ name = "3gp",         text = "🎥" },
+
+	# Project files
+	{ name = "xcf",         text = "🎨" },
+	{ name = "kra",         text = "🎨" },
+	{ name = "ase",         text = "👻" },
+	{ name = "aseprite",    text = "👻" },
+	{ name = "ods",         text = "📊" },
+	{ name = "xls",         text = "📊" },
+	{ name = "xlsx",        text = "📊" },
+	{ name = "ardour",      text = "⛺" },
+	{ name = "ove",         text = "🫒" },
+	{ name = "h2song",      text = "🥁" },
+	{ name = "ipynb",       text = "📗" },
+
+	# Source code
+	{ name = "css",         text = "🎨" },
+	{ name = "html",        text = "🌐" },
+	{ name = "zig",         text = "⚡" },
+	{ name = "rs",          text = "🦀" },
+	{ name = "py",          text = "🐍" },
+	{ name = "nix",         text = "❄️" },
+	{ name = "patch",       text = "🩹" },
+	{ name = "lua",         text = "🧿" },
+
+	# Binary
+	{ name = "bin",         text = "⬛" },
+	{ name = "dat",         text = "⬛" },
+	{ name = "so",          text = "🧰" },
+	{ name = "a",           text = "🧰" },
+	{ name = "o",           text = "◼️" },
+
+	# Configuration / serialization
+	{ name = "conf",        text = "⚙️" },
+	{ name = "config",      text = "⚙️" },
+	{ name = "xml",         text = "⚙️" },
+	{ name = "toml",        text = "⚙️" },
+	{ name = "yaml",        text = "⚙️" },
+	{ name = "ini",         text = "⚙️" },
+	{ name = "csv",         text = "⚙️" },
+	{ name = "json",        text = "⚙️" },
+
+	# Documentation
+	{ name = "1",           text = "ℹ️" },
+	{ name = "2",           text = "ℹ️" },
+	{ name = "3",           text = "ℹ️" },
+	{ name = "4",           text = "ℹ️" },
+	{ name = "5",           text = "ℹ️" },
+	{ name = "6",           text = "ℹ️" },
+	{ name = "7",           text = "ℹ️" },
+	{ name = "8",           text = "ℹ️" },
+	{ name = "9",           text = "ℹ️" },
+	{ name = "nfo",         text = "ℹ️" },
+	{ name = "info",        text = "ℹ️" },
+
+	# Archives / packages / databases
+	{ name = "zip",         text = "📦" },
+	{ name = "rar",         text = "📦" },
+	{ name = "7z",          text = "📦" },
+	{ name = "gz",          text = "📦" },
+	{ name = "bz",          text = "📦" },
+	{ name = "xz",          text = "📦" },
+	{ name = "deb",         text = "📦" },
+	{ name = "jar",         text = "📦" },
+	{ name = "pak",         text = "📦" },
+	{ name = "ispm",        text = "📦" },
+	{ name = "iso",         text = "📀" },
+	{ name = "img",         text = "📀" },
+	{ name = "db",          text = "🗃️" },
+	{ name = "db3",         text = "🗃️" },
+	{ name = "sqlite",      text = "🗃️" },
+	{ name = "sqlite3",     text = "🗃️" },
+
+	# Misc
+	{ name = "bak",         text = "🗄️" },
+	{ name = "gpg",         text = "🔒" },
+	{ name = "asc",         text = "🔒" },
+	{ name = "pub",         text = "🔑" },
+	{ name = "sig",         text = "🪪" },
+	{ name = "torrent",     text = "🔽" },
+	{ name = "part",        text = "💔" },
+	{ name = "ninja",       text = "⚒️" },
+	{ name = "trashinfo",   text = "🗑️" },
+]
+conds = [
+	{ if = "orphan",        text = "❌" },
+	{ if = "char",          text = "🖱️" },
+	{ if = "block",         text = "💽" },
+	{ if = "fifo",          text = "➡️" },
+	{ if = "sock",          text = "↔️" },
+	{ if = "sticky",        text = "🤝" },
+	#{ if = "link",          text = "📎" },
+	{ if = "dummy",         text = "❓" },
+
+	{ if = "dir",           text = "📁" },
+	{ if = "exec",          text = "👾" },
+	{ if = "!dir",          text = "📃" },
+]
