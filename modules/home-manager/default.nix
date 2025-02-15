@@ -31,7 +31,7 @@
     rsync
     file patch highlight
     tmux
-    lf tree ripgrep fzf
+    tree ripgrep fzf
     htop lm_sensors
     trash-cli
     tokei
