@@ -17,5 +17,5 @@ appmap Control+Alt M "$TERMINAL ncmpcpp"
 appmap Control+Alt N "$TERMINAL newsraft"
 appmap Control+Alt Slash "$TERMINAL qalc"
 
-appmap Control+Alt T "$TERMINAL $EDITOR ~/Sync/todo"
+appmap Control+Alt T "$TERMINAL $EDITOR ~/Sync/todo.txt"
 appmap Control+Alt B ~/.scripts/book

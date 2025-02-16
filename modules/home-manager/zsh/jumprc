@@ -9,7 +9,7 @@ alias rit='(cd ~/nixos-config/modules/home-manager/river/river && $EDITOR init)'
 alias vrc='(cd ~/nixos-config/modules/home-manager/nvim/nvim && $EDITOR init.lua)'
 alias rss='$EDITOR ~/.config/newsraft/feeds'
 alias snip='$EDITOR ~/.config/snippetrc'
-alias todo='$EDITOR ~/Sync/todo'
+alias todo='$EDITOR ~/Sync/todo.txt'
 
 # Directories
 alias cdni='cd ~/nixos-config && ls'
