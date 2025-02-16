@@ -139,4 +139,7 @@
     *.ninja                 ⚒️
     *.trashinfo             🗑️
   '';
+
+  home.file.".scripts/genlfjmp".source = ./genlfjmp;
+  home.file.".scripts/lf-previewer".source = ./lf-previewer;
 }
