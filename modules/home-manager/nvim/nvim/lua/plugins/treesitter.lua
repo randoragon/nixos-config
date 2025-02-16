@@ -25,6 +25,7 @@ treesitter.setup {
 		"ruby",
 		"rust",
 		"sql",
+		"toml",
 		"typst",
 		"vim", "vimdoc",
 		"zig",
