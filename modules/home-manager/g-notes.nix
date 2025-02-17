@@ -34,6 +34,7 @@
 
       body {
           font-family: 'Libertinus Serif', sans-serif;
+          font-size: 14pt;
           margin: 0 auto;
           max-width: 48rem;
           line-height: 1.45;
@@ -42,7 +43,7 @@
 
       code {
           font-family: 'Jetbrains Mono';
-          font-size: 10pt;
+          font-size: 11pt;
       }
       </style>
     '';
