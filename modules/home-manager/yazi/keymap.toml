@@ -35,7 +35,7 @@ desc = "Open with $EDITOR"
 # Open with PAGER
 [[manager.prepend_keymap]]
 on = "i"
-run = '''shell --block 'less -f -- "$@"''''
+run = '''shell --block 'less -f +g +k -- "$@"''''
 desc = "Open with less"
 
 # Run fls

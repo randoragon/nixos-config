@@ -1,8 +1,27 @@
 # https://yazi-rs.github.io/docs/configuration/theme
 
+[status]
+separator_open  = ""
+separator_close = ""
+
+[which]
+separator = ": "
+
+[notify]
+icon_info  = "ℹ️"
+icon_warn  = "⚠️"
+icon_error = "‼️"
+
+[completion]
+icon_file    = "📃"
+icon_folder  = "📁"
+icon_command = "✴️"
+
 [icon]
 globs = [
 	{ name = "**/LICENSE-*",          text = "©️" },
+	{ name = "**/*.so.*",             text = "🧰" },
+	{ name = "**/*.a.*",              text = "🧰" },
 ]
 dirs = []
 files = [
@@ -21,6 +40,7 @@ files = [
 	# Files recognized by GitHub (https://gist.github.com/jakebrinkmann/c63eaedbe384516e4a7bc133c1e1066b)
 	{ name = "README",                text = "📝" },
 	{ name = "LICENSE",               text = "©️" },
+	{ name = "license.txt",           text = "©️" },
 	{ name = "CHANGELOG",             text = "📝" },
 	{ name = "CONTRIBUTING",          text = "📝" },
 	{ name = "SUPPORT",               text = "📝" },
@@ -118,6 +138,7 @@ exts = [
 	{ name = "ini",         text = "⚙️" },
 	{ name = "csv",         text = "⚙️" },
 	{ name = "json",        text = "⚙️" },
+	{ name = "desktop",     text = "⚙️" },
 
 	# Documentation
 	{ name = "1",           text = "ℹ️" },
@@ -154,6 +175,7 @@ exts = [
 	{ name = "bak",         text = "🗄️" },
 	{ name = "gpg",         text = "🔒" },
 	{ name = "asc",         text = "🔒" },
+	{ name = "lock",        text = "🔒" },
 	{ name = "pub",         text = "🔑" },
 	{ name = "sig",         text = "🪪" },
 	{ name = "torrent",     text = "🔽" },
