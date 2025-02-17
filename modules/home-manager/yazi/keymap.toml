@@ -5,3 +5,151 @@
 on   = "<Esc>"
 run  = "close"
 desc = "Cancel input"
+
+# Swap delete and cut
+[[manager.prepend_keymap]]
+on = "d"
+run = "yank --cut"
+desc = "Yank selected files (cut)"
+[[manager.prepend_keymap]]
+on = "x"
+run = "remove"
+desc = "Trash selected files"
+[[manager.prepend_keymap]]
+on = "X"
+run = "remove --permanently"
+desc = "Permanently delete selected files"
+
+# Deselect (alternative to Esc)
+[[manager.prepend_keymap]]
+on = "u"
+run = "toggle_all --state=off"
+desc = "Deselect all files"
+
+# Open with EDITOR
+[[manager.prepend_keymap]]
+on = "e"
+run = '''shell --block '$EDITOR -- "$@"''''
+desc = "Open with $EDITOR"
+
+# Open with PAGER
+[[manager.prepend_keymap]]
+on = "i"
+run = '''shell --block 'less -f -- "$@"''''
+desc = "Open with less"
+
+# Run fls
+[[manager.prepend_keymap]]
+on = "I"
+run = '''shell --block 'fls "$@" | less -f -R +g +k''''
+desc = "Display file information"
+
+# Toggle max-preview
+[[manager.prepend_keymap]]
+on   = "\\"
+run  = "plugin max-preview"
+desc = "Maximize or restore preview"
+
+# Run the mount plugin
+[[manager.prepend_keymap]]
+on   = "M"
+run  = "plugin mount"
+desc = "Open mount menu"
+
+# jumprc
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "n", "i" ]
+run  = "cd ~/nixos-config"
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "h", "n", "i" ]
+run  = "cd ~/nixos-config/modules/home-manager"
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "h", "n", "s", "c" ]
+run  = "cd ~/nixos-config/modules/home-manager/scripts/scripts"
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "h", "n", "l", "b" ]
+run  = "cd ~/nixos-config/modules/home-manager/scripts/localbin"
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "a", "p" ]
+run  = 'cd ~/.local/share/applications'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "c" ]
+run  = 'cd ~/.config'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "d", "m", "u" ]
+run  = 'cd ~/Downloads/Music'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "p", "r" ]
+run  = 'cd ~/Production'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "l", "b" ]
+run  = 'cd ~/.local/bin'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "l", "s" ]
+run  = 'cd ~/.local/share'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "l", "t" ]
+run  = 'cd ~/.local/state'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "m", "n" ]
+run  = 'cd /mnt'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "m", "t" ]
+run  = "cd /run/media/$(whoami)"
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "m", "u" ]
+run  = 'cd ~/Music'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "p", "l" ]
+run  = 'cd ~/Music/Playlists'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "o", "c" ]
+run  = 'cd ~/Documents'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "s", "y" ]
+run  = 'cd ~/Sync'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "o", "w" ]
+run  = 'cd ~/Downloads'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "p", "a" ]
+run  = 'cd ~/.local/share/pass'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "n", "o" ]
+run  = 'cd ~/.local/share/notes'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "h", "l" ]
+run  = 'cd ~/.local/share/ledger'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "p", "i" ]
+run  = 'cd ~/Pictures'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "p", "u", "t" ]
+run  = 'cd ~/Documents/put/sem9'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "s", "c" ]
+run  = 'cd ~/.scripts'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "s", "o" ]
+run  = 'cd ~/Software'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "t", "r" ]
+run  = 'cd ~/.local/share/Trash/files'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "v", "i" ]
+run  = 'cd ~/Videos'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "w", "a", "l", "l" ]
+run  = 'cd ~/.local/share/wallpapers'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "r", "u" ]
+run  = 'cd ~/Software/randoutils'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "s", "p" ]
+run  = 'cd ~/Software/libstaple'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "r", "i" ]
+run  = 'cd ~/nixos-config/modules/home-manager/river/river'
+[[manager.prepend_keymap]]
+on   = [ "c", "d", "n", "v" ]
+run  = 'cd ~/nixos-config/modules/home-manager/nvim/nvim'

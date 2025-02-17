@@ -9,5 +9,9 @@
     settings = builtins.fromTOML (builtins.readFile ./yazi.toml);
     theme = builtins.fromTOML (builtins.readFile ./theme.toml);
     keymap = builtins.fromTOML (builtins.readFile ./keymap.toml);
+    plugins = {
+      max-preview = ./plugins/max-preview.yazi;
+      mount = ./plugins/mount.yazi;
+    };
   };
 }

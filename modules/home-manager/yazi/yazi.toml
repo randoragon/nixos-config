@@ -1,1 +1,14 @@
 # https://yazi-rs.github.io/docs/configuration/yazi
+[which]
+sort_translit = true
+
+# Always use xdg-open for opening
+[open]
+rules = [
+	{ name = "*", use = [ "open" ] },
+]
+
+[plugin]
+prepend_previewers = [
+    { mime = "audio/*",   run = "exifaudio"}
+]
