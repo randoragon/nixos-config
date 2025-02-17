@@ -17,7 +17,6 @@
     ./wine
     ./xdg-dirs
     ./xdg-mime
-    ./yazi
     ./zsh
   ];
 

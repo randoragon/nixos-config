@@ -51,8 +51,17 @@ setopt shwordsplit
 DIRSTACKSIZE=8
 setopt autopushd pushdminus pushdsilent pushdtohome
 
-# Open yazicd on Ctrl-O
-bindkey -s '^o' 'yazicd\n'
+# Use lf to switch directories and bind it to ctrl-o
+lfcd () {
+    tmp="$(mktemp)"
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp"
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+bindkey -s '^o' 'lfcd\n'
 
 # Enable light-up menu
 zstyle ':completion:*' menu select
