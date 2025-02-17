@@ -11,6 +11,7 @@ treesitter.setup {
 		"dockerfile",
 		"dot",
 		"gitcommit", "git_config", "gitignore", "git_rebase", "gitattributes",
+		"gnuplot",
 		"go", "gosum", "gowork",
 		"html", "css", "javascript", "typescript", "jsdoc",
 		"json", "yaml",
