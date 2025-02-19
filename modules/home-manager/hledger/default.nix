@@ -9,6 +9,7 @@
   home.file.".local/bin/hledger-bsee".source = ./hledger-bsee;
   home.file.".local/bin/hledger-pozyczki".source = ./hledger-pozyczki;
   home.file.".local/bin/hledger-bud".source = ./hledger-bud;
+  home.file.".local/bin/hledger-for".source = ./hledger-for;
 
   home.sessionVariables = {
     LEDGER_FILE = "${config.xdg.dataHome}/ledger/secrets/main.journal";

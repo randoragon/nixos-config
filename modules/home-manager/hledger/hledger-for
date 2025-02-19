@@ -1,0 +1,14 @@
+#!/bin/sh
+# Show a historical forecast (default: monthly current year)
+set -e
+
+hledger \
+    --auto \
+    --strict \
+    --infer-equity \
+    --real \
+    --pretty \
+    --color=always \
+    --period=thisyear \
+    bal --forecast --historical --tree --monthly not:equity \
+    "$@" | less -R +g +k
