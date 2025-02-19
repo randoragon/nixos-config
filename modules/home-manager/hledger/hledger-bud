@@ -1,0 +1,15 @@
+#!/bin/sh
+# Show the budget for any time period (default: current month in zł)
+set -e
+
+hledger \
+    --auto \
+    --strict \
+    --infer-equity \
+    --real \
+    --pretty \
+    --color=always \
+    --period=thismonth \
+    --exchange=zł \
+    bal --budget --layout=tidy --tree \
+    "$@"
