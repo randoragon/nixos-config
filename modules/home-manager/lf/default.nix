@@ -10,29 +10,33 @@
     ln        📎
     or        ❌
     ex        👾
-    Makefile                ⚒️
-    makefile                ⚒️
-    GNUmakefile             ⚒️
-    CMakeLists.txt          ⚒️
-    Dockerfile              🐋
-    Cargo.lock              🦀
-    Cargo.toml              🦀
-    clippy.toml             🦀
-    rustfmt.toml            🦀
-    requirements.txt        🐍
-    README                  📝
-    LICENSE                 ©️
-    CHANGELOG               📝
-    CONTRIBUTING            📝
-    SUPPORT                 📝
-    CONTRIBUTORS            📝
-    AUTHORS                 📝
-    ACKNOWLEDGEMENTS        📝
-    ISSUE_TEMPLATE          📝
-    PULL_REQUEST_TEMPLATE   📝
-    CODEOWNERS              📝
-    OWNERS                  📝
-    COPYING                 📝
+    *Makefile               ⚒️
+    *makefile               ⚒️
+    *GNUmakefile            ⚒️
+    *CMakeLists.txt         ⚒️
+    *Kconfig                ⚒️
+    *Kbuild                 ⚒️
+    *Dockerfile             🐋
+    *Cargo.lock             🦀
+    *Cargo.toml             🦀
+    *clippy.toml            🦀
+    *rustfmt.toml           🦀
+    *requirements.txt       🐍
+    *README                 📝
+    *LICENSE                ©️
+    *CHANGELOG              📝
+    *CONTRIBUTING           📝
+    *SUPPORT                📝
+    *CONTRIBUTORS           📝
+    *AUTHORS                📝
+    *ACKNOWLEDGEMENTS       📝
+    *ISSUE_TEMPLATE         📝
+    *PULL_REQUEST_TEMPLATE  📝
+    *CODEOWNERS             📝
+    *OWNERS                 📝
+    *CREDITS                📝
+    *MAINTAINERS            📝
+    *COPYING                📝
     *.txt                   📝
     *.md                    📝
     *.MD                    📝
