@@ -7,8 +7,8 @@ appmap () {
 appmap Super         C      'snippet'
 appmap Super+Shift   O      '~/.scripts/passcpy'
 appmap Super+Control O      '~/.scripts/usercpy'
-appmap Super+Shift   Y      'note --bemenu'
-appmap Super+Control Y      'note --bemenu -e'
+appmap Super+Shift   Y      'note --bemenu || notify-send -u critical note "Exited with error"'
+appmap Super+Control Y      'note --bemenu -e || notify-send -u critical "note -e" "Exited with error"'
 appmap Super+Control equal  '~/.scripts/pladd_select'
 
 appmap Control+Alt H "$TERMINAL -W 150x45 -a floatme htop"
