@@ -51,7 +51,7 @@
       "inode/directory" = [ "file.desktop" ];
       "inode/x-empty" = [ "text.desktop" ];
       "application/octet-stream" = [ "text.desktop" ];
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "libreoffice-writer.desktop" ];
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "libreoffice-writer.desktop" "writer.desktop" ];
       "application/zip" = [ "xarchiver.desktop" ];
       "application/xml" = [ "text.desktop" "firefox.desktop" ];
       "application/rss+xml" = [ "text.desktop" "firefox.desktop" ];
