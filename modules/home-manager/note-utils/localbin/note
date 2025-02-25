@@ -124,6 +124,8 @@ edit () {
         echo 'No changes were made, skipping.'
     else
         # Custom postprocessing based on file type.
+        # Disable exiting on error here, to prioritize saving the changes.
+        set +e
         case "$ext" in
             tex)
                 # Cache the PDF for quick access
@@ -154,6 +156,7 @@ edit () {
         git -C "$SECRETS" add -- "$note"
         git -C "$SECRETS" commit -m "Edit $note" -- "$note"
         secrets save "$NOTES"
+        set -e
     fi
 }
 
