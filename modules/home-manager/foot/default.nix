@@ -3,7 +3,7 @@
     enable = true;
     settings = {
       main = {
-        font = "JetBrains Mono:size=10";
+        font = "JetBrains Mono:size=10, Noto Color Emoji:size=10";
         font-italic = "JetBrains Mono:style=Italic:size=10";
         font-bold = "JetBrains Mono:style=Bold:size=10";
         font-bold-italic = "JetBrains Mono:style=Bold Italic:size=10";
