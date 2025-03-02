@@ -22,6 +22,7 @@
     *clippy.toml            🦀
     *rustfmt.toml           🦀
     *requirements.txt       🐍
+    *flake.lock             ❄️
     *README                 📝
     *LICENSE                ©️
     *CHANGELOG              📝
