@@ -1,6 +1,7 @@
 { pkgs, config, ... }: {
   imports = [
     ../../modules/home-manager
+    ../../modules/home-manager/g-daily-driver.nix
     ../../modules/home-manager/g-accounting.nix
     ../../modules/home-manager/g-devtools.nix
     ../../modules/home-manager/g-ebooks.nix
