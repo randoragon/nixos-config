@@ -36,5 +36,13 @@
         nix-index-database.nixosModules.nix-index
       ];
     };
+
+    nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit spkgs; };
+      modules = [
+        ./hosts/vps/configuration.nix
+        home-manager.nixosModules.home-manager
+      ];
+    };
   };
 }
