@@ -12,6 +12,7 @@
       window-title-page = true;
       statusbar-home-tilde = true;
       scroll-step = 100;
+      selection-clipboard = "clipboard";
     };
 
     mappings = {
