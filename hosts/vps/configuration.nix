@@ -15,10 +15,12 @@
     interval = "weekly";
   };
 
-  # Extra system-wide packages
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
+  # Install neovim system-wide
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    viAlias = true;
+  };
 
   # User configuration
   users.users.pcache = {
