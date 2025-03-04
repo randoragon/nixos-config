@@ -20,7 +20,4 @@
     pinentryPackage = pkgs.pinentry-gtk2;
   };
   environment.systemPackages = with pkgs; [ pinentry-gtk2 pinentry-curses ];
-
-  # Enable i2c support and group, for ddcutil and ddui
-  hardware.i2c.enable = true;
 }

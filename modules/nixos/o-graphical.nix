@@ -1,5 +1,5 @@
 # Optional graphical session support
-{ pkgs, ... }: {
+{
   services.libinput.enable = true;
 
   # River should ideally be installed at the user-level.
@@ -15,10 +15,6 @@
   # More precise configuration should be written at the user-level.
   # This is more of a cautionary setting, in case the system-wide option does something Home Manager can't.
   xdg.portal.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    ddcutil ddcui
-  ];
 
   # Allow waylock to authenticate (https://github.com/swaywm/sway/issues/2773#issuecomment-427570877)
   security.pam.services.waylock = {
