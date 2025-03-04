@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   xdg.mime.enable = true;
+  home.packages = with pkgs; [ xdg-utils ];
 
   xdg.mimeApps = {
     enable = true;
