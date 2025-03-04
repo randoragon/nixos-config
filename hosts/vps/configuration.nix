@@ -15,6 +15,11 @@
     interval = "weekly";
   };
 
+  # Extra system-wide packages
+  environment.systemPackages = with pkgs; [
+    neovim
+  ];
+
   # User configuration
   users.users.pcache = {
     isNormalUser = true;
