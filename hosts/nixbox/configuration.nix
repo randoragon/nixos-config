@@ -10,6 +10,7 @@
     ../../modules/nixos/o-graphical.nix
     ../../modules/nixos/o-kanata.nix
     ../../modules/nixos/o-removable-storage.nix
+    ../../modules/nixos/o-sshd-service.nix
     # ../../modules/nixos/o-printing.nix
     ../../modules/nixos/o-work.nix
   ];
