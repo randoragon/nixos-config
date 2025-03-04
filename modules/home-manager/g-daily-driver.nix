@@ -4,6 +4,7 @@
   imports = [
     ./bluetuith
     ./kanata
+    ./nvim
     ./sqlite
     ./wine
     ./xdg-dirs

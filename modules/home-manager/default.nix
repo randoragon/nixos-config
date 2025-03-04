@@ -7,7 +7,6 @@
     ./lazygit
     ./less
     ./lf
-    ./nvim
     ./scripts
     ./tmux
     ./wget
