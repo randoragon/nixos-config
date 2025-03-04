@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     ./boot.nix
+    ./neovim.nix
     ../../modules/nixos
   ];
 
@@ -13,13 +14,6 @@
   services.btrfs.autoScrub = {
     enable = true;
     interval = "weekly";
-  };
-
-  # Install neovim system-wide
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
-    viAlias = true;
   };
 
   # User configuration
