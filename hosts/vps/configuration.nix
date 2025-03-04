@@ -9,6 +9,12 @@
   # Set hostname
   networking.hostName = "nixos";
 
+  # Enable btrfs scrubbing
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
   # User configuration
   users.users.pcache = {
     isNormalUser = true;
