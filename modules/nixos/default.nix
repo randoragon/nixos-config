@@ -30,9 +30,6 @@
   };
   environment.systemPackages = with pkgs; [ pinentry-gtk2 pinentry-curses ];
 
-  # Enable uinput support and group, for kanata (https://github.com/jtroo/kanata/wiki/Avoid-using-sudo-on-Linux)
-  hardware.uinput.enable = true;
-
   # Enable i2c support and group, for ddcutil and ddui
   hardware.i2c.enable = true;
 }

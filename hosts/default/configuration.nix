@@ -7,6 +7,7 @@
     ../../modules/nixos/o-bluetooth.nix
     ../../modules/nixos/o-gaming.nix
     ../../modules/nixos/o-graphical.nix
+    ../../modules/nixos/o-kanata.nix
     # ../../modules/nixos/o-printing.nix
     ../../modules/nixos/o-work.nix
   ];
