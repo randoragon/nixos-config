@@ -9,7 +9,6 @@
   ];
 
   networking.networkmanager.enable = true;
-  services.libinput.enable = true;
   services.udisks2.enable = true;
   programs.ssh.startAgent = true;
   services.ntp.enable = true;

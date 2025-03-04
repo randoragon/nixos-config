@@ -1,5 +1,7 @@
 # Optional graphical session support
 { pkgs, ... }: {
+  services.libinput.enable = true;
+
   # River should ideally be installed at the user-level.
   # However, I encountered NVIDIA-related crashes when removing this
   # system-wide enable. I assume this does something Home Manager's enabling
