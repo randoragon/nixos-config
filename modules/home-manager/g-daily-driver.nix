@@ -7,7 +7,6 @@
     ./sqlite
     ./wine
     ./xdg-dirs
-    ./xdg-mime
   ];
 
   home.packages = with pkgs; [

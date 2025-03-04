@@ -12,6 +12,7 @@
     ./tmux
     ./wget
     ./zsh
+    ./xdg-mime
   ];
 
   # User packages that should always be installed.
