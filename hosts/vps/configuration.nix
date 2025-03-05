@@ -35,6 +35,17 @@
     };
   };
 
+  # Automatically install updates and reboot if needed
+  system.autoUpgrade = {
+    enable = true;
+    flake = "github:randoragon/nixos-config";
+    allowReboot = true;
+    dates = "04:20";
+    rebootWindow = {
+      lower = "03:00";
+      upper = "05:00";
+    };
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
