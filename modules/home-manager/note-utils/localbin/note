@@ -93,102 +93,31 @@ strsub () {
     sed -i -e "s/NOTE_MTIME/$mtime/g" "$2"
 }
 
-# edit <note>
-# note -  path to the note subdirectory, relative to $NOTES
-edit () {
-    note="$1"
-    ext="${note##*.}"
-    dir="$SECRETS/$note"
-    notemain="$dir/$(basename -- "$note")"
-
-    # Custom preprocessing based on file type.
-    # The files variable holds a string of filenames to open.
-    files="$notemain"
-    case "$ext" in
-        typ) export TYPST_ROOT="$dir" ;;
-    esac
-
-    if [ -z "$interactive" ]; then
-        # shellcheck disable=SC2086
-        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
-    else
-        # shellcheck disable=SC2086
-        echo "$files " | xargs $EDITOR "+cd $dir" --
-    fi
-    if ! secrets modified "$NOTES" >/dev/null; then
-        echo 'No changes were made, skipping.'
-    else
-        git -C "$SECRETS" add -- "$note"
-        git -C "$SECRETS" commit -m "Edit $note" -- "$note"
-        secrets save "$NOTES"
-    fi
-}
-
-# view <note>
-# note -  path to the note subdirectory, relative to $NOTES
-view () {
-    note="$1"
-    ext="${note##*.}"
-    dir="$SECRETS/$note"
-    notemain="$dir/$(basename -- "$note")"
-
-    # Delegate cached note types to view_cached()
-    case "$ext" in
-        tex|typ|ly)
-            view_cached "$@"
-            return $?
-            ;;
-        *) ;;
-    esac
-
-    # TODO?: this is unnecessary for cached notes
-    tmpd="$(mktemp --tmpdir -d note.XXXXX)"
-    tmpdmain="$tmpd/$(basename -- "$note")"
-    rsync -a --delete -- "$dir"/ "$tmpd"/
-
-    # Perform string substitutions
-    strsub "$notemain" "$tmpdmain"
-
-    case "$ext" in
-        txt)
-            if [ -z "$interactive" ]; then
-                # shellcheck disable=SC2086
-                $TERMINAL -e $PAGER -- "$tmpdmain"
-            else
-                $PAGER -- "$tmpdmain"
-            fi
-            ;;
-        md)
-            tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
-            printf '%s' "$HTML_MD_STYLE" >"$tmp"
-            md2html --github -- "$tmpdmain" >>"$tmp"
-            [ -s "$tmp" ] && $BROWSER file://"$tmp" && sleep 2  # Browsers tend to be non-blocking, so wait a bit before deleting
-            ;;
-        *)
-            printf "note: unknown note format '%s'\n" "$ext" >&2
-    esac
-    rm -rf -- "$tmpd"
-}
-
-# view_cached <note>
+# cached_get_fpath <note>
 # note - path to the note subdirectory, relative to $NOTES
-# This function is same as view(), except it assumes the note uses caching and
-# will attempt to find the cached file, and will generate it if it does not
-# exist.
-view_cached () {
+# Returns the filepath to where the cache for note should be. If note is not
+# a type that gets cached, exits with an error.
+cached_get_fpath () {
     note="$1"
     ext="${note##*.}"
-    dir="$SECRETS/$note"
-    notemain="$dir/$(basename -- "$note")"
-
-    cache_fpath=
     case "$ext" in
-        tex|typ|ly) cache_fpath="$NOTES_CACHE/$(echo "$dir" | md5sum | cut -d' ' -f1).pdf" ;;
+        tex|typ|ly) echo "$NOTES_CACHE/$(echo "$dir" | md5sum | cut -d' ' -f1).pdf.gpg" ;;
         *)
             echo "note: internal error! extension not recognized as cacheable: $ext" >&2
             exit 3
             ;;
     esac
+}
+
+# cached_ensure_exists <note>
+# note - path to the note subdirectory, relative to $NOTES
+# Caches the note if cache does not exists or is out of date.
+cached_ensure_exists () {
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
+    cache_fpath="$(cached_get_fpath "$note")"
 
     # Read mtime of the note. Will be useful later
     src_fpath="$dir/$(basename -- "$note")"
@@ -236,10 +165,99 @@ view_cached () {
         # Ensure the cache has the exact same mtime as the source from which it was generated.
         touch -mct "$(date -d "@$src_epoch" '+%Y%m%d%H%M.%S')" -- "$cache_fpath"
     fi
+}
+
+# edit <note>
+# note -  path to the note subdirectory, relative to $NOTES
+edit () {
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
+
+    # Custom preprocessing based on file type.
+    # The files variable holds a string of filenames to open.
+    files="$notemain"
+    case "$ext" in
+        typ) export TYPST_ROOT="$dir" ;;
+    esac
+
+    if [ -z "$interactive" ]; then
+        # shellcheck disable=SC2086
+        echo "$files" | xargs $TERMINAL -e $EDITOR "+cd $dir" --
+    else
+        # shellcheck disable=SC2086
+        echo "$files " | xargs $EDITOR "+cd $dir" --
+    fi
+    if ! secrets modified "$NOTES" >/dev/null; then
+        echo 'No changes were made, skipping.'
+    else
+        git -C "$SECRETS" add -- "$note"
+        git -C "$SECRETS" commit -m "Edit $note" -- "$note"
+        secrets save "$NOTES"
+    fi
+}
+
+# view <note>
+# note -  path to the note subdirectory, relative to $NOTES
+view () {
+    note="$1"
+    ext="${note##*.}"
+    dir="$SECRETS/$note"
+    notemain="$dir/$(basename -- "$note")"
+
+    # Delegate cached note types to cached_view()
+    case "$ext" in
+        tex|typ|ly)
+            cached_view "$@"
+            return $?
+            ;;
+        *) ;;
+    esac
+
+    # TODO?: this is unnecessary for cached notes
+    tmpd="$(mktemp --tmpdir -d note.XXXXX)"
+    tmpdmain="$tmpd/$(basename -- "$note")"
+    rsync -a --delete -- "$dir"/ "$tmpd"/
+
+    # Perform string substitutions
+    strsub "$notemain" "$tmpdmain"
+
+    case "$ext" in
+        txt)
+            if [ -z "$interactive" ]; then
+                # shellcheck disable=SC2086
+                $TERMINAL -e $PAGER -- "$tmpdmain"
+            else
+                $PAGER -- "$tmpdmain"
+            fi
+            ;;
+        md)
+            tmp="$(mktemp -p "$tmpd" note.XXXXX.html)"
+            printf '%s' "$HTML_MD_STYLE" >"$tmp"
+            md2html --github -- "$tmpdmain" >>"$tmp"
+            [ -s "$tmp" ] && $BROWSER file://"$tmp" && sleep 2  # Browsers tend to be non-blocking, so wait a bit before deleting
+            ;;
+        *)
+            printf "note: unknown note format '%s'\n" "$ext" >&2
+    esac
+    rm -rf -- "$tmpd"
+}
+
+# cached_view <note>
+# note - path to the note subdirectory, relative to $NOTES
+# This function is same as view(), except it assumes the note uses caching and
+# will attempt to find the cached file, and will generate it if it does not
+# exist.
+cached_view () {
+    note="$1"
+    cache_fpath="$(cached_get_fpath "$note")"
+
+    cached_ensure_exists "$note"
 
     # View the cache
     case "$cache_fpath" in
-        *.pdf)
+        *.pdf.gpg)
             secrets od "$NOTES" "$cache_fpath" - | $PDF_READER -
             ;;
         *)
@@ -296,6 +314,15 @@ output () {
         return
     }
 
+    # Delegate cached note types to cached_output()
+    case "$ext" in
+        tex|typ|ly)
+            cached_output "$@"
+            return $?
+            ;;
+        *) ;;
+    esac
+
     tmpd="$(mktemp --tmpdir -d note.XXXXX)"
     tmpdmain="$tmpd/$(basename -- "$note")"
     rsync -a --delete -- "$dir"/ "$tmpd"/
@@ -322,53 +349,36 @@ output () {
                 md2html --github -- "$tmpdmain" >>"$output"
             fi
             ;;
-        tex)
-            cache="$tmpd/.cache.pdf"
-            # Ensure PDF cache exists
-            [ ! -f "$cache" ] && {
-                lxmake "$tmpdmain" "$cache"
-                git -C "$SECRETS" add -- "$cache"
-                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
-            }
-            if [ $stdout ]; then
-                cat -- "$cache"
-            else
-                cp -- "$cache" "$output"
-            fi
-            ;;
-        typ)
-            cache="$tmpd/NOTE/.cache.pdf"
-            # Ensure PDF cache exists
-            [ ! -f "$cache" ] && {
-                typst compile -- "$tmpdmain" "$cache"
-                git -C "$SECRETS" add -- "$cache"
-                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
-            }
-            if [ $stdout ]; then
-                cat -- "$cache"
-            else
-                cp -- "$cache" "$output"
-            fi
-            ;;
-        ly)
-            cache="$tmpd/NOTE/.cache.pdf"
-            # Ensure PDF cache exists
-            [ ! -f "$cache" ] && {
-                lilypond -s -o "${cache%.pdf}" "$tmpdmain"
-                git -C "$SECRETS" add -- "$cache"
-                git -C "$SECRETS" commit -m "Cache $note" -- "$cache"
-            }
-            if [ $stdout ]; then
-                cat -- "$cache"
-            else
-                cp -- "$cache" "$output"
-            fi
-            ;;
         *)
             printf "note: unknown note format '%s'\n" "$ext" >&2
             ;;
     esac
     rm -rf -- "$tmpd"
+}
+
+# cached_output <note> <output>
+# note -  path to the note subdirectory, relative to $NOTES
+# output - path to the file to export to, or - for stdout
+# This function is same as view(), except it assumes the note uses caching and
+# will attempt to find the cached file, and will generate it if it does not
+# exist.
+cached_output () {
+    note="$1"
+    ext="${note##*.}"
+    cache_fpath="$(cached_get_fpath "$note")"
+    output="$2"
+
+    cached_ensure_exists "$note"
+
+    case "$ext" in
+        tex|typ|ly)
+            secrets od "$NOTES" "$cache_fpath" "$output"
+            ;;
+        *)
+            echo "note: don't know how to output cache '$cache_fpath'" >&2
+            exit 3
+            ;;
+    esac
 }
 
 note=
