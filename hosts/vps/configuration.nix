@@ -5,6 +5,7 @@
     ./boot.nix
     ./neovim.nix
     ./ssh.nix
+    ./git-server.nix
     ../../modules/nixos
   ];
 
