@@ -6,6 +6,7 @@
       PasswordAuthentication = false;
       KbdInteractiveAuthentication = false;
       ChallengeResponseAuthentication = false;
+      PermitRootLogin = "no";
     };
   };
 
