@@ -9,7 +9,7 @@
   ];
 
   # Set hostname
-  networking.hostName = "nixos";
+  networking.hostName = "vps";
 
   # Enable btrfs scrubbing
   services.btrfs.autoScrub = {
