@@ -23,6 +23,7 @@
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "input" "uinput" ];
     shell = pkgs.zsh;
+    openssh.authorizedKeys.keyFiles = [ ../authorized_keys ];
   };
 
   home-manager = {
