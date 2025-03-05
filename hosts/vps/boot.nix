@@ -5,6 +5,7 @@
   boot.loader.grub = {
     enable = true;
     efiSupport = false;
+    devices = [ "/dev/vda" ];
   };
   boot.tmp.useTmpfs = lib.mkForce false;
 }
