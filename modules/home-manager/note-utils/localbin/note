@@ -168,7 +168,7 @@ cached_ensure_exists () {
 }
 
 # edit <note>
-# note -  path to the note subdirectory, relative to $NOTES
+# note - path to the note subdirectory, relative to $NOTES
 edit () {
     note="$1"
     ext="${note##*.}"
@@ -199,14 +199,14 @@ edit () {
 }
 
 # view <note>
-# note -  path to the note subdirectory, relative to $NOTES
+# note - path to the note subdirectory, relative to $NOTES
 view () {
     note="$1"
     ext="${note##*.}"
     dir="$SECRETS/$note"
     notemain="$dir/$(basename -- "$note")"
 
-    # Delegate cached note types to cached_view()
+    # Delegate cached note types to cached_view
     case "$ext" in
         tex|typ|ly)
             cached_view "$@"
@@ -246,7 +246,7 @@ view () {
 
 # cached_view <note>
 # note - path to the note subdirectory, relative to $NOTES
-# This function is same as view(), except it assumes the note uses caching and
+# This function is same as view, except it assumes the note uses caching and
 # will attempt to find the cached file, and will generate it if it does not
 # exist.
 cached_view () {
@@ -297,7 +297,7 @@ create () {
 }
 
 # output <note> <output>
-# note -  path to the note subdirectory, relative to $NOTES
+# note - path to the note subdirectory, relative to $NOTES
 # output - path to the file to export to, or - for stdout
 output () {
     note="$1"
@@ -314,7 +314,7 @@ output () {
         return
     }
 
-    # Delegate cached note types to cached_output()
+    # Delegate cached note types to cached_output
     case "$ext" in
         tex|typ|ly)
             cached_output "$@"
@@ -357,9 +357,9 @@ output () {
 }
 
 # cached_output <note> <output>
-# note -  path to the note subdirectory, relative to $NOTES
+# note - path to the note subdirectory, relative to $NOTES
 # output - path to the file to export to, or - for stdout
-# This function is same as view(), except it assumes the note uses caching and
+# This function is same as output, except it assumes the note uses caching and
 # will attempt to find the cached file, and will generate it if it does not
 # exist.
 cached_output () {
