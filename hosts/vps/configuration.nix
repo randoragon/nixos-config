@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ./boot.nix
     ./neovim.nix
+    ./ssh.nix
     ../../modules/nixos
   ];
 
