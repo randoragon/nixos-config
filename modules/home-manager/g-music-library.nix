@@ -15,6 +15,5 @@
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))
-    lua
   ];
 }
