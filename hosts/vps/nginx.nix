@@ -1,5 +1,10 @@
 {
-  services.nginx = {
+  services.nginx = let
+    reverse-proxy-config = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "https://localhost:5232";
+    }; in {
     enable = true;
     virtualHosts."randoragon.dev" = {
       enableACME = true;
@@ -12,6 +17,10 @@
       forceSSL = true;
       root = "/srv/www/pcache.dev";
     };
+
+    # Reverse proxy for caldav and carddav
+    virtualHosts."caldav.pcache.dev" = reverse-proxy-config;
+    virtualHosts."carddav.pcache.dev" = reverse-proxy-config;
   };
 
   security.acme = {

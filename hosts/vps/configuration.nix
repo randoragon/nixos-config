@@ -7,6 +7,7 @@
     ./ssh.nix
     ./git-server.nix
     ./nginx.nix
+    ./webdav.nix
     ../../modules/nixos
   ];
 
