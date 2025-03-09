@@ -18,4 +18,9 @@
     acceptTerms = true;
     defaults.email = "pcache01@gmail.com";
   };
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 ];
+  };
 }

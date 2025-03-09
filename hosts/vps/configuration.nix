@@ -7,7 +7,6 @@
     ./ssh.nix
     ./git-server.nix
     ./nginx.nix
-    ./firewall.nix
     ../../modules/nixos
   ];
 
