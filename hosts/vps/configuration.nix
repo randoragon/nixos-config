@@ -6,6 +6,7 @@
     ./neovim.nix
     ./ssh.nix
     ./git-server.nix
+    ./nginx.nix
     ../../modules/nixos
   ];
 
