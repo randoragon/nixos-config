@@ -20,7 +20,7 @@ while read -r line; do
     if [ -f "$mroot/$line" ]; then
         if trash-put "$mroot/$line"; then
             dcount="$(( dcount + 1 ))"
-            echo "$line" >>"$log"
+            echo "$line" | tee -a -- "$log"
         else
             echo "pldel: failed to trash file \"$mroot/$line\"" >&2
         fi
