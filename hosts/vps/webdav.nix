@@ -15,7 +15,7 @@
       config.storages = {
         my_contacts_local = {
           type = "filesystem";
-          path = "${config.xdg.dataHome}/contacts";
+          path = "~/.local/share/contacts";
           fileext = ".vcf";
         };
         my_contacts_remote = {
@@ -28,7 +28,7 @@
         };
         my_calendar_local = {
           type = "filesystem";
-          path = "${config.xdg.dataHome}/calendar";
+          path = "~/.local/share/calendar";
           fileext = ".vcf";
         };
         my_calendar_remote = {
