@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   services.radicale = {
     enable = true;
     settings = {
@@ -8,6 +8,7 @@
     };
   };
 
+  environment.systemPackages = with pkgs; [ vdirsyncer ];
   services.vdirsyncer = {
     enable = true;
     jobs."my_contacts" = {
