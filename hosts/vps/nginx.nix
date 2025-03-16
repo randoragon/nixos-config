@@ -3,7 +3,7 @@
     reverse-proxy-config = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "https://localhost:5232";
+      locations."/".proxyPass = "http://localhost:5232";
     }; in {
     enable = true;
     virtualHosts."randoragon.dev" = {
