@@ -14,11 +14,11 @@ longdatetimeformat = %d.%m.%Y %H:%M
 [calendars]
 
 [[caldav.pcache]]
-path = "~/.local/share/calendars/6d25faca-ac85-448f-8829-c29ffbdda989"
+path = "~/.local/share/calendars/caldav.pcache/6d25faca-ac85-448f-8829-c29ffbdda989"
 color = "#B3FF00"
 
 [[caldav.work]]
-path = "~/.local/share/calendars/4cd68d24-9c49-4c2d-9a9a-69329eb248e2"
+path = "~/.local/share/calendars/caldav.pcache/4cd68d24-9c49-4c2d-9a9a-69329eb248e2"
 color = "#FF0000"
 
 [[birthdays]]
