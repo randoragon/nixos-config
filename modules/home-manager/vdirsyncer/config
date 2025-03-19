@@ -17,7 +17,7 @@ a = "my_contacts_remote"
 b = "my_contacts_local"
 collections = ["from a", "from b"]
 metadata = ["color", "displayname", "description", "order"]
-conflict_resolution = null
+conflict_resolution = ["command", "nvim", "-d"]
 
 [storage my_calendars_local]
 type = "filesystem"
@@ -35,7 +35,7 @@ a = "my_calendars_remote"
 b = "my_calendars_local"
 collections = ["from a", "from b"]
 metadata = ["color", "displayname", "description", "order"]
-conflict_resolution = null
+conflict_resolution = ["command", "nvim", "-d"]
 
 [storage put_classes_local]
 type = "filesystem"
@@ -52,5 +52,5 @@ a = "put_classes_remote"
 b = "put_classes_local"
 collections = null
 metadata = ["color", "displayname", "description", "order"]
-conflict_resolution = null
+conflict_resolution = ["command", "nvim", "-d"]
 partial_sync = "revert"
