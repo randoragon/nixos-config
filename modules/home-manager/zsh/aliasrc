@@ -30,6 +30,7 @@ alias der='direnv reload'
 alias vs='vdirsyncer sync'
 alias kl='khal list'
 alias k='khal interactive'
+alias td='\todo'
 
 # Git
 alias gs='git status'
