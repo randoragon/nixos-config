@@ -3,7 +3,6 @@
 # Functionality
 set open-in-browser-command "xdg-open '%l'"
 set copy-to-clipboard-command "auto"
-set status-messages-count-limit 1000
 set notification-command ":"  # Disable notifications
 set menu-feed-sorting unread-desc
 set menu-item-sorting unread-desc
@@ -15,7 +14,6 @@ set list-entry-date-format "%b %d %Y"
 set menu-section-entry-format "%5.0u %t"
 
 # Command keybinds
-unbind ^D
 unbind ^R
 unbind Q
 unbind i
@@ -24,13 +22,13 @@ unbind p
 unbind P
 unbind R
 bind r reload-all
-bind d mark-read
-bind D mark-read-all
+bind f mark-read
+bind F mark-read-all
 bind a mark-unread
 bind A mark-unread-all
 bind q quit-hard
-bind f select-next-page
-bind b select-prev-page
+bind d select-next-page-half
+bind u select-prev-page-half
 
 # Custom keybinds
 bind E exec $EDITOR ~/.config/newsraft/feeds
