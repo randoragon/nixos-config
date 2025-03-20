@@ -15,7 +15,6 @@
     ../../modules/home-manager/g-rss.nix
     ../../modules/home-manager/g-screencasting.nix
     ../../modules/home-manager/g-synchronization.nix
-    ../../modules/home-manager/g-webdav.nix
     ../../modules/home-manager/nvidia
   ];
 
