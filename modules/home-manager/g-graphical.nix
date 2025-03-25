@@ -4,6 +4,7 @@
     ./bemenu
     ./carla
     ./cursor-theme
+    ./flameshot
     ./foot
     ./grim
     ./gtk
@@ -11,7 +12,6 @@
     ./mako
     ./nsxiv
     ./river
-    ./swappy
     ./wlsunset
     ./xorg
     ./yambar
@@ -21,7 +21,6 @@
   home.packages = with pkgs; [
     swayidle waylock
     swww
-    grim slurp swappy
     wl-clipboard
     wlr-randr wdisplays
     brightnessctl

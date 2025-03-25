@@ -9,6 +9,7 @@ riverctl rule-add -app-id 'vesktop' tags $((1 << 11))
 # Floats
 riverctl rule-add -app-id 'floatme' float
 riverctl rule-add -title 'Load SFZ file' float  # sfizz dialog
+riverctl rule-add -title 'flameshot-pin' float
 
 # Ardour floating dialogs
 riverctl rule-add -title 'Rename Track' float
@@ -33,3 +34,4 @@ riverctl rule-add -title 'Mixer' float
 # Server-side decorations
 riverctl rule-add -app-id 'firefox' ssd
 riverctl rule-add -app-id 'zathura*' ssd
+riverctl rule-add -title 'flameshot-pin' csd
