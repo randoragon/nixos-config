@@ -1,0 +1,334 @@
+// https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+
+// Miscellaneous top-level stuff
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H%M%S.png"
+spawn-at-startup "~/.config/niri/init.sh"
+
+// Named workspaces
+workspace "9"
+workspace "8"
+workspace "7"
+workspace "6"
+workspace "5"
+workspace "4"
+workspace "3"
+workspace "2"
+workspace "1"
+workspace "web"
+workspace "email"
+workspace "discord"
+workspace "news"
+workspace "music"
+
+input {
+	keyboard {
+		xkb {
+			layout "pl"
+		}
+		repeat-delay 250
+		repeat-rate 30
+	}
+
+	touchpad {
+		tap
+		natural-scroll
+	}
+	focus-follows-mouse max-scroll-amount="0%"
+}
+
+layout {
+	empty-workspace-above-first
+
+	preset-column-widths {
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+	}
+
+	preset-window-heights {
+		proportion 0.33333
+		proportion 0.5
+		proportion 0.66667
+	}
+
+	default-column-width { proportion 0.5; }
+
+	focus-ring {
+		width 2
+		active-gradient from="#73003f" to="#ff4f00" angle=45
+		inactive-gradient from="#333333" to="#666666" angle=30
+	}
+
+	border {
+		width 2
+		active-gradient from="#d3003f" to="#ff8f00" angle=30
+		inactive-color "#111111"
+	}
+
+	shadow {
+		on
+		softness 30
+		spread 5
+		offset x=0 y=5
+		color "#0007"
+	}
+
+	struts {
+		left 32
+		right 32
+	}
+}
+
+binds {
+	// Basic keybindings
+	Mod+Shift+Slash { show-hotkey-overlay; }
+	Mod+Return { spawn "foot"; }
+	Mod+O { spawn "bemenu-run" "-i" "-c" "-W0.8" "-l20" "-B5" "-R10"; }
+	Mod+Shift+Q { spawn "quitmenu"; }
+
+	// Volume control
+	Mod+equal allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+"; }
+	Mod+minus allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%-"; }
+	Mod+BackSpace allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+	XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+"; }
+	XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%-"; }
+	XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+	XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+	// MPD
+	XF86AudioPlay allow-when-locked=true { spawn "mpc" "toggle"; }
+	XF86AudioStop allow-when-locked=true { spawn "mpc" "stop"; }
+	XF86AudioPrev allow-when-locked=true { spawn "mpc" "prev"; }
+	XF86AudioNext allow-when-locked=true { spawn "mpc" "next"; }
+	Shift+XF86AudioPrev allow-when-locked=true { spawn "mpc" "seek" "-5"; }
+	Shift+XF86AudioNext allow-when-locked=true { spawn "mpc" "seek" "+5"; }
+	Mod+P allow-when-locked=true { spawn "mpc" "toggle"; }
+	Mod+Shift+P allow-when-locked=true { spawn "mpc" "stop"; }
+	Mod+semicolon allow-when-locked=true { spawn "mpc" "prev"; }
+	Mod+apostrophe allow-when-locked=true { spawn "mpc" "next"; }
+	Mod+Shift+semicolon allow-when-locked=true { spawn "mpc" "seek" "-5"; }
+	Mod+Shift+apostrophe allow-when-locked=true { spawn "mpc" "seek" "+5"; }
+
+	// Audio sink picker
+	Mod+Control+P { spawn "~/.scripts/choose_default_sink.sh"; }
+
+	// Windows and columns
+	Mod+H             { focus-column-left; }
+	Mod+J             { focus-window-or-workspace-down; }
+	Mod+K             { focus-window-or-workspace-up; }
+	Mod+L             { focus-column-right; }
+	Mod+Shift+H       { move-column-left; }
+	Mod+Shift+J       { move-window-down-or-to-workspace-down; }
+	Mod+Shift+L       { move-column-right; }
+	Mod+Shift+K       { move-window-up-or-to-workspace-up; }
+
+	// Stacking columns
+	Mod+BracketLeft         { consume-or-expel-window-left; }
+	Mod+BracketRight        { consume-or-expel-window-right; }
+	Mod+Shift+BracketLeft   { consume-window-into-column; }
+	Mod+Shift+BracketRight  { expel-window-from-column; }
+
+	// Resizing windows/columns
+	Mod+Ctrl+H         { set-column-width "-5%"; }
+	Mod+Ctrl+L         { set-column-width "+5%"; }
+	Mod+Ctrl+K         { set-window-height "-5%"; }
+	Mod+Ctrl+J         { set-window-height "+5%"; }
+	Mod+Ctrl+Shift+L   { expand-column-to-available-width; }
+	Mod+Ctrl+Shift+H   { set-column-width "50%"; }
+	Mod+Ctrl+Shift+J   { switch-preset-window-height; }
+	Mod+Ctrl+Shift+K   { reset-window-height; }
+
+	// Other layouting actions
+	Mod+Q              { close-window; }
+	Mod+S              { focus-column-first; }
+	Mod+Shift+S        { move-column-to-first; }
+	Mod+A              { maximize-column; }
+	Mod+Shift+A        { toggle-column-tabbed-display; }
+
+	// Floating windows
+	Mod+Shift+Space  { toggle-window-floating; }
+	Mod+Space        { switch-focus-between-floating-and-tiling; }
+
+	// Workspaces
+	Mod+U        { focus-workspace-down; }
+	Mod+I        { focus-workspace-up; }
+	Mod+Shift+U  { move-workspace-down; }
+	Mod+Shift+I  { move-workspace-up; }
+	Mod+Tab      { focus-workspace-previous; }
+	Mod+1   { focus-workspace "1"; }
+	Mod+2   { focus-workspace "2"; }
+	Mod+3   { focus-workspace "3"; }
+	Mod+4   { focus-workspace "4"; }
+	Mod+5   { focus-workspace "5"; }
+	Mod+6   { focus-workspace "6"; }
+	Mod+7   { focus-workspace "7"; }
+	Mod+8   { focus-workspace "8"; }
+	Mod+9   { focus-workspace "9"; }
+	Mod+W   { focus-workspace "web"; }
+	Mod+E   { focus-workspace "email"; }
+	Mod+D   { focus-workspace "discord"; }
+	Mod+N   { focus-workspace "news"; }
+	Mod+M   { focus-workspace "music"; }
+	Mod+Shift+1  { move-column-to-workspace "1"; }
+	Mod+Shift+2  { move-column-to-workspace "2"; }
+	Mod+Shift+3  { move-column-to-workspace "3"; }
+	Mod+Shift+4  { move-column-to-workspace "4"; }
+	Mod+Shift+5  { move-column-to-workspace "5"; }
+	Mod+Shift+6  { move-column-to-workspace "6"; }
+	Mod+Shift+7  { move-column-to-workspace "7"; }
+	Mod+Shift+8  { move-column-to-workspace "8"; }
+	Mod+Shift+9  { move-column-to-workspace "9"; }
+	Mod+Shift+W  { move-column-to-workspace "web"; }
+	Mod+Shift+E  { move-column-to-workspace "email"; }
+	Mod+Shift+D  { move-column-to-workspace "discord"; }
+	Mod+Shift+N  { move-column-to-workspace "news"; }
+	Mod+Shift+M  { move-column-to-workspace "music"; }
+
+	// Monitors
+	Mod+comma                 { focus-monitor-previous; }
+	Mod+period                { focus-monitor-next; }
+	Mod+Shift+comma           { move-column-to-monitor-previous; }
+	Mod+Shift+period          { move-column-to-monitor-next; }
+	Mod+Control+Shift+comma   { move-workspace-to-monitor-previous; }
+	Mod+Control+Shift+period  { move-workspace-to-monitor-next; }
+
+	// Mouse
+	Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+	Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+	Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+	Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+	Mod+WheelScrollRight                     { focus-column-right; }
+	Mod+WheelScrollLeft                      { focus-column-left; }
+	Mod+Ctrl+WheelScrollRight                { move-column-right; }
+	Mod+Ctrl+WheelScrollLeft                 { move-column-left; }
+	Mod+Shift+WheelScrollDown                { focus-column-right; }
+	Mod+Shift+WheelScrollUp                  { focus-column-left; }
+	Mod+Ctrl+Shift+WheelScrollDown           { move-column-right; }
+	Mod+Ctrl+Shift+WheelScrollUp             { move-column-left; }
+
+	// Applications such as remote-desktop clients and software KVM switches may
+	// request that niri stops processing the keyboard shortcuts defined here
+	// so they may, for example, forward the key presses as-is to a remote machine.
+	// It's a good idea to bind an escape hatch to toggle the inhibitor,
+	// so a buggy application can't hold your session hostage.
+	//
+	// The allow-inhibiting=false property can be applied to other binds as well,
+	// which ensures niri always processes them, even when an inhibitor is active.
+	Mod+Ctrl+Shift+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+	// Launchers
+	Mod+C               { spawn "snippet"; }
+	Mod+Shift+O         { spawn "~/.scripts/passcpy"; }
+	Mod+Ctrl+O          { spawn "~/.scripts/usercpy"; }
+	Mod+Shift+Y         { spawn "sh" "-c" "note --bemenu || notify-send -u critical note 'Exited with error'"; }
+	Mod+Ctrl+Y          { spawn "sh" "-c" "note --bemenu -e || notify-send -u critical note 'Exited with error'"; }
+	Mod+Ctrl+Equal      { spawn "~/.scripts/pladd_select"; }
+	Control+Alt+H       { spawn "foot" "-W" "150x45" "-a" "floatme" "htop"; }
+	Control+Alt+D       { spawn "vesktop"; }
+	Control+Alt+M       { spawn "foot" "ncmpcpp"; }
+	Control+Alt+N       { spawn "foot" "newsraft"; }
+	Control+Alt+Slash   { spawn "foot" "qalc"; }
+	Control+Alt+T       { spawn "sh" "-c" "$TERMINAL $EDITOR ~/Sync/todo.txt"; }
+	Control+Alt+B       { spawn "~/.scripts/book"; }
+
+	// Status bar
+	Mod+B               { spawn "sh" "-c" "pkill -x yambar || yambar"; }
+
+	// Wallpaper
+	Mod+Control+Shift+Slash  { spawn "swww" "clear" "111111"; }
+	Mod+Control+Slash        { spawn "~/.scripts/wallpaper_random.sh"; }
+
+	// Notifications
+	Control+Grave  { spawn "makoctl" "dismiss" "-a"; }
+	Mod+Grave      { spawn "makoctl" "restore"; }
+
+	// Backlight
+	XF86MonBrightnessUp     { spawn "brightnessctl" "set" "+5%"; }
+	XF86MonBrightnessDown   { spawn "brightnessctl" "set" "-5%"; }
+
+	// Screenshots
+	Print { spawn "flameshot" "gui"; }
+	Ctrl+Print { screenshot-screen; }
+	Alt+Print { screenshot-window; }
+}
+
+// Configure status bar
+layer-rule {
+	match namespace="panel"
+	match at-startup=true
+
+	opacity 0.8
+	block-out-from "screen-capture"
+
+	shadow {
+		on
+		softness 20
+		spread 4
+		offset x=0 y=5
+		draw-behind-window true
+		color "#00000064"
+	}
+}
+
+// Block notifications from screen capture
+layer-rule {
+	match namespace="notifications"
+	block-out-from "screen-capture"
+}
+
+// Global window rules
+window-rule {
+	clip-to-geometry true
+	geometry-corner-radius 4
+	tab-indicator {
+		active-gradient from="yellow" to="red"
+		inactive-color "#211a"
+	}
+}
+
+// Floats
+window-rule {
+	match app-id="floatme"
+	open-floating true
+}
+
+// Firefox
+window-rule {
+	match app-id="firefox" at-startup=true
+	open-maximized true
+	open-on-workspace "web"
+}
+window-rule {
+	match app-id="firefox" title="Picture-in-Picture"
+	open-floating true
+}
+
+// Thunderbird
+window-rule {
+	match app-id="thunderbird"
+	open-maximized true
+	open-on-workspace "email"
+}
+
+// Discord
+window-rule {
+	match app-id="discord|vesktop"
+	open-maximized true
+	open-on-workspace "discord"
+}
+
+// Flameshot
+window-rule {
+	match app-id="flameshot" title="flameshot-pin"
+	open-floating true
+	shadow {
+		off
+	}
+	border {
+		off
+	}
+	focus-ring {
+		width 4
+	}
+}
