@@ -10,8 +10,8 @@
     ./gtk
     ./krita
     ./mako
+    ./niri
     ./nsxiv
-    ./river
     ./wlsunset
     ./xorg
     ./yambar
@@ -26,6 +26,7 @@
     brightnessctl
     ripdrag
     zenity
+    xwayland-satellite
 
     firefox ungoogled-chromium
     zathura

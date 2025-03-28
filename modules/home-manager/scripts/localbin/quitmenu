@@ -8,5 +8,5 @@ case "$(printf "%s\n" "poweroff" "reboot" "suspend" "logout" | bemenu -p 'quitme
     "poweroff") systemctl poweroff ;;
     "reboot") systemctl reboot ;;
     "suspend") systemctl suspend ;;
-    "logout") riverctl exit ;;
+    "logout") niri msg action quit --skip-confirmation ;;
 esac
