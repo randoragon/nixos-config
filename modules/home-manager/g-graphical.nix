@@ -19,7 +19,7 @@
   ];
 
   home.packages = with pkgs; [
-    swayidle waylock
+    swayidle swaylock
     swww
     wl-clipboard
     wlr-randr wdisplays

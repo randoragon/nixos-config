@@ -87,8 +87,8 @@ riverctl map -repeat normal Super+Control L resize horizontal  50
 
 # Lock idle session
 swayidle -w \
-    timeout 600 waylock \
-    before-sleep waylock &
+    timeout 600 swaylock \
+    before-sleep swaylock &
 
 # Source script files from init.d directory
 if [ -d init.d ]; then
