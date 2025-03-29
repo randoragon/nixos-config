@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+update () {
+    win_title="$(niri msg -j focused-window | jq -r 'if . != null then .title else "" end')"
+    echo "str|string|$win_title"
+    echo
+}
+
+update
+niri msg -j event-stream | while read -r json; do
+    win_title="$(echo "$json" | jq -r 'if has("WindowFocusChanged") then "" else .WindowOpenedOrChanged.window.title end')"
+    [ "$win_title" = null ] && continue
+
+    if [ -n "$win_title" ]; then
+        echo "str|string|$win_title"
+        echo
+    else
+        update
+    fi
+done
