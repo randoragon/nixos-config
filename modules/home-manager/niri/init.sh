@@ -26,5 +26,8 @@ dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
 systemctl --user start wireplumber
 
+# Start the status bar
+yambar &
+
 # Run custom autostart, if present
 [ -f ~/.config/autostart.sh ] && . ~/.config/autostart.sh

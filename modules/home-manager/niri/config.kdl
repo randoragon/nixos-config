@@ -37,8 +37,14 @@ input {
 	focus-follows-mouse max-scroll-amount="0%"
 }
 
+cursor {
+	xcursor-theme "Simp1e-Adw-Dark"
+	xcursor-size 24
+}
+
 layout {
 	empty-workspace-above-first
+	always-center-single-column
 
 	preset-column-widths {
 		proportion 0.33333
@@ -253,6 +259,11 @@ binds {
 	Alt+Print { screenshot-window; }
 }
 
+environment {
+	// Make XWayland work (when xwayland-satellite is running)
+	DISPLAY ":0"
+}
+
 // Configure status bar
 layer-rule {
 	match namespace="panel"
@@ -331,4 +342,10 @@ window-rule {
 	focus-ring {
 		width 4
 	}
+}
+
+// GPG Pinentry
+window-rule {
+	match app-id="Pinentry"
+	open-floating true
 }
