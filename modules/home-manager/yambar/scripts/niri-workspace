@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+update () {
+    ws_name="$(niri msg -j workspaces | jq -r ".[] | select(.is_active == true).name // empty")"
+    echo "str|string|${ws_name:-_}"
+    echo
+}
+
+update
+niri msg -j event-stream | while read -r json; do
+    ws_id="$(echo "$json" | jq -r '.WorkspaceActivated.id')"
+    [ "$ws_id" = null ] && continue
+    update
+done
