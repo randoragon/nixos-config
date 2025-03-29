@@ -14,7 +14,6 @@
     ./nsxiv
     ./wlsunset
     ./xorg
-    ./xwayland-satellite
     ./yambar
     ./zathura
   ];
@@ -26,6 +25,7 @@
     wlr-randr wdisplays
     brightnessctl
     ripdrag
+    xwayland-satellite
     zenity
 
     firefox ungoogled-chromium
