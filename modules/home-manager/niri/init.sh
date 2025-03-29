@@ -16,6 +16,7 @@ mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
 
 # Start wallpaper manager
 swww-daemon --no-cache &
+swww img -t none ~/.config/wallpaper
 
 # Fix screen capture
 # Source: https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
