@@ -2,7 +2,6 @@
 
 # Enable XWayland support
 xwayland-satellite :0 &
-export DISPLAY=:0
 
 # Lock idle session
 swayidle -w \
