@@ -242,8 +242,8 @@ binds {
 	Mod+Grave      hotkey-overlay-title="Restore Last Notification" { spawn "makoctl" "restore"; }
 
 	// Backlight
-	XF86MonBrightnessUp     hotkey-overlay-title="Increase Monitor Brightness" { spawn "brightnessctl" "set" "+5%"; }
-	XF86MonBrightnessDown   hotkey-overlay-title="Decrease Monitor Brightness" { spawn "brightnessctl" "set" "-5%"; }
+	XF86MonBrightnessUp     hotkey-overlay-title="Increase Monitor Brightness" { spawn "brightnessctl" "set" "--" "+5%"; }
+	XF86MonBrightnessDown   hotkey-overlay-title="Decrease Monitor Brightness" { spawn "brightnessctl" "set" "--" "-5%"; }
 
 	// Screenshots
 	Print hotkey-overlay-title="Flameshot" { spawn "flameshot" "gui"; }
