@@ -11,8 +11,8 @@
     ./krita
     ./mako
     ./niri
-    ./nsxiv
     ./swaylock
+    ./vimiv-qt
     ./wlsunset
     ./xorg
     ./yambar

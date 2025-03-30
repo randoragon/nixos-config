@@ -4,7 +4,6 @@
 alias ls='ls --color=auto'
 alias ll='ls -al --group-directories-first --color=auto'
 alias tp='trash-put'
-alias nsxiv='nsxiv -qab'
 alias fzf='fzf --bind=ctrl-d:half-page-down,ctrl-u:half-page-up'
 alias xo='xdg-open'
 alias xpo='setsid >/dev/null 2>&1 xdg-open'

@@ -1,5 +1,5 @@
 nnoremap <Leader>m :write \| AsyncRun mscgen -Tpng -i % -o "$VIM_PREVIEW_HOME/vim-preview.png"<CR>
-nnoremap <Leader>p :AsyncRun setsid nsxiv -bps f -- "$VIM_PREVIEW_HOME/vim-preview.png"<CR>
+nnoremap <Leader>p :AsyncRun setsid vimiv --set statusbar.show False --set thumbnail.save False -- "$VIM_PREVIEW_HOME/vim-preview.png"<CR>
 
 inoremap <Leader>l label=""<Left>
 inoremap <Leader>i \|\|\|;<CR>

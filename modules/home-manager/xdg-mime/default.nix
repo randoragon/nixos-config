@@ -87,15 +87,16 @@
 
     image = {
       type = "Application";
-      name = "nsxiv";
+      name = "vimiv";
       genericName = "Image Viewer";
-      exec = "${pkgs.nsxiv}/bin/nsxiv -- %F";
+      exec = "${pkgs.vimiv-qt}/bin/vimiv -- %F";
       terminal = false;
       mimeType = [
-        "image/bmp" "image/gif" "image/jpeg" "image/jpg"
-        "image/png" "image/svg" "image/webp" "image/tiff"
-        "image/x-bmp" "image/x-portable-anymap" "image/x-portable-bitmap"
-        "image/x-portable-graymap" "image/x-tga" "image/x-xpixmap"
+        "image/bmp" "image/gif" "image/jp2" "image/jpeg"
+        "image/jpeg2000" "image/jpg" "image/jpx" "image/png"
+        "image/svg" "image/tiff" "image/webp" "image/x-bmp"
+        "image/x-portable-anymap" "image/x-portable-bitmap" "image/x-portable-graymap" "image/x-tga"
+        "image/x-xpixmap"
       ];
     };
 
