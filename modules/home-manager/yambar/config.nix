@@ -21,93 +21,24 @@
 
   in {
     location = "top";
+    layer = "top";
     height = 20;
     background = "333333ff";
 
     left = [
       {
-        river = let
-          on-click = {
-            left = "sh -c 'riverctl set-focused-tags $((1 << ({id} - 1)))'";
-            right = "sh -c 'riverctl toggle-focused-tags $((1 << ({id} - 1)))'";
-          };
-          focus-string = {
-            deco.background.color = "666666ff";
-            margin = 5;
-            text = "{id}";
-            inherit on-click;
-          };
-          urgent-string = {
-            deco.background.color = "ff4444ff";
-            margin = 5;
-            text = "{id}";
-            inherit on-click;
-          };
-          tag-default = name: {
-            string = {
-              margin = 5;
-              text = "${name}";
-              inherit on-click;
-            };
-          };
-          tag-focused = name: {
-            string = {
-              deco.background.color = "666666ff";
-              margin = 5;
-              text = "${name}";
-              inherit on-click;
-            };
-          };
-          tag-urgent = name: {
-            string = {
-              deco.background.color = "ff4444ff";
-              margin = 5;
-              text = "${name}";
-              inherit on-click;
-            };
-          };
-          per-special-tag = hook: {
-            "id == 10" = hook "w";
-            "id == 11" = hook "e";
-            "id == 12" = hook "d";
-            "id == 13" = hook "n";
-            "id == 14" = hook "m";
-          };
-        in {
-          content = {
-            map = {
-              default = {
-                map = {
-                  default = tag-default "{id}";
-                  conditions = per-special-tag tag-default;
-                };
-              };
-              conditions = {
-                "~occupied && ~focused" = empty;
-                urgent = {
-                  map = {
-                    default = tag-urgent "{id}";
-                    conditions = per-special-tag tag-urgent;
-                  };
-                };
-                focused = {
-                  map = {
-                    default = tag-focused "{id}";
-                    conditions = per-special-tag tag-focused;
-                  };
-                };
-              };
-            };
-          };
+        script = {
+          path = ./scripts/niri-workspace;
+          content = basic-string "{str}";
         };
       }
     ];
 
     center = [
       {
-        river = {
-          title.string.text = "{title}";
-          content = empty;
+        foreign-toplevel.content.map.conditions = {
+          "~activated" = empty;
+          "activated" = basic-string "{title}";
         };
       }
     ];
@@ -134,7 +65,7 @@
 
       {
         script = {
-          path = "~/.scripts/yambar/storage";
+          path = ./scripts/storage;
           poll-interval = 10000;
           content = basic-string "{str}";
         };
@@ -144,7 +75,7 @@
 
       {
         script = {
-          path = "~/.scripts/yambar/gpg_expire";
+          path = ./scripts/gpg_expire;
           poll-interval = 3600000;
           content = basic-string "{str}";
         };
