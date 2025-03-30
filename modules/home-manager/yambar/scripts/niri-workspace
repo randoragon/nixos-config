@@ -26,7 +26,7 @@ update () {
 
 update
 niri msg -j event-stream | while read -r json; do
-    ws_id="$(echo "$json" | jq -r '.WorkspaceActivated.id // .WorkspaceActiveWindowChanged.workspace_id')"
-    [ "$ws_id" = null ] && continue
+    ws_changed="$(echo "$json" | jq -r '.WorkspaceActivated.id // .WorkspaceActiveWindowChanged.workspace_id // .WorkspacesChanged')"
+    [ "$ws_changed" = null ] && continue
     update
 done
