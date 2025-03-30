@@ -21,6 +21,7 @@
 
   in {
     location = "top";
+    layer = "top";
     height = 20;
     background = "333333ff";
 
