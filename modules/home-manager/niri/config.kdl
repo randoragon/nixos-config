@@ -229,6 +229,7 @@ binds {
 	Control+Alt+Slash   hotkey-overlay-title="Spawn qalc" { spawn "foot" "qalc"; }
 	Control+Alt+T       hotkey-overlay-title="Open todo.txt" { spawn "sh" "-c" "$TERMINAL $EDITOR ~/Sync/todo.txt"; }
 	Control+Alt+B       hotkey-overlay-title="Open Book" { spawn "~/.scripts/book"; }
+	Control+Alt+L       hotkey-overlay-title="Lock" { spawn "swaylock"; }
 
 	// Status bar
 	Mod+B               hotkey-overlay-title="Toggle Status Bar" { spawn "sh" "-c" "pkill -x yambar || yambar"; }
