@@ -7,7 +7,7 @@
       statusbar-v-padding = 0;
       page-padding = 1;
       font = "bitstream vera sans mono 12";
-      guioptions = "shv";
+      guioptions = "hv";
       window-title-home-tilde = true;
       window-title-page = true;
       statusbar-home-tilde = true;
