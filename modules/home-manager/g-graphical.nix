@@ -30,7 +30,6 @@
     zenity
 
     firefox ungoogled-chromium
-    zathura
     xarchiver
     libreoffice
     android-file-transfer
