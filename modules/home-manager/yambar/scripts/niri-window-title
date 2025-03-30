@@ -8,7 +8,14 @@ update () {
 
 update
 niri msg -j event-stream | while read -r json; do
-    win_title="$(echo "$json" | jq -r 'if has("WindowFocusChanged") then "" else .WindowOpenedOrChanged.window.title end')"
+    win_title="$(echo "$json" | jq -r '
+        if has("WindowFocusChanged") then
+            ""
+        elif .WindowOpenedOrChanged.window.is_focused == true then
+            .WindowOpenedOrChanged.window.title
+        else
+            null
+        end')"
     [ "$win_title" = null ] && continue
 
     if [ -n "$win_title" ]; then
