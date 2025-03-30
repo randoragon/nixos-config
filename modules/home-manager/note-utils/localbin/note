@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Wrapper script for storing plain-text, markup, encrypted notes.
 # See "note -h" for more details.
@@ -16,7 +16,6 @@
 # - lilypond (for lilypond support)
 #
 # For the lxmake script see https://github.com/Randoragon/dotfiles/blob/master/scripts/.local/bin/lxmake
-set -e
 
 # CONFIG
 NOTES="${XDG_DATA_HOME:-~/.local/share}/notes"

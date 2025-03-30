@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 mkdir -p -- "$GRIM_DEFAULT_DIR"
 

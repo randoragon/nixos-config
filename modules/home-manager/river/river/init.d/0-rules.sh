@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Tags
 riverctl rule-add -app-id 'firefox' tags $((1 << 9))

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script lets you select any entry from pass via bemenu,
 # then will prompt you for key password if necessary, and

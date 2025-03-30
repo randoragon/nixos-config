@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is called everytime a file is being opened by xdg-open using
 # text.desktop application (connected to text/plain files).

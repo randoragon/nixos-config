@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is an imitation of updatedb from the mlocate package.
 # It runs a find command and stores the resulting paths in a text file.

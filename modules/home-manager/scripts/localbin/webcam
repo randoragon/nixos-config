@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Open a new mpv window with live webcam feed.
 # The camera device can be specified explicitly,

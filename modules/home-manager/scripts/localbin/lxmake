@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # LaTeX make - a script for converting a LaTeX document to PDF in a contained
 # way, without any of the aux files junk. The document is compiled once if a

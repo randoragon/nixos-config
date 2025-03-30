@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -e
+#!/bin/sh -e
 
 url='https://github.com/olive-editor/olive/releases/download/0.2.0-nightly/Olive-8ac191ce-Linux-x86_64.AppImage'
 fname="$(basename -- "$url")"

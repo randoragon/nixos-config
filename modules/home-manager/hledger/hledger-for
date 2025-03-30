@@ -1,6 +1,5 @@
-#!/bin/sh
+#!/bin/sh -e
 # Show a historical forecast (default: monthly current year)
-set -e
 
 hledger \
     --auto \

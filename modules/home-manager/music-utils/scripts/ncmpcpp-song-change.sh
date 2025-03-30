@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is run every time ncmpcpp registers a song change.
 

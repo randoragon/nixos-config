@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 # Source: https://github.com/LukeSmithxyz/voidrice/blob/master/.config/sxiv/exec/key-handler
 #
 # KeyBindings (all precede with <C-x>):

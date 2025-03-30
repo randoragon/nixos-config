@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 swww-daemon --format xrgb --no-cache &
 

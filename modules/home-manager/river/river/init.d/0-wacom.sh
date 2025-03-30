@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 wacombind () {
     riverctl map normal None  "$1" spawn "~/.scripts/wacom/wacom_$2.sh"

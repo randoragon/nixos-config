@@ -8,7 +8,7 @@
   # Thus, create a wrapper script for invoking it with the desired parameters.
   home.file.".local/bin/wlsunset" = {
     text = ''
-      #!/bin/sh
+      #!/bin/sh -e
 
       ${pkgs.wlsunset}/bin/wlsunset -l 52.4 -L 16.9
     '';

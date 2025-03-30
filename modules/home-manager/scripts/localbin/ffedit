@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Transcode video and audio files to an editing-friendly format.
 # Suitable for DaVinci Resolve (free version), and in general faster due to
@@ -7,8 +7,6 @@
 # Sources:
 # - https://wiki.archlinux.org/title/DaVinci_Resolve#MP4,_H.264,_H.265_and_AAC_Support
 # - https://documents.blackmagicdesign.com/SupportNotes/DaVinci_Resolve_18_Supported_Codec_List.pdf
-
-set -e
 
 help () {
     echo 'Usage:'

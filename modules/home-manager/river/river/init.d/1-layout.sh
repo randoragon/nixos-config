@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Layout mappings
 riverctl map normal Super A send-layout-cmd rivercarro 'main-location-cycle left,monocle'

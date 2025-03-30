@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is used by an RSS reader to play videos with mpv.
 # The advantage that it offers over simply running mpv is that

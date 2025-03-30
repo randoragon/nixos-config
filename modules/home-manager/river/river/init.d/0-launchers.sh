@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 appmap () {
     riverctl map normal "$1" "$2" spawn "$3"

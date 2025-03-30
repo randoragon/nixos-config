@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script lets you run a single gpg command with
 # the primary secret key temporarily imported.
@@ -7,8 +7,6 @@
 #
 # Inspired by:
 # https://incenp.org/notes/2015/using-an-offline-gnupg-master-key.html
-
-set -e
 
 [ "$1" = "-h" ] || [ "$1" = "--help" ] && {
     printf "NAME

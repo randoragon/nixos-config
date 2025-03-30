@@ -1,6 +1,5 @@
-#!/bin/sh
+#!/bin/sh -e
 # Edit the hledger journal
-set -e
 
 LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 SECRETS="$LEDGER/secrets"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is a simple wrapper for running mp3gain recursively
 # on a library full of mp3 music files.
@@ -10,8 +10,6 @@
 
 MUSIC_DIR=~/Music
 LOG=~/.cache/normalize-latest.log
-
-set -e
 
 usage () {
     echo 'Usage:  normalize OPTION'

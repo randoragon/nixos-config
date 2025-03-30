@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 mpcmap () {
     riverctl map -repeat normal "$1" "$2" spawn "mpc $3"

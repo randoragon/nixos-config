@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is executed by the hotkey daemon when button1 is pressed on a wacom stylus device.
 

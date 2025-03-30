@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Extracts any common archive format into a custom directory
 # Simple wrapper for tar, unzip, rar, jar and 7z.

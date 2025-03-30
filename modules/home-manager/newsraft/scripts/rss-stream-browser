@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is used by an RSS reader to open live streams.
 # Based on the URL it can distinguish between YouTube and Twitch

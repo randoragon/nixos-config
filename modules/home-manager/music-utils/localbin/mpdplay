@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Intakes an absolute/relative song path, adds it after the current playing mpd song,
 # then skips the current playing song and plays the next one.

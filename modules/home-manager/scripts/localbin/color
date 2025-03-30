@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Displays a color selection zenity dialogue,
 # copies the result to clipboard

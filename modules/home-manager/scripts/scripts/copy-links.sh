@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # For copying a lot of links and storing them in a text file.
 

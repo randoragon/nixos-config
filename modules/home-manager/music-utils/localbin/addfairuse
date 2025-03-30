@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script is meant to simplify the process of adding new songs to my live streaming music playlist.
 # Given a list of files, it will scan their metadata and poll the user for missing values or offer

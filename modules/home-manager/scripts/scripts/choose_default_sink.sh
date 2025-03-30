@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Displays an interactive bemenu with all PipeWire sinks listed.
 # Sets the chosen sink as the new default.

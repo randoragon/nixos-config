@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 WALLPAPER_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/wallpapers"
 

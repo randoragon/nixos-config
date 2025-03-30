@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # CoPy PUBlisher TO URL (mp3 tags)
 

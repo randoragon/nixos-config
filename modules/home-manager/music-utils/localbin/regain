@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Normalize a single file or directory with mp3gain.
 # Directories can be treated both as singles and as an album.
@@ -7,8 +7,6 @@
 # - mp3gain
 # - rsgain
 # - rsid3
-
-set -e
 
 usage () {
     echo 'Usage:  regain [OPTION] [FILE]'

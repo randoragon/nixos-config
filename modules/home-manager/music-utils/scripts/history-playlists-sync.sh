@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script copies every* hist.$host.m3u file from Sync directory to the
 # Music directory. It's intended to be run periodically (e.g. cronjob).

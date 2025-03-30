@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Reencodes a video for YouTube upload.
 # source: https://video.stackexchange.com/questions/24479/how-to-encode-for-youtube-with-ffmpeg

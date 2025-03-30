@@ -1,9 +1,7 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Distributes some config files from pass to the filesystem.
 # To be used along with "ppush".
-
-set -e
 
 heading () {
     tput setaf 3

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This is a wrapper script for an RSS reader. It downloads a video or audio
 # file with youtube-dl without blocking the running RSS reader instance by

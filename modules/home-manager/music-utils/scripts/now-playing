@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 watch -t "mpc status -f '\
 artist: %artist%

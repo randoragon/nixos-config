@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 link="$1"
 echo "$link" | grep -q '^https://\(www\.\)\?youtube\.com/watch?v=[^?]\+$' || {

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 epoch_expire=$(($(gpg -K --with-colons | grep '^\(sec\|ssb\)' | cut -d: -f7 | sort -n | head -n1)))
 epoch_now=$(($(date +%s)))

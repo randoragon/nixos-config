@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Small wrapper for cron jobs to easily display notifications
 # in conjunction with custom SFX.

@@ -1,7 +1,6 @@
-#!/bin/sh
+#!/bin/sh -e
 # An improved accounting equation report.
 # https://hledger.org/balancing-the-accounting-equation.html
-set -e
 
 LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 

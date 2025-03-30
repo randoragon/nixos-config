@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Source: https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
 

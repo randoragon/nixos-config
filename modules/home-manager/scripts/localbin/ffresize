@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Wrapper for ffmpeg to resize a video/gif file
 

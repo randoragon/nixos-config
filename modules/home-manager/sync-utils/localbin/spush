@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # This script first mirrors files and directories designated for sync
 # to a special sync directory used by Syncthing. After the mirror,

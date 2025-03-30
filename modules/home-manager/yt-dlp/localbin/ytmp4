@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # youtube-dl/yt-dlp wrapper for downloading single mp4 files in best quality.
 

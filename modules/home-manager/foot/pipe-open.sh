@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Writes stdin to a temporary file, opens the file for editing.
 # The file is removed after the editor closes.

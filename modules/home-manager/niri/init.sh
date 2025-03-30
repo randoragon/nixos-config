@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Enable XWayland support
 xwayland-satellite :0 &

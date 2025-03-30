@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 case "$1" in
     *.tar|*.tar.gz|*.tar.bz|*.tar.xz) tar tf "$1" ;;

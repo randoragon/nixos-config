@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Wrap nvidia-settings to prevent it from creating a config file in $HOME
 nvidia-settings --config="${XDG_CONFIG_HOME:-$HOME/.config}/nvidia/settings"

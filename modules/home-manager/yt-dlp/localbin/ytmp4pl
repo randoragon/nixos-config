@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # youtube-dl/yt-dlp wrapper for downloading mp4 playlists in best quality.
 

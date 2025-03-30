@@ -1,6 +1,4 @@
-#!/bin/sh
-
-set -e
+#!/bin/sh -e
 
 usage () {
     echo 'Usage:  bass-trainer [OPTION] BPM'
