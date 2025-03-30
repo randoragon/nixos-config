@@ -12,6 +12,7 @@
     ./mako
     ./niri
     ./nsxiv
+    ./swaylock
     ./wlsunset
     ./xorg
     ./yambar
@@ -19,7 +20,7 @@
   ];
 
   home.packages = with pkgs; [
-    swayidle swaylock
+    swayidle
     swww
     wl-clipboard
     wlr-randr wdisplays
