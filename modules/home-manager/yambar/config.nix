@@ -35,9 +35,9 @@
 
     center = [
       {
-        script = {
-          path = ./scripts/niri-window-title;
-          content = basic-string "{str}";
+        foreign-toplevel.content.map.conditions = {
+          "~activated" = empty;
+          "activated" = basic-string "{title}";
         };
       }
     ];
