@@ -137,10 +137,12 @@ binds {
 
 	// Other layouting actions
 	Mod+Q              { close-window; }
-	Mod+S              { focus-column-first; }
-	Mod+Shift+S        { move-column-to-first; }
-	Mod+A              { maximize-column; }
-	Mod+Shift+A        { toggle-column-tabbed-display; }
+	Mod+A              { focus-column-first; }
+	Mod+S              { focus-column-last; }
+	Mod+Shift+A        { move-column-to-first; }
+	Mod+Shift+S        { move-column-to-last; }
+	Mod+Escape         { maximize-column; }
+	Mod+Shift+Escape   { toggle-column-tabbed-display; }
 
 	// Floating windows
 	Mod+Shift+Space  { toggle-window-floating; }
