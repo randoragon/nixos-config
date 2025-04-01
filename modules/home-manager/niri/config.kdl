@@ -142,6 +142,7 @@ binds {
 	Mod+Shift+S        { move-column-to-last; }
 	Mod+Escape         { maximize-column; }
 	Mod+Shift+Escape   { toggle-column-tabbed-display; }
+	Mod+F              { fullscreen-window; }
 
 	// Floating windows
 	Mod+Shift+Space  { toggle-window-floating; }
