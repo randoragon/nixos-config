@@ -29,5 +29,8 @@ systemctl --user start wireplumber
 # Start the status bar
 yambar &
 
+# Start on workspace 1 (index 6)
+niri msg action focus-workspace 6
+
 # Run custom autostart, if present
 [ -f ~/.config/autostart.sh ] && . ~/.config/autostart.sh
