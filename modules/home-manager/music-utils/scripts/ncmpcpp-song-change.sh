@@ -76,7 +76,7 @@ if [ -n "$NCMPCPP_KEEP_PLAYCOUNT" ] || [ -n "$NCMPCPP_KEEP_HISTORY" ]; then
     (
         # Kill the last subshell
         pidfile="${TMPDIR:-/tmp}/ncmpcpp-playcount.$(whoami).pid"
-        [ -s "$pidfile" ] && kill "$(cat -- "$pidfile")"
+        [ -s "$pidfile" ] && { kill "$(cat -- "$pidfile")" || true; }
         sh -c "echo \$PPID >'$pidfile'"
 
         sleep $(( seconds / 2 ))
