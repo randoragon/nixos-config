@@ -346,3 +346,24 @@ window-rule {
 	match app-id="Pinentry"
 	open-floating true
 }
+
+// Ardour
+window-rule {
+	match app-id="Ardour" at-startup=true
+	open-maximized true
+}
+window-rule {
+	match app-id="Ardour-"
+	open-floating true
+}
+
+// Hydrogen
+window-rule {
+	match app-id="hydrogen" at-startup=true
+	open-maximized true
+}
+window-rule {
+	match app-id="hydrogen" title="Audio File Browser"
+	match app-id="hydrogen" title="Mixer"
+	open-floating true
+}
