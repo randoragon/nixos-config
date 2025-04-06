@@ -367,3 +367,15 @@ window-rule {
 	match app-id="hydrogen" title="Mixer"
 	open-floating true
 }
+
+// Olive Editor
+window-rule {
+	match app-id="Olive"
+	open-floating true
+	open-fullscreen false
+}
+window-rule {
+	match app-id="Olive" title=r#"^Olive [0-9\.]+-[0-9a-f]+ - .*$"#
+	open-floating false
+	open-maximized true
+}
