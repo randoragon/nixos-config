@@ -379,3 +379,9 @@ window-rule {
 	open-floating false
 	open-maximized true
 }
+
+// XDG Open Files dialog
+window-rule {
+	match app-id="xdg-desktop-portal-gtk" title="Open Files"
+	open-floating true
+}
