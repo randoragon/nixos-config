@@ -26,6 +26,7 @@
     wlr-randr wdisplays
     brightnessctl
     ripdrag
+    wayvnc wlvncc
     xwayland-satellite
     zenity
 
