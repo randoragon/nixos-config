@@ -1,13 +1,18 @@
 #!/bin/sh -e
 
 link="$1"
-echo "$link" | grep -q '^https://\(www\.\)\?youtube\.com/watch?v=[^?]\+$' || {
-    notify-send -u low rss-thumbnail "Only YouTube links are supported.\n$link"
-    exit 1
-}
-video_id="${link##*\?v=}"
-
 tmpf="$(mktemp --tmpdir rss-thumbnail.XXXXX)"
-wget -q -O "$tmpf" "https://img.youtube.com/vi/$video_id/hqdefault.jpg"
+trap 'rm -f -- "$tmpf"' INT EXIT QUIT TERM
+
+if echo "$link" | rg -q '^https://(www\.)?youtube\.com/watch\?v=[^?]+$'; then
+    video_id="${link##*\?v=}"
+    wget -q -O "$tmpf" "https://img.youtube.com/vi/$video_id/hqdefault.jpg"
+elif echo "$link" | rg -q '^https://(www\.)?euronews\.com/.*'; then
+    img_url="$(curl -s -- "$link" | tr -d '\n' | rg -o -r '$1' '<img\s+class="js-poster-img[^"]*[^>]*src="([^"]*)"')"
+    wget -q -O "$tmpf" "$img_url"
+else
+    notify-send -u low rss-thumbnail "Unsupported link type.\n$link"
+    exit 1
+fi
+
 vimiv --set statusbar.show False -- "$tmpf"
-rm -- "$tmpf"
