@@ -354,6 +354,7 @@ window-rule {
 }
 window-rule {
 	match app-id="Ardour-"
+	match app-id="Ardour" title="Add Existing Media"
 	open-floating true
 }
 
