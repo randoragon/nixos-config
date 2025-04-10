@@ -9,8 +9,4 @@
     virtiofsd
   ];
   users.extraGroups.libvirtd.members = ["pcache"];
-
-  # Enable VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = ["pcache"];
 }
