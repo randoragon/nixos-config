@@ -358,6 +358,12 @@ window-rule {
 	open-floating true
 }
 
+// sfizz
+window-rule {
+	match app-id="zenity" title="Load SFZ file"
+	open-floating true
+}
+
 // Hydrogen
 window-rule {
 	match app-id="hydrogen" at-startup=true
