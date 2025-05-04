@@ -17,6 +17,7 @@ in (pkgs.buildFHSEnv {
 
       # For ispm-gui
       glib
+      libgbm
       nss
       nspr
       dbus
