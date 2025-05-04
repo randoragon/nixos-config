@@ -75,10 +75,10 @@ if __name__ == "__main__":
             if all(links.values()):
                 break
 
-    print("\t\twikipedia:", f"\"{links['wikipedia']}\"," if links["wikipedia"] else "none,")
-    print("\t\tdiscogs:", f"\"{links['discogs']}\"," if links["discogs"] else "none,")
-    print("\t\tyoutube:", f"\"{links["youtube"]}\"," if links["youtube"] else "none,")
-    print("\t\tspotify:", f"\"{links['spotify']}\"," if links["spotify"] else "none,")
-    print("\t\tbandcamp:", f"\"{links['bandcamp']}\"," if links["bandcamp"] else "none,")
-    print("\t\tsoundcloud:", f"\"{links['soundcloud']}\"," if links["soundcloud"] else "none,")
-    print("\t\tmusicbrainz:", f"\"{links['musicbrainz']}\"," if links["musicbrainz"] else "none,")
+    print("    wikipedia:", f"\"{links['wikipedia']}\"," if links["wikipedia"] else "none,")
+    print("    discogs:", f"\"{links['discogs']}\"," if links["discogs"] else "none,")
+    print("    youtube:", f"\"{links["youtube"]}\"," if links["youtube"] else "none,")
+    print("    spotify:", f"\"{links['spotify']}\"," if links["spotify"] else "none,")
+    print("    bandcamp:", f"\"{links['bandcamp']}\"," if links["bandcamp"] else "none,")
+    print("    soundcloud:", f"\"{links['soundcloud']}\"," if links["soundcloud"] else "none,")
+    print("    musicbrainz:", f"\"{links['musicbrainz']}\"," if links["musicbrainz"] else "none,")

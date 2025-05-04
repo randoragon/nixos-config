@@ -23,9 +23,9 @@ endfunction
 " Typst
 function! sshot#TypstScreenshot(imgpath)
     if strlen(getline('.')) > 0
-        call append('.', '	image("'.a:imgpath.'", width: 100%),')
+        call append('.', '  image("'.a:imgpath.'", width: 100%),')
     else
-        call setline('.', '	image("'.a:imgpath.'", width: 100%),')
+        call setline('.', '  image("'.a:imgpath.'", width: 100%),')
     endif
 endfunction
 
