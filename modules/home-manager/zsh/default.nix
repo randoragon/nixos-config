@@ -21,8 +21,12 @@
       }
     ];
 
-    initExtraBeforeCompInit = builtins.readFile ./zshrc-extra-first.zsh;
-    initExtra = builtins.readFile ./zshrc-extra-last.zsh;
+    initContent = let
+      zshConfigEarlyInit = lib.mkOrder 550 (builtins.readFile ./zshrc-extra-first.zsh);
+      zshConfig = lib.mkOrder 1000 (builtins.readFile ./zshrc-extra-last.zsh);
+    in
+      lib.mkMerge [ zshConfigEarlyInit zshConfig ];
+
     loginExtra = builtins.readFile ./zlogin-extra.zsh;
   };
 
