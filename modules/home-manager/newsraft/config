@@ -27,6 +27,7 @@ bind D mark-read-all
 bind a mark-unread
 bind A mark-unread-all
 bind q quit-hard
+bind e toggle-explore-mode
 
 # Custom keybinds
 bind E exec $EDITOR ~/.config/newsraft/feeds
