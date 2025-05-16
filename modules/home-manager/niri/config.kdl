@@ -340,6 +340,10 @@ window-rule {
 		width 4
 	}
 }
+window-rule {
+	match app-id="flameshot" title="Save screenshot"
+	open-floating true
+}
 
 // GPG Pinentry
 window-rule {
