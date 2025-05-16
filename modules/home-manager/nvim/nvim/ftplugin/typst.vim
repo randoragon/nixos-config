@@ -78,5 +78,19 @@ command LSPProjectToggleTypst lua lsp_toggle({
             \  "Makefile", "makefile", "GNUmakefile",
             \  "main.typ"
             \ })
+function TinymistPinMainFile()
+    " https://forum.typst.app/t/how-can-i-make-label-references-work-across-multiple-files-with-neovim-tinymist/2275
+    " b:active_lsp_client is my own conventional variable
+    if !exists("b:active_lsp_client")
+        echom "[TinymistPinMainFile] Tinymist is not running."
+        return
+    endif
+    lua vim.lsp.get_client_by_id(vim.b.active_lsp_client):exec_cmd({
+            \ command = "tinymist.pinMain",
+            \ arguments = { vim.api.nvim_buf_get_name(0) }
+            \ })
+    echom "[TinymistPinMainFile] Pinned current file as main."
+endfunction
 nnoremap <buffer> <silent> <Leader>l :LSPFileToggleTypst<CR>
 nnoremap <buffer> <silent> <Leader>L :LSPProjectToggleTypst<CR>
+nnoremap <buffer> <silent> <Leader>.L :call TinymistPinMainFile()<CR>
