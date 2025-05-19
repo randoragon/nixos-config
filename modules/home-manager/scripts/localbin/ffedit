@@ -15,6 +15,7 @@ help () {
     echo
     echo 'Video is converted to DNxHD MOV, audio to PCM 24-bit WAV.'
     echo 'Input files are checked and conversion is done only when necessary.'
+    echo 'Warning: Video thumbnail streams may be lost during conversion.'
 }
 
 if [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
@@ -37,13 +38,21 @@ convert () {
 
     video_codec="$(echo "$info" | grep -o 'Stream #.*: Video: .*')" || true
     if [ -n "$video_codec" ] && echo "$video_codec" | grep -Fvqi 'attached pic'; then
+        cover_arts="$(echo "$video_codec" | grep -Fi 'attached pic')"
+        if [ -n "$cover_arts" ]; then
+            # Exclude cover art streams
+            cover_arts="$(echo "$cover_arts" | sed 's/^Stream #0://')"
+            for stream in $(echo "$cover_arts" | grep -o '^[0-9]\+'); do
+                ffmpeg_flags="$ffmpeg_flags -map -0:${stream##*:}"
+            done
+        fi
         ffmpeg_ext=mov
         case "$video_codec" in
             *Video:\ dnxhd*)
                 ffmpeg_flags="$ffmpeg_flags -c:v copy"
                 ;;
             *)
-                ffmpeg_flags="$ffmpeg_flags -c:v dnxhd -profile:v dnxhr_hq -pix_fmt yuv422p"
+                ffmpeg_flags="$ffmpeg_flags -c:V dnxhd -profile:V dnxhr_hq -pix_fmt yuv422p"
                 work_to_do=1
                 ;;
         esac
