@@ -36,11 +36,10 @@ convert () {
     work_to_do=
 
     video_codec="$(echo "$info" | grep -o 'Stream #.*: Video: .*')" || true
-    video_codec="${video_codec##*Video: }"
     if [ -n "$video_codec" ] && echo "$video_codec" | grep -Fvqi 'attached pic'; then
         ffmpeg_ext=mov
         case "$video_codec" in
-            dnxhd*)
+            *Video:\ dnxhd*)
                 ffmpeg_flags="$ffmpeg_flags -c:v copy"
                 ;;
             *)
