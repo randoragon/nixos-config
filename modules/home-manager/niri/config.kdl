@@ -34,6 +34,7 @@ cursor {
 
 layout {
 	always-center-single-column
+	background-color "transparent"
 
 	preset-column-widths {
 		proportion 0.33333
@@ -75,12 +76,19 @@ layout {
 	}
 }
 
+overview {
+	workspace-shadow {
+		off
+	}
+}
+
 binds {
 	// Basic keybindings
 	Mod+Shift+Slash { show-hotkey-overlay; }
 	Mod+Return { spawn "foot"; }
 	Mod+O { spawn "bemenu-run" "-i" "-c" "-W0.8" "-l20" "-B5" "-R10"; }
 	Mod+Shift+Q { spawn "quitmenu"; }
+	Mod+G { toggle-overview; }
 
 	// Volume control
 	Mod+equal allow-when-locked=true hotkey-overlay-title="Increase Volume" { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "2%+"; }
@@ -117,6 +125,7 @@ binds {
 	Mod+Shift+J       { move-window-down-or-to-workspace-down; }
 	Mod+Shift+L       { move-column-right; }
 	Mod+Shift+K       { move-window-up-or-to-workspace-up; }
+	Mod+Ctrl+Shift+N  { center-window; }
 
 	// Stacking columns
 	Mod+BracketLeft         { consume-or-expel-window-left; }
@@ -143,6 +152,7 @@ binds {
 	Mod+Escape         { maximize-column; }
 	Mod+Shift+Escape   { toggle-column-tabbed-display; }
 	Mod+F              { fullscreen-window; }
+	Mod+Shift+F        { toggle-windowed-fullscreen; }
 
 	// Floating windows
 	Mod+Shift+Space  { toggle-window-floating; }
@@ -277,6 +287,12 @@ layer-rule {
 		draw-behind-window true
 		color "#00000064"
 	}
+}
+
+// Stationary wallpaper (https://github.com/YaLTeR/niri/wiki/Overview#backdrop-customization)
+layer-rule {
+	match namespace="^swww-daemon$"
+	place-within-backdrop true
 }
 
 // Block notifications from screen capture
