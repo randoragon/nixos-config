@@ -15,9 +15,7 @@
       default-timeout = 5000;
       background-color = "#328fbe";
       text-color = "#000000";
-    };
 
-    criteria = {
       "urgency=low" = {
         default-timeout = 3000;
         background-color = "#303030";
