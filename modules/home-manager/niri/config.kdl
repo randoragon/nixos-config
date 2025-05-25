@@ -233,6 +233,8 @@ binds {
 	Mod+Ctrl+Y          hotkey-overlay-title="Edit Note" { spawn "sh" "-c" "note --bemenu -e || notify-send -u critical note 'Exited with error'"; }
 	Mod+Ctrl+Equal      hotkey-overlay-title="Add To Playlist" { spawn "~/.scripts/pladd_select"; }
 	Control+Alt+H       hotkey-overlay-title="Spawn htop" { spawn "foot" "-W" "150x45" "-a" "floatme" "htop"; }
+	Control+Alt+W       hotkey-overlay-title="Spawn Firefox" { spawn "firefox"; }
+	Control+Alt+E       hotkey-overlay-title="Spawn Thunderbird" { spawn "thunderbird"; }
 	Control+Alt+D       hotkey-overlay-title="Spawn Discord" { spawn "vesktop"; }
 	Control+Alt+M       hotkey-overlay-title="Spawn ncmpcpp" { spawn "foot" "ncmpcpp"; }
 	Control+Alt+N       hotkey-overlay-title="Spawn newsraft" { spawn "foot" "newsraft"; }
@@ -240,6 +242,7 @@ binds {
 	Control+Alt+T       hotkey-overlay-title="Open todo.txt" { spawn "sh" "-c" "$TERMINAL $EDITOR ~/Sync/todo.txt"; }
 	Control+Alt+B       hotkey-overlay-title="Open Book" { spawn "~/.scripts/book"; }
 	Control+Alt+L       hotkey-overlay-title="Lock" { spawn "swaylock"; }
+	Control+Alt+A       hotkey-overlay-title="Spawn Anki" { spawn "anki"; }
 
 	// Status bar
 	Mod+B               hotkey-overlay-title="Toggle Status Bar" { spawn "sh" "-c" "pkill -x yambar || yambar"; }
