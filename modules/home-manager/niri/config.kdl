@@ -415,3 +415,9 @@ window-rule {
 	match app-id="xdg-desktop-portal-gtk" title="Open Files"
 	open-floating true
 }
+
+// sfizz
+window-rule {
+	match app-id="xdg-desktop-portal-gtk" title="Load SFZ file"
+	open-floating true
+}
