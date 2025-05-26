@@ -119,9 +119,7 @@ cached_ensure_exists () {
     cache_fpath="$(cached_get_fpath "$note")"
 
     # Read mtime of the note. Will be useful later
-    src_fpath="$dir/$(basename -- "$note")"
-    [ ! -f "$src_fpath" ] && echo "note: $src_fpath not found!" >&2 && exit 3
-    src_epoch="$(git -C "$SECRETS" log -1 --format='%at' -- "$src_fpath")"
+    src_epoch="$(git -C "$SECRETS" log -1 --format='%at' -- "$note")"
 
     cache_exists_and_matches_src=
     if [ -n "$cache_fpath" ] && [ -f "$cache_fpath" ]; then
