@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    rsid3.url = "github:randoragon/rsid3";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,33 +16,34 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-index-database, ... }: let
+  outputs = { self, ... }@inputs: let
     system = "x86_64-linux";
-    spkgs = nixpkgs-stable.legacyPackages.${system};
+    spkgs = inputs.nixpkgs-stable.legacyPackages.${system};
+    rsid3 = inputs.rsid3.packages.${system}.default;
   in {
-    nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit spkgs; };
+    nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit spkgs; inherit rsid3; };
       modules = [
         ./hosts/default/configuration.nix
-        home-manager.nixosModules.home-manager
-        nix-index-database.nixosModules.nix-index
+        inputs.home-manager.nixosModules.home-manager
+        inputs.nix-index-database.nixosModules.nix-index
       ];
     };
 
-    nixosConfigurations.nixbox = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit spkgs; };
+    nixosConfigurations.nixbox = inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit spkgs; inherit rsid3; };
       modules = [
         ./hosts/nixbox/configuration.nix
-        home-manager.nixosModules.home-manager
-        nix-index-database.nixosModules.nix-index
+        inputs.home-manager.nixosModules.home-manager
+        inputs.nix-index-database.nixosModules.nix-index
       ];
     };
 
-    nixosConfigurations.vps = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.vps = inputs.nixpkgs.lib.nixosSystem {
       specialArgs = { inherit spkgs; };
       modules = [
         ./hosts/vps/configuration.nix
-        home-manager.nixosModules.home-manager
+        inputs.home-manager.nixosModules.home-manager
       ];
     };
   };

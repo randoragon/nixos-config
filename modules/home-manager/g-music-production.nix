@@ -1,5 +1,5 @@
 # Config group for systems with music production support.
-{ config, pkgs, spkgs, ... }: {
+{ config, pkgs, spkgs, rsid3, ... }: {
   imports = [
     ./ardour
     ./carla
@@ -27,7 +27,7 @@
     setbfree
     lilypond
     tonelib-zoom
-  ];
+  ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   home.sessionVariables = let

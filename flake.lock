@@ -72,12 +72,47 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1748460289,
+        "narHash": "sha256-7doLyJBzCllvqX4gszYtmZUToxKvMUrg45EUWaUYmBg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "96ec055edbe5ee227f28cdbc3f1ddf1df5965102",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-stable": "nixpkgs-stable"
+        "nixpkgs-stable": "nixpkgs-stable",
+        "rsid3": "rsid3"
+      }
+    },
+    "rsid3": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1748734020,
+        "narHash": "sha256-M9ZoZthguLTELFAHNnyKoegSN/5GE60h1LL2uSXxrJk=",
+        "owner": "randoragon",
+        "repo": "rsid3",
+        "rev": "65f1d2cff423b43e2626b0ab0e1dc0b5bac60695",
+        "type": "github"
+      },
+      "original": {
+        "owner": "randoragon",
+        "repo": "rsid3",
+        "type": "github"
       }
     }
   },
