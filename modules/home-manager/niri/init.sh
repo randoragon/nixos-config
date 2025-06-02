@@ -15,7 +15,7 @@ wlsunset &
 mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
 
 # Start wallpaper manager
-swww init --no-cache
+swww-daemon --no-cache &
 swww img -t none ~/.config/wallpaper
 
 # Fix screen capture
