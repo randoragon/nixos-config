@@ -1,5 +1,5 @@
 # The basis for all sub-configuration modules. Every system is built on top of this.
-{ pkgs, ... }: {
+{ pkgs, secrets, lxmake, note, ... }: {
   imports = [
     ./direnv
     ./git
@@ -27,6 +27,8 @@
     htop lm_sensors
     neofetch
     gdu
+  ] ++ [
+    secrets lxmake note
   ];
 
   # Environment variables that should always be present.

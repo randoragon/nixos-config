@@ -1,4 +1,4 @@
-{ pkgs, spkgs, rsid3, ... }: {
+{ pkgs, spkgs, rsid3, secrets, lxmake, note, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -27,7 +27,13 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit spkgs; inherit rsid3; };
+    extraSpecialArgs = {
+      inherit spkgs;
+      inherit rsid3;
+      inherit secrets;
+      inherit lxmake;
+      inherit note;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
