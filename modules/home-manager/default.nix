@@ -28,4 +28,33 @@
     neofetch
     gdu
   ];
+
+  # Environment variables that should always be present.
+  home.sessionVariables = {
+    # This makes markdown previews bearable to look at, just prepend the html
+    # file with it.
+    HTML_MD_STYLE = ''
+      <style>
+      table, th, td {
+          padding: 5px;
+          border: 1px solid black;
+          border-collapse: collapse;
+      }
+
+      body {
+          font-family: 'Libertinus Serif', sans-serif;
+          font-size: 14pt;
+          margin: 0 auto;
+          max-width: 48rem;
+          line-height: 1.45;
+          padding: .25rem;
+      }
+
+      code {
+          font-family: 'Jetbrains Mono';
+          font-size: 11pt;
+      }
+      </style>
+    '';
+  };
 }
