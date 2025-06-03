@@ -40,7 +40,7 @@
     },
     "lxmake_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1748946212,
@@ -53,6 +53,24 @@
       "original": {
         "owner": "randoragon",
         "repo": "lxmake",
+        "type": "github"
+      }
+    },
+    "music-tools": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1748957436,
+        "narHash": "sha256-wtXXcE+lVNmdM9mH1bdtwrzgw0l3vUq+8FhNgXCinvE=",
+        "owner": "randoragon",
+        "repo": "music-tools",
+        "rev": "a1f2f4e5d138a2bb48ea4187e212141e45f5ebce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "randoragon",
+        "repo": "music-tools",
         "type": "github"
       }
     },
@@ -204,10 +222,26 @@
         "type": "github"
       }
     },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1748693115,
+        "narHash": "sha256-StSrWhklmDuXT93yc3GrTlb0cKSS0agTAxMGjLKAsY8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "910796cabe436259a29a72e8d3f5e180fc6dfacc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "note": {
       "inputs": {
         "lxmake": "lxmake_2",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_5",
         "secrets": "secrets"
       },
       "locked": {
@@ -228,8 +262,9 @@
       "inputs": {
         "home-manager": "home-manager",
         "lxmake": "lxmake",
+        "music-tools": "music-tools",
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable",
         "note": "note",
         "rsid3": "rsid3",
@@ -238,7 +273,7 @@
     },
     "rsid3": {
       "inputs": {
-        "nixpkgs": "nixpkgs_6"
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "lastModified": 1748772802,
@@ -256,7 +291,7 @@
     },
     "secrets": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       },
       "locked": {
         "lastModified": 1748946482,
@@ -274,7 +309,7 @@
     },
     "secrets_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1748946482,

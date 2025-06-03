@@ -1,5 +1,5 @@
 # Config group for systems with access to my music library.
-{ pkgs, rsid3, ... }: {
+{ pkgs, rsid3, music-tools, ... }: {
   imports = [
     ./beets
     ./mpd
@@ -15,5 +15,5 @@
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
     ]))
-  ] ++ [ rsid3 ];
+  ] ++ [ rsid3 music-tools ];
 }

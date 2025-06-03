@@ -8,6 +8,7 @@
     secrets.url = "github:randoragon/secrets";
     lxmake.url = "github:randoragon/lxmake";
     note.url = "github:randoragon/note";
+    music-tools.url = "github:randoragon/music-tools";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -26,12 +27,14 @@
     secrets = inputs.secrets.packages.${system}.default;
     lxmake = inputs.lxmake.packages.${system}.default;
     note = inputs.note.packages.${system}.default;
+    music-tools = inputs.music-tools.packages.${system}.default;
     inherited-inputs = {
       inherit spkgs;
       inherit rsid3;
       inherit secrets;
       inherit lxmake;
       inherit note;
+      inherit music-tools;
     };
   in {
     nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {

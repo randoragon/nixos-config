@@ -1,4 +1,4 @@
-{ pkgs, spkgs, rsid3, secrets, lxmake, note, ... }: {
+{ pkgs, spkgs, rsid3, secrets, lxmake, note, music-tools, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -32,6 +32,7 @@
       inherit secrets;
       inherit lxmake;
       inherit note;
+      inherit music-tools;
     };
     useGlobalPkgs = true;
     useUserPackages = true;
