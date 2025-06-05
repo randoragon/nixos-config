@@ -1,0 +1,11 @@
+#!/bin/sh -e
+
+# Play lilypond scores.
+
+file="$1"
+notif_id="$(notify-send -p -u low -t 100000 lyplay "Converting $file to audio ...")"
+tmpf="$(mktemp --tmpdir lyplay.XXXXX.wav)"
+ly2audio "$file" "$tmpf"
+makoctl dismiss -n "$notif_id"
+mpv --force-window=immediate -- "$tmpf"
+rm -f -- "$tmpf"

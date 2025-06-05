@@ -1,0 +1,54 @@
+#!/bin/sh -e
+
+# Convert a lilypond score to audio.
+
+SFZ=~/Production/000_audio-bank/soundfonts/SalamanderGrandPianoV3_48khz24bit/SalamanderGrandPianoV3Retuned.sfz
+
+if [ ! -f "$SFZ" ]; then
+    echo "ly2audio: soundfont file not found" >&2
+    exit 1
+fi
+
+status () {
+    echo
+    tput bold setaf 10
+    printf '[ly2audio] %s\n' "$1"
+    tput sgr0
+}
+
+if [ "$1" = '-h' ] || [ "$1" = '--help' ] || [ $# -lt 1 ]; then
+    echo "Usage:"
+    echo "  ly2audio [-h, --help] INPUT [OUTPUT]"
+    echo
+    echo "Converts a lilypond score (*.ly) into a sound file."
+    echo "OUTPUT is INPUT.mp3 by default. Any audio extension may be specified;"
+    echo "wav is fastest, but can be converted into the target format using sox."
+    exit 1
+fi
+input="$1"
+output="${2:-${input%%.*}.mp3}"
+
+tmpd="$(mktemp --tmpdir -d ly2audio.XXXXX)"
+trap 'rm -rf -- "$tmpd"' INT EXIT QUIT TERM
+
+status 'converting score to midi ...'
+lilypond -o "$tmpd" "$1"
+
+midi=
+for f in "$tmpd"/*.midi; do
+    midi="$f"; break
+done
+if [ ! -f "$midi" ]; then
+    echo "ly2audio: lilypond did not create a midi file (or created multiple)" >&2
+    exit 1
+fi
+
+if [ "${output%.wav}" != "$output" ]; then
+    status 'rendering audio ...'
+    sfizz_render --midi "$midi" --wav "$output" --sfz "$SFZ"
+else
+    status 'rendering audio ...'
+    sfizz_render --midi "$midi" --wav "$tmpd/out.wav" --sfz "$SFZ"
+    status "converting to ${output##*.} ..."
+    sox --show-progress "$tmpd/out.wav" "$output"
+fi
