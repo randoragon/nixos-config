@@ -33,6 +33,7 @@
       "audio/x-wave" = [ "mpv.desktop" ];
       "audio/x-wav" = [ "mpv.desktop" ];
       "audio/ogg" = [ "mpv.desktop" ];
+      "audio/x-vorbis+ogg" = [ "mpv.desktop" ];
       "audio/x-hx-aac-adts" = [ "mpv.desktop" ];
 
       # Images
