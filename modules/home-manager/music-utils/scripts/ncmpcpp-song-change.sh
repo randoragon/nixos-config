@@ -44,12 +44,16 @@ if [ -n "$NCMPCPP_SWITCH_WALLPAPER" ]; then
                 +write "$tmp" \
             \) null:
 
+        set +e
         swww img -t "$t_effect" --transition-fps $t_fps --transition-angle $t_angle "$tmp"
+        set -e
         rm -f -- "$tmp"
     else
         rm -f -- "$cachefile"
+        set +e
         swww img -t "$t_effect" --transition-fps $t_fps --transition-angle $t_angle "$tmp"
         swww img "${XDG_CONFIG_HOME:-~/.config}/wallpaper"
+        set -e
     fi
 fi
 
