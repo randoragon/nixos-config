@@ -49,21 +49,6 @@ for f in "$@"; do
         html)
             $BROWSER file://"$f"
             ;;
-        mom) # groff -mom
-            pdfmom -ket -- "$f" | $PDF_READER -
-            ;;
-        rnd) # neatroff -mrnd
-            ntmake "$f" -mrnd | $PDF_READER -
-            ;;
-        mm) # neatroff -mm
-            ntmake "$f" -mm | $PDF_READER -
-            ;;
-        ms) # neatroff -ms
-            ntmake "$f" -ms | $PDF_READER -
-            ;;
-        groff) # pure groff
-            groff -ket -- "$f" | $PDF_READER -
-            ;;
         tex|latex) # latex
             lxmake "$f" - | $PDF_READER -
             ;;
