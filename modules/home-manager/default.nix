@@ -27,6 +27,7 @@
     htop lm_sensors
     neofetch
     gdu
+    md4c typst
   ] ++ [
     secrets lxmake note
   ];
