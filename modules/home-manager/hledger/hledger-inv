@@ -1,0 +1,66 @@
+#!/bin/sh -e
+
+# Hledger script to plot investment returns.
+# shellcheck disable=SC2064
+
+cost_csv="$(mktemp --tmpdir hledger-inv.XXXXX)"
+trap "rm -f -- '$cost_csv'" INT QUIT TERM EXIT
+value_csv="$(mktemp --tmpdir hledger-inv.XXXXX)"
+trap "rm -f -- '$value_csv'" INT QUIT TERM EXIT
+gnuplot_script="$(mktemp --tmpdir hledger-inv.XXXXX)"
+trap "rm -f -- '$gnuplot_script'" INT QUIT TERM EXIT
+plot_img="$(mktemp --tmpdir hledger-inv.XXXXX)"
+trap "rm -f -- '$plot_img'" INT QUIT TERM EXIT
+
+commodity=zł
+
+hledger bal \
+    --auto \
+    --strict \
+    --infer-equity \
+    --real \
+    --no-total \
+    --layout=bare \
+    --historical \
+    --daily \
+    --value=cost,"$commodity" \
+    --output-format=csv \
+    --transpose \
+    ^assets:investments \
+    | tail -n+3 >"$cost_csv"
+
+hledger bal \
+    --auto \
+    --strict \
+    --infer-equity \
+    --real \
+    --no-total \
+    --layout=bare \
+    --historical \
+    --daily \
+    --value=end,"$commodity" \
+    --output-format=csv \
+    --transpose \
+    ^assets:investments \
+    | tail -n+3 >"$value_csv"
+
+cat >"$gnuplot_script" <<EOF
+set terminal svg size 640,360
+set title 'Investments'
+set xlabel 'Time'
+set xdata time
+set timefmt '%Y-%m-%d'
+set format x '%Y-%m-%d'
+set ylabel 'Money'
+set grid
+set key top left
+set datafile separator ','
+plot '$cost_csv' using 1:2 with lines title 'Invested Amount', \
+     '$value_csv' using 1:2 with lines title 'Market Value'
+EOF
+
+gnuplot "$gnuplot_script" \
+    | sed '/^<g id="gnuplot_canvas">/a<rect width="640" height="360" fill="white" />' \
+    >"$plot_img"
+
+xdg-open "$plot_img"
