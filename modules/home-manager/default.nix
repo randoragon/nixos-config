@@ -27,7 +27,7 @@
     htop lm_sensors
     neofetch
     gdu
-    md4c typst
+    md4c typst gnuplot
   ] ++ [
     secrets lxmake note
   ];
