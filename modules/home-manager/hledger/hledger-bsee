@@ -6,12 +6,12 @@ LEDGER="${XDG_DATA_HOME:-$HOME/.local/share}/ledger"
 
 secrets decrypt "$LEDGER"
 
-hledger \
+hledger bse \
     --strict \
     --pretty \
     --color=always \
     --real \
     --infer-equity \
     --alias '/^(revenue|income|expenses)\b/=equity' \
-    bse not:desc:'closing balances' \
+    not:desc:'closing balances' \
     "$@"

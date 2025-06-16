@@ -1,7 +1,7 @@
 #!/bin/sh -e
 # Show a historical forecast (default: monthly current year)
 
-hledger \
+hledger bal \
     --auto \
     --strict \
     --infer-equity \
@@ -9,5 +9,9 @@ hledger \
     --pretty \
     --color=always \
     --period=thisyear \
-    bal --forecast --historical --tree --monthly not:equity \
+    --forecast \
+    --historical \
+    --tree \
+    --monthly \
+    not:equity \
     "$@" | less -R +g +k
