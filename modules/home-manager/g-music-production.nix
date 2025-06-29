@@ -3,7 +3,6 @@
   imports = [
     ./ardour
     ./carla
-    ./lmms
     ./sox
   ];
 
