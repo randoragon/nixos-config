@@ -93,4 +93,4 @@ function TinymistPinMainFile()
 endfunction
 nnoremap <buffer> <silent> <Leader>l :LSPFileToggleTypst<CR>
 nnoremap <buffer> <silent> <Leader>L :LSPProjectToggleTypst<CR>
-nnoremap <buffer> <silent> <Leader>.L :call TinymistPinMainFile()<CR>
+nnoremap <buffer> <silent> <Leader>./L :call TinymistPinMainFile()<CR>
