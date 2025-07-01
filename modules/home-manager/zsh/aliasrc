@@ -26,6 +26,9 @@ alias hl='secrets decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/ledger" && hledg
 alias hlv='secrets decrypt "${XDG_DATA_HOME:-$HOME/.local/share}/ledger" && hledger --auto --strict --infer-equity --pretty --color=always'
 alias update='nh os switch --ask --hostname "$(cat -- ~/.config/nixos-config-profile)" ~/nixos-config/'
 alias der='direnv reload'
+alias ss.='secrets save .'
+alias sd.='secrets decrypt .'
+alias sc.='secrets clean .'
 
 # Git
 alias gs='git status'
