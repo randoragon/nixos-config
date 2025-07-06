@@ -1,0 +1,146 @@
+#!/bin/sh -e
+
+usage () {
+    echo 'Usage:  chord-trainer [OPTION] BPM'
+    echo 'chord-trainer prints random chords to improvise over.'
+    echo 'Each note is displayed for the duration of 1 bar. Each bar consists of 4 beats.'
+    echo 'The speed of the beat is controlled by the BPM.'
+    echo
+    echo 'Options:'
+    echo '  -h, --help          Print this help message and exit.'
+    echo '  -b, --bpm           Set bpm (default 60).'
+    echo '  -t, --time          Set the number of beats per bar (default 4).'
+    echo '  -s, --simple        Simple mode. Only minor/major triads.'
+    echo '  -e, --extended      Include altered chord extensions, like Cmaj7♯13.'
+    echo '  -j, --jazz          Use jazz notation, e.g. C–, B♭ø, etc.'
+}
+
+# random_chord
+# shellcheck disable=SC2120
+random_chord () {
+    chord="$({
+        printf '%s\n' \
+             D♭  E♭      G♭  A♭  B♭    \
+             C♯  D♯      F♯  G♯  A♯    \
+            C   D   E   F   G   A   B  \
+                                       \
+             D♭m E♭m     G♭m A♭m B♭m   \
+             C♯m D♯m     F♯m G♯m A♯m   \
+            Cm  Dm  Em  Fm  Gm  Am  Bm
+
+        if [ -z "$SIMPLE_MODE" ]; then
+            # Common 7th chords
+            printf '%s\n' \
+                 D♭7  E♭7       G♭7  A♭7  B♭7                         \
+                 C♯7  D♯7       F♯7  G♯7  A♯7                         \
+                C7   D7   E7   F7   G7   A7   B7                      \
+                                                                      \
+                 D♭m7 E♭m7      G♭m7 A♭m7 B♭m7                        \
+                 C♯m7 D♯m7      F♯m7 G♯m7 A♯m7                        \
+                Cm7  Dm7  Em7  Fm7  Gm7  Am7  Bm7                     \
+                                                                      \
+                 D♭maj7  E♭maj7          G♭maj7  A♭maj7  B♭maj7       \
+                 C♯maj7  D♯maj7          F♯maj7  G♯maj7  A♯maj7       \
+                Cmaj7   Dmaj7   Emaj7   Fmaj7   Gmaj7   Amaj7   Bmaj7
+
+            # Suspended chords
+            printf '%s\n' \
+                 D♭sus2  E♭sus2          G♭sus2  A♭sus2  B♭sus2         \
+                 C♯sus2  D♯sus2          F♯sus2  G♯sus2  A♯sus2         \
+                Csus2   Dsus2   Esus2   Fsus2   Gsus2   Asus2   Bsus2   \
+                                                                        \
+                 D♭msus2 E♭msus2         G♭msus2 A♭msus2 B♭msus2        \
+                 C♯msus2 D♯msus2         F♯msus2 G♯msus2 A♯msus2        \
+                Cmsus2  Dmsus2  Emsus2  Fmsus2  Gmsus2  Amsus2  Bmsus2  \
+                                                                        \
+                 D♭sus4  E♭sus4          G♭sus4  A♭sus4  B♭sus4         \
+                 C♯sus4  D♯sus4          F♯sus4  G♯sus4  A♯sus4         \
+                Csus4   Dsus4   Esus4   Fsus4   Gsus4   Asus4   Bsus4   \
+                                                                        \
+                 D♭msus4 E♭msus4         G♭msus4 A♭msus4 B♭msus4        \
+                 C♯msus4 D♯msus4         F♯msus4 G♯msus4 A♯msus4        \
+                Cmsus4  Dmsus4  Emsus4  Fmsus4  Gmsus4  Amsus4  Bmsus4
+
+            # Diminished, half-diminished and augmented chords
+            printf '%s\n' \
+                 D♭dim E♭dim       G♭dim A♭dim B♭dim             \
+                 C♯dim D♯dim       F♯dim G♯dim A♯dim             \
+                Cdim  Ddim  Edim  Fdim  Gdim  Adim  Bdim         \
+                                                                 \
+                 D♭m7♭5 E♭m7♭5        G♭m7♭5 A♭m7♭5 B♭m7♭5       \
+                 C♯m7♭5 D♯m7♭5        F♯m7♭5 G♯m7♭5 A♯m7♭5       \
+                Cm7♭5  Dm7♭5  Em7♭5  Fm7♭5  Gm7♭5  Am7♭5  Bm7♭5  \
+                                                                 \
+                 D♭aug E♭aug       G♭aug A♭aug B♭aug             \
+                 C♯aug D♯aug       F♯aug G♯aug A♯aug             \
+                Caug  Daug  Eaug  Faug  Gaug  Aaug  Baug
+        fi
+    } | shuf -n1)"
+
+    if [ -n "$JAZZ_NOTATION" ]; then
+        chord="$(echo "$chord" | sed \
+            -e 's/m7♭5/ø7/g' \
+            -e 's/maj7/Δ/g' \
+            -e 's/dim/°/g' \
+            -e 's/aug/+/g' \
+            -e 's/m/–/g'
+        )"
+    fi
+
+    if [ -n "$EXT_MODE" ]; then
+        case "$(seq 7 | sort -R | head -n1)" in
+            1) ;;
+            2) chord="$chord♯9" ;;
+            3) chord="$chord♯11" ;;
+            4) chord="$chord♯13" ;;
+            5) chord="$chord♭9" ;;
+            6) chord="$chord♭11" ;;
+            7) chord="$chord♭13" ;;
+        esac
+    fi
+
+    echo "$chord"
+}
+
+# Parse command-line arguments
+OPTS="$(getopt -n bass-trainer -s sh -o hb:t:jse -l help -l bpm: -l time: -l jazz -l simple -l extended -- "$@")"
+eval set -- "$OPTS"
+BPM=60
+TIME=4
+SIMPLE_MODE=
+EXT_MODE=
+JAZZ_NOTATION=
+while true; do
+    case "$1" in
+        -h|--help) usage && exit ;;
+        -b|--bpm) BPM="$2"; shift 2 ;;
+        -t|--time) TIME="$2"; shift 2 ;;
+        -j|--jazz) JAZZ_NOTATION=1; shift ;;
+        -s|--simple) SIMPLE_MODE=1; shift ;;
+        -e|--extended) EXT_MODE=1; shift ;;
+        *) break ;;
+    esac
+done
+if [ -n "$SIMPLE_MODE" ] && [ -n "$EXT_MODE" ]; then
+    echo "chord-trainer: simple and extended modes are mutually exclusive" >&2
+    exit 1
+fi
+
+# Compute beat duration
+BEAT_DURATION="$(echo "scale=5;60/$BPM" | bc)"
+
+beat=0
+bar=0
+chord=–
+while true; do
+    [ $((beat % TIME)) -eq 0 ] && {
+        bar=$((bar + 1))
+        chord="$(random_chord)"
+        printf '\n\n%s\n' "$(tput setab 7 setaf 0 bold) $chord $(tput sgr0)"
+    }
+
+    printf '\r[%-3d %d/%d]' $bar $((1 + beat % TIME)) "$TIME"
+
+    beat=$((beat + 1))
+    sleep "$BEAT_DURATION"
+done
