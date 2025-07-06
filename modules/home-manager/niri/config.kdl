@@ -387,6 +387,12 @@ window-rule {
 	open-floating true
 }
 
+// setBfree as plugin (not standalone)
+window-rule {
+	match title="setBfree DSP Tonewheel Organ"
+	open-floating true
+}
+
 // Hydrogen
 window-rule {
 	match app-id="hydrogen" at-startup=true
