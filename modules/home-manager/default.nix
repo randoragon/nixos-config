@@ -28,6 +28,7 @@
     neofetch
     gdu
     md4c typst gnuplot
+    paperkey qrencode
   ] ++ [
     secrets lxmake note
   ];
