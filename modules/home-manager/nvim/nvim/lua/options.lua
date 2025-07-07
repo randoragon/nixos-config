@@ -30,8 +30,8 @@ o.splitbelow = true
 o.splitright = true
 
 -- Backup directories
-o.backup = true
-o.writebackup = true
+o.backup = false
+o.writebackup = false
 o.backupdir = os.getenv("HOME") .. "/.local/share/nvim/backup/"
 
 -- Status bar
