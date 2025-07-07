@@ -1,5 +1,5 @@
 # The basis for all sub-configuration modules. Every system is built on top of this.
-{ pkgs, secrets, lxmake, note, ... }: {
+{ pkgs, secrets, ... }: {
   imports = [
     ./direnv
     ./git
@@ -29,9 +29,7 @@
     gdu
     md4c typst gnuplot
     paperkey qrencode
-  ] ++ [
-    secrets lxmake note
-  ];
+  ] ++ [ secrets ];
 
   # Environment variables that should always be present.
   home.sessionVariables = {

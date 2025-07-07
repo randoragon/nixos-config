@@ -1,4 +1,4 @@
-{ pkgs, spkgs, ... }: {
+{ pkgs, spkgs, secrets, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -29,7 +29,10 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit spkgs; };
+    extraSpecialArgs = {
+      inherit spkgs;
+      inherit secrets;
+    };
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {

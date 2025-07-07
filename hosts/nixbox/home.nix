@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lxmake, ... }: {
   imports = [
     ../../modules/home-manager
     ../../modules/home-manager/g-daily-driver.nix
@@ -24,6 +24,7 @@
   home.packages = with pkgs; [
     spotify
     nvtopPackages.full
+    lxmake
   ];
 
   home.sessionVariables = {

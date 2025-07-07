@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, config, lxmake, ... }: {
   imports = [
     ../../modules/home-manager
     ../../modules/home-manager/g-daily-driver.nix
@@ -26,6 +26,8 @@
     # NCMPCPP_KEEP_PLAYCOUNT = "1";
     NCMPCPP_KEEP_HISTORY = "1";
   };
+
+  home.packages = [ lxmake ];
 
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";
