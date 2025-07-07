@@ -14,7 +14,7 @@
     userEmail = "randoragongamedev@gmail.com";
     userName = "randoragon";
 
-    signing.key = "0x033330609EB240A515E4B5BDFE00DCDB97D196C1!";
+    signing.key = "0x8A07E8710BC97B4D5478E419D0693F85BC6D731F!";
     signing.signByDefault = true;
 
     aliases = {
