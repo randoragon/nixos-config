@@ -13,6 +13,7 @@ usage () {
     echo '  -s, --simple        Simple mode. Only minor/major triads.'
     echo '  -e, --extended      Include altered chord extensions, like Cmaj7♯13.'
     echo '  -j, --jazz          Use jazz notation, e.g. C–, B♭ø, etc.'
+    echo '  -q, --quiet         Do not play a metronome sound.'
 }
 
 # random_chord
@@ -95,13 +96,14 @@ random_chord () {
 }
 
 # Parse command-line arguments
-OPTS="$(getopt -n bass-trainer -s sh -o hb:t:jse -l help -l bpm: -l time: -l jazz -l simple -l extended -- "$@")"
+OPTS="$(getopt -n bass-trainer -s sh -o hb:t:jseq -l help -l bpm: -l time: -l jazz -l simple -l extended -l quiet -- "$@")"
 eval set -- "$OPTS"
 BPM=60
 TIME=4
 SIMPLE_MODE=
 EXT_MODE=
 JAZZ_NOTATION=
+NO_METRONOME=
 while true; do
     case "$1" in
         -h|--help) usage && exit ;;
@@ -110,6 +112,7 @@ while true; do
         -j|--jazz) JAZZ_NOTATION=1; shift ;;
         -s|--simple) SIMPLE_MODE=1; shift ;;
         -e|--extended) EXT_MODE=1; shift ;;
+        -q|--quiet) NO_METRONOME=1; shift ;;
         *) break ;;
     esac
 done
@@ -125,11 +128,13 @@ beat=0
 bar=0
 chord=–
 while true; do
-    [ $((beat % TIME)) -eq 0 ] && {
+    if [ $((beat % TIME)) -eq 0 ]; then
         bar=$((bar + 1))
         chord="$(random_chord)"
         printf '\n\n%s\n' "$(tput setab 7 setaf 0 bold) $chord $(tput sgr0)"
-    }
+    elif [ -z "$NO_METRONOME" ]; then
+        play -q -n synth 0.1 sine 440 vol 0.5 &
+    fi
 
     printf '\r[%-3d %d/%d]' $bar $((1 + beat % TIME)) "$TIME"
 
