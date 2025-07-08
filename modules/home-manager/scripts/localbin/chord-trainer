@@ -49,17 +49,9 @@ random_chord () {
                  C♯sus2  D♯sus2          F♯sus2  G♯sus2  A♯sus2         \
                 Csus2   Dsus2   Esus2   Fsus2   Gsus2   Asus2   Bsus2   \
                                                                         \
-                 D♭msus2 E♭msus2         G♭msus2 A♭msus2 B♭msus2        \
-                 C♯msus2 D♯msus2         F♯msus2 G♯msus2 A♯msus2        \
-                Cmsus2  Dmsus2  Emsus2  Fmsus2  Gmsus2  Amsus2  Bmsus2  \
-                                                                        \
                  D♭sus4  E♭sus4          G♭sus4  A♭sus4  B♭sus4         \
                  C♯sus4  D♯sus4          F♯sus4  G♯sus4  A♯sus4         \
-                Csus4   Dsus4   Esus4   Fsus4   Gsus4   Asus4   Bsus4   \
-                                                                        \
-                 D♭msus4 E♭msus4         G♭msus4 A♭msus4 B♭msus4        \
-                 C♯msus4 D♯msus4         F♯msus4 G♯msus4 A♯msus4        \
-                Cmsus4  Dmsus4  Emsus4  Fmsus4  Gmsus4  Amsus4  Bmsus4
+                Csus4   Dsus4   Esus4   Fsus4   Gsus4   Asus4   Bsus4
 
             # Diminished, half-diminished and augmented chords
             printf '%s\n' \
