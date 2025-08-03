@@ -33,6 +33,7 @@ cursor {
 }
 
 layout {
+	gaps 0
 	always-center-single-column
 	background-color "transparent"
 
@@ -50,29 +51,38 @@ layout {
 
 	default-column-width { proportion 0.5; }
 
-	focus-ring {
-		width 2
-		active-gradient from="#73003f" to="#ff4f00" angle=45
-		inactive-gradient from="#333333" to="#666666" angle=30
-	}
-
 	border {
 		width 2
-		active-gradient from="#d3003f" to="#ff8f00" angle=30
-		inactive-color "#111111"
+		active-gradient from="red" to="purple" relative-to="workspace-view" angle=225
+		inactive-color "#141414e6"  // background color from foot
+	}
+
+	focus-ring {
+		off
+	}
+
+	struts {
+		left 16
+		right 16
 	}
 
 	shadow {
 		on
-		softness 30
-		spread 5
+		softness 20
+		spread 4
 		offset x=0 y=5
-		color "#0007"
+		draw-behind-window true
+		color "#00000064"
 	}
 
-	struts {
-		left 32
-		right 32
+	tab-indicator {
+		place-within-column
+		gap 0
+		width 2
+		length total-proportion=1.0
+		active-gradient from="yellow" to="red"
+		inactive-color "#211a"
+		position "left"
 	}
 }
 
@@ -283,7 +293,7 @@ layer-rule {
 	block-out-from "screen-capture"
 
 	shadow {
-		on
+		off
 		softness 20
 		spread 4
 		offset x=0 y=5
@@ -307,10 +317,11 @@ layer-rule {
 // Global window rules
 window-rule {
 	clip-to-geometry true
-	geometry-corner-radius 4
-	tab-indicator {
-		active-gradient from="yellow" to="red"
-		inactive-color "#211a"
+}
+window-rule {
+	match is-floating=false
+	shadow {
+		off
 	}
 }
 
@@ -350,9 +361,6 @@ window-rule {
 	match app-id="flameshot" title="flameshot-pin"
 	open-floating true
 	shadow {
-		off
-	}
-	border {
 		off
 	}
 	focus-ring {
