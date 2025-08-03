@@ -2,6 +2,7 @@
   programs.bemenu = {
     enable = true;
     settings = {
+      line-height = 20;
       scrollbar = "autohide";
       counter = "always";
       tb = "#3fbfff";
