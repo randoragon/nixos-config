@@ -17,6 +17,8 @@
     distrho-ports
     gxplugins-lv2
     lsp-plugins
+    tap-plugins
+    infamousPlugins
     helm
     geonkick
     sfizz
