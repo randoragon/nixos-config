@@ -15,7 +15,7 @@
     ./vimiv-qt
     ./wlsunset
     ./xorg
-    ./yambar
+    ./waybar
     ./zathura
   ];
 

@@ -1,5 +1,5 @@
 #!/bin/sh -e
 
-riverctl map normal Super B spawn 'pkill -x yambar || yambar'
+riverctl map normal Super B spawn 'pkill -x waybar || waybar'
 
-yambar &
+waybar &
