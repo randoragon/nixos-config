@@ -96,7 +96,7 @@ binds {
 	// Basic keybindings
 	Mod+Shift+Slash { show-hotkey-overlay; }
 	Mod+Return { spawn "foot"; }
-	Mod+O { spawn "bemenu-run" "-i" "-c" "-W0.8" "-l20" "-B5" "-R10"; }
+	Mod+O { spawn "bemenu-run"; }
 	Mod+Shift+Q { spawn "quitmenu"; }
 	Mod+G { toggle-overview; }
 

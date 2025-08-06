@@ -2,9 +2,12 @@
   programs.bemenu = {
     enable = true;
     settings = {
-      line-height = 20;
+      ignorecase = true;
+      line-height = 16;
+      list = 20;
       scrollbar = "autohide";
       counter = "always";
+      border = 2;
       tb = "#3fbfff";
       tf = "#000000";
       hb = "#3fbfff";

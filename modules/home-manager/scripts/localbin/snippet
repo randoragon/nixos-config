@@ -128,7 +128,7 @@ if __name__ == '__main__':
     # Run bemenu
     # reference: https://stackoverflow.com/questions/9393425/python-how-to-execute-shell-commands-with-pipe-but-without-shell-true
     p1 = subprocess.Popen(['printf', '%s\n'] + items, stdout=subprocess.PIPE)
-    p2 = subprocess.Popen(['bemenu', '-i', '-l', '20', '-p', 'Snippet:'], stdin=p1.stdout, stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(['bemenu', '-p', 'snippet'], stdin=p1.stdout, stdout=subprocess.PIPE)
     p1.stdout.close()
     out = p2.communicate()[0].decode('utf-8').strip()
     if out in values:

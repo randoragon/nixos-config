@@ -25,7 +25,7 @@ options="$(printf '%s' "$pw_dump" | jq -r \
     | @tsv")"
 
 # Obtain new sink id from user
-sel="$(echo "$options" | bemenu -i -c -W0.5 -l20 -B5 -R10 -p 'Default Sink')"
+sel="$(echo "$options" | bemenu -p 'Default sink:')"
 sink_id="${sel#*	}"
 sink_id=$((${sink_id%%	*}))
 

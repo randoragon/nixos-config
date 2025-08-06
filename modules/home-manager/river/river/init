@@ -37,7 +37,7 @@ riverctl default-attach-mode below
 
 # Basic keybindings
 riverctl map normal Super Return spawn "$TERMINAL"
-riverctl map normal Super O spawn 'bemenu-run -i -c -W0.8 -l20 -B5 -R10'
+riverctl map normal Super O spawn 'bemenu-run'
 riverctl map normal Super+Shift Q spawn 'quitmenu'
 
 # Tag keybindings

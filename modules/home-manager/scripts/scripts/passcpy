@@ -21,7 +21,7 @@ time="${PASSWORD_STORE_CLIP_TIME:-45}"
 entry="$( \
     find "$passdir" -type f -name "[^_]*.gpg" -exec realpath --relative-to "$passdir" "{}" \; \
     | sed 's/\.gpg$//' \
-    | bemenu -p "Pass Query:" "$@" \
+    | bemenu -p 'Pass query:' "$@" \
 )"
 
 [ -z "$entry" ] && exit
