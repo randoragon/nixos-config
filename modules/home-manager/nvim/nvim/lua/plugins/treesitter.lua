@@ -6,6 +6,7 @@ treesitter.setup {
 		"awk",
 		"bash",
 		"c", "cpp", "c_sharp",
+		"corn",
 		"make", "cmake",
 		"diff",
 		"dockerfile",
