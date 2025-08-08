@@ -29,7 +29,7 @@ systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal
 systemctl --user start wireplumber
 
 # Start the status bar
-waybar &
+ironbar &
 
 # Start on workspace 1 (index 6)
 niri msg action focus-workspace 6

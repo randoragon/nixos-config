@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+# If like me you have 5 named workspaces preceding the dynamic ones,
+# making the 6th workspace "workspace 1". Otherwise set to 1.
+WS_FIRST_INDEX=6
+
+update () {
+    {
+        echo '['
+        niri msg -j workspaces
+        echo ','
+        niri msg -j windows
+        echo ','
+        niri msg -j focused-output
+        echo ']'
+    } | jq -r '
+        .[2].name as $output |
+        INDEX(.[0].[]; .id) as $workspaces |
+
+        (.[0] | map(select(.is_active == true))) + [$workspaces[.[1].[].workspace_id | tostring]] |
+        map(select(.output == $output)) |
+        unique_by(.id) | sort_by(.idx) |
+        map(if .name == null then .name = (.idx - '"$WS_FIRST_INDEX"' + 1 | tostring) else . end) |
+        map(if .is_active == true then "*" + .name else .name end) |
+        join("  ")
+    '  # jq is fucking magic
+}
+
+update
+niri msg -j event-stream | while read -r json; do
+    ws_changed="$(echo "$json" | jq -r '.WorkspaceActivated.id // .WorkspaceActiveWindowChanged.workspace_id // .WorkspacesChanged')"
+    [ "$ws_changed" = null ] && continue
+    update
+done

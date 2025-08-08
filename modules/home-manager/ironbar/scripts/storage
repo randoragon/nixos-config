@@ -1,0 +1,18 @@
+#!/bin/sh -e
+
+while true; do
+    rootfs_mountpoint="$(df --output=target /)"
+    homefs_mountpoint="$(df --output=target /home)"
+    rootfs=$((1024 * $(df --output=avail / | tail -n1)))
+    homefs=$((1024 * $(df --output=avail /home | tail -n1)))
+
+    printf '/ %s' \
+        "$(numfmt --to iec --format %.1f "$rootfs")"
+
+    if [ "$rootfs_mountpoint" != "$homefs_mountpoint" ]; then
+        printf '  ~ %s' \
+            "$(numfmt --to iec --format %.1f "$homefs")"
+    fi
+    echo
+    sleep 10
+done

@@ -1,0 +1,69 @@
+let {
+	$pad = {
+		type = "label"
+		label = "  "
+	}
+
+	$sep = {
+		type = "label"
+		label = " | "
+	}
+
+	$niri_workspace = {
+		type = "script"
+		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/niri-workspace"
+		mode = "watch"
+	}
+
+	$focused = {
+		type = "focused"
+		icon_size = 16
+	}
+
+	$volume = {
+		type = "volume"
+		format = "{icon} {percentage}"
+		max_volume = 100
+		icons.volume_high = ">"
+		icons.volume_medium = ">"
+		icons.volume_low = ">"
+		icons.muted = "X"
+		on_click_right = "qpwgraph"
+	}
+
+	$storage = {
+		type = "script"
+		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/storage"
+		mode = "watch"
+	}
+
+	$gpg_expire = {
+		type = "script"
+		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/gpg-expire"
+		mode = "watch"
+	}
+
+	$clock = {
+		type = "clock"
+		format = "%a %m/%d  %T  "
+		on_click_right = "foot -a floatme sh -c 'cal -3 --color=always | less -R'"
+	}
+
+	$battery = {
+		type = "script"
+		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/battery"
+		mode = "watch"
+	}
+}
+	in {
+	name = "mybar"
+	layer = "top"
+	position = "top"
+	anchor_to_edges = true
+	height = 20
+	icon_theme = "Kanagawa-BL"
+
+	start = [ $pad $niri_workspace ]
+	center = [ $focused ]
+	end = [ $volume $sep $storage $sep $gpg_expire $sep $clock $battery $pad ]
+}

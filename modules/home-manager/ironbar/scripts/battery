@@ -1,0 +1,34 @@
+#!/bin/sh -e
+
+notif_id=82147924
+tmpf="$(mktemp --tmpdir "battery.XXXXX")"
+trap 'rm -f -- "$tmpf"' INT EXIT QUIT TERM
+echo 100 >"$tmpf"
+
+while true; do
+    for path in /sys/class/power_supply/BAT?; do
+        [ ! -d "$path" ] && return
+
+        case "$(cat -- "$path/status")" in
+            Charging) printf '^' ;;
+            Discharging) printf 'v' ;;
+            *) printf '*' ;;
+        esac
+
+        perc=$(($(cat -- "$path/capacity")))
+        perc_prev=$(($(cat -- "$tmpf")))
+        [ -z "$perc_prev" ] && perc_prev=100 || perc_prev=$((perc_prev))
+        [ -n "$perc" ] && {
+            echo "$perc%"
+            if [ $perc -le 15 ] && [ $perc_prev -gt 15 ]; then
+                notify-send -r $notif_id -i battery -u critical "Battery Low [$perc%]"
+            elif [ $perc -le 5 ] && [ $perc_prev -gt $perc ]; then
+                notify-send -r $notif_id -i battery -u critical "Battery Low [$perc%]"
+            fi
+            echo $perc >"$tmpf"
+        }
+
+        break  # Only care about the first battery, if any
+    done
+    sleep 10
+done
