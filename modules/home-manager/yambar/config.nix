@@ -75,7 +75,7 @@
 
       {
         script = {
-          path = ./scripts/gpg_expire;
+          path = ./scripts/gpg-expire;
           poll-interval = 3600000;
           content = basic-string "{str}";
         };
