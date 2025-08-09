@@ -27,7 +27,7 @@
     zynaddsubfx
     setbfree
     lilypond
-    tonelib-zoom
+    #tonelib-zoom depends on libsoup-2.74.3, which is EOL
   ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
