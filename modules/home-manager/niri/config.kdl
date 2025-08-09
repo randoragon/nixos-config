@@ -255,7 +255,7 @@ binds {
 	Control+Alt+A       hotkey-overlay-title="Spawn Anki" { spawn "anki"; }
 
 	// Status bar
-	Mod+B               hotkey-overlay-title="Toggle Status Bar" { spawn "sh" "-c" "pkill -x .ironbar-wrappe || ironbar"; }
+	Mod+B               hotkey-overlay-title="Toggle Status Bar" { spawn "ironbar" "bar" "mybar" "toggle-visible"; }
 
 	// Wallpaper
 	Mod+Control+Shift+Slash  hotkey-overlay-title="Clear Wallpaper" { spawn "swww" "clear" "111111"; }
