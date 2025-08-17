@@ -286,7 +286,7 @@ environment {
 
 // Configure status bar
 layer-rule {
-	match namespace="panel"
+	match namespace="ironbar"
 	match at-startup=true
 
 	opacity 0.8
