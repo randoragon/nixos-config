@@ -1,5 +1,5 @@
 # Optional audio support
-{ pkgs, ... }: {
+{
   services.pipewire = {
     enable = true;
     alsa.enable = true;
