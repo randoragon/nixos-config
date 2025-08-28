@@ -4,6 +4,7 @@
     ./ardour
     ./carla
     ./sox
+    ./wine  # For yabridge
   ];
 
   home.packages = with pkgs; [
@@ -28,6 +29,10 @@
     setbfree
     lilypond
     #tonelib-zoom depends on libsoup-2.74.3, which is EOL
+
+    # For running Windows plugins
+    yabridge
+    yabridgectl
   ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4

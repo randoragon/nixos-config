@@ -1,5 +1,5 @@
 { pkgs, config, ... }: {
-  home.packages = with pkgs; [ wine ];
+  home.packages = with pkgs; [ wineWowPackages.yabridge ];
 
   home.sessionVariables = {
     WINEPREFIX = "${config.xdg.dataHome}/wine";
