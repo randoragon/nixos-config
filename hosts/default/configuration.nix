@@ -13,7 +13,6 @@
     ../../modules/nixos/o-sshd-service.nix
     # ../../modules/nixos/o-printing.nix
     ../../modules/nixos/o-work.nix
-    ../../modules/nixos/o-hotfix-carla-python313.nix
   ];
 
   # Set hostname
