@@ -31,6 +31,7 @@
   ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
+  # musnix also does a similar thing, but uses default home paths and I prefer my own one
   home.sessionVariables = let
     pluginsPath = "${config.xdg.userDirs.extraConfig.XDG_PRODUCTION_DIR}/000_audio-bank/plugins";
   in {

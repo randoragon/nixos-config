@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    musnix.url = "github:musnix/musnix";
     rsid3.url = "github:randoragon/rsid3";
     secrets.url = "github:randoragon/secrets";
     lxmake.url = "github:randoragon/lxmake";
@@ -41,6 +42,7 @@
       specialArgs = inherited-inputs;
       modules = [
         ./hosts/default/configuration.nix
+        inputs.musnix.nixosModules.musnix
         inputs.home-manager.nixosModules.home-manager
         inputs.nix-index-database.nixosModules.nix-index
       ];
@@ -50,6 +52,7 @@
       specialArgs = inherited-inputs;
       modules = [
         ./hosts/nixbox/configuration.nix
+        inputs.musnix.nixosModules.musnix
         inputs.home-manager.nixosModules.home-manager
         inputs.nix-index-database.nixosModules.nix-index
       ];

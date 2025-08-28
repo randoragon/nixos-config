@@ -4,6 +4,7 @@
     ./hardware-configuration.nix
     ../../modules/nixos
     ../../modules/nixos/o-audio.nix
+    ../../modules/nixos/o-audio-production.nix
     ../../modules/nixos/o-bluetooth.nix
     ../../modules/nixos/o-gaming.nix
     ../../modules/nixos/o-graphical.nix
@@ -21,7 +22,7 @@
   # User configuration
   users.users.pcache = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" "uinput" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "uinput" "audio" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys ];
   };
