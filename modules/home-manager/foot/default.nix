@@ -38,11 +38,6 @@
         scrollback-up-page = "Control+Shift+b";
         scrollback-down-page = "Control+Shift+f";
       };
-
-      tweak = {
-        # This fixes some visual glitches in lf with emoji font icons
-        grapheme-width-method = "wcswidth";
-      };
     };
   };
 
