@@ -1,155 +1,177 @@
 # https://yazi-rs.github.io/docs/configuration/keymap
 
-# Disable vim-mode for prompt windows
-[[input.prepend_keymap]]
-on   = "<Esc>"
-run  = "close"
-desc = "Cancel input"
+[mgr]
+prepend_keymap = [
+	# Remove redundant keymap (open --interactive, already available with <S-Enter>)
+	{ on = "O", run = "noop" },
 
-# Swap delete and cut
-[[manager.prepend_keymap]]
-on = "d"
-run = "yank --cut"
-desc = "Yank selected files (cut)"
-[[manager.prepend_keymap]]
-on = "x"
-run = "remove"
-desc = "Trash selected files"
-[[manager.prepend_keymap]]
-on = "X"
-run = "remove --permanently"
-desc = "Permanently delete selected files"
+	# Close tab or exit
+	{ on = "<C-c>", run = "noop" },
+	{ on = "q", run = "close", desc = "Close the current tab, or quit if it's last" },
+	{ on = "Q", run = "quit --no-cwd-file", desc = "Quit without outputting cwd-file" },
 
-# Deselect (alternative to Esc)
-[[manager.prepend_keymap]]
-on = "u"
-run = "toggle_all --state=off"
-desc = "Deselect all files"
+	# Spawn shell in cwd
+	{ on = "w", run = 'shell --block "$SHELL"', desc = "Open $SHELL here" },
 
-# Open with EDITOR
-[[manager.prepend_keymap]]
-on = "e"
-run = '''shell --block '$EDITOR -- "$@"''''
-desc = "Open with $EDITOR"
+	# Toggle task manager
+	{ on = "T", run = "tasks:show", desc = "Show task manager" },
 
-# Open with PAGER
-[[manager.prepend_keymap]]
-on = "i"
-run = '''shell --block 'less -f +g +k -- "$@"''''
-desc = "Open with less"
+	# Make down and up movement non-wrapping
+	{ on = "j", run = "arrow 1", desc = "Next file" },
+	{ on = "<Down>", run = "arrow 1", desc = "Next file" },
+	{ on = "k", run = "arrow -1", desc = "Next file" },
+	{ on = "<Up>", run = "arrow -1", desc = "Next file" },
 
-# Run fls
-[[manager.prepend_keymap]]
-on = "I"
-run = '''shell --block 'fls "$@" | less -f -R +g +k''''
-desc = "Display file information"
+	# Swap delete and cut
+	{ on = "Y", run = "noop" },
+	{ on = "U", run = "unyank", desc = "Clear yank status" },
+	{ on = "d", run = "yank --cut", desc = "Yank selected files (cut)" },
+	{ on = "x", run = "remove", desc = "Trash selected files" },
+	{ on = "X", run = "remove --permanently", desc = "Permanently delete selected files" },
 
-# Toggle max-preview
-[[manager.prepend_keymap]]
-on   = "\\"
-run  = "plugin max-preview"
-desc = "Maximize or restore preview"
+	# Selecting files
+	{ on = "<C-a>", run = "noop" },
+	{ on = "<C-r>", run = "noop" },
+	{ on = "<Space>", run = [ "toggle", "arrow 1" ], desc = "Deselect all files" },
+	{ on = "u", run = "toggle_all --state=off", desc = "Deselect all files" },
+	{ on = "<C-v>", run = "toggle_all", desc = "Toggle select all" },
 
-# Run the mount plugin
-[[manager.prepend_keymap]]
-on   = "M"
-run  = "plugin mount"
-desc = "Open mount menu"
+	# Fuzzy searching
+	{ on = "z", run = "noop" },
+	{ on = "Z", run = "noop" },
+	{ on = "o", run = "plugin fzf", desc = "Jump to a file/directory via fzf" },
 
-# jumprc
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "n", "i" ]
-run  = "cd ~/nixos-config"
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "h", "n", "i" ]
-run  = "cd ~/nixos-config/modules/home-manager"
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "h", "n", "s", "c" ]
-run  = "cd ~/nixos-config/modules/home-manager/scripts/scripts"
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "h", "n", "l", "b" ]
-run  = "cd ~/nixos-config/modules/home-manager/scripts/localbin"
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "a", "p" ]
-run  = 'cd ~/.local/share/applications'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "c" ]
-run  = 'cd ~/.config'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "d", "m", "u" ]
-run  = 'cd ~/Downloads/Music'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "p", "r" ]
-run  = 'cd ~/Production'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "l", "b" ]
-run  = 'cd ~/.local/bin'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "l", "s" ]
-run  = 'cd ~/.local/share'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "l", "t" ]
-run  = 'cd ~/.local/state'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "m", "n" ]
-run  = 'cd /mnt'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "m", "t" ]
-run  = "cd /run/media/$(whoami)"
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "m", "u" ]
-run  = 'cd ~/Music'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "p", "l" ]
-run  = 'cd ~/Music/Playlists'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "o", "c" ]
-run  = 'cd ~/Documents'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "s", "y" ]
-run  = 'cd ~/Sync'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "o", "w" ]
-run  = 'cd ~/Downloads'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "p", "a" ]
-run  = 'cd ~/.local/share/pass'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "n", "o" ]
-run  = 'cd ~/.local/share/notes'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "h", "l" ]
-run  = 'cd ~/.local/share/ledger'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "p", "i" ]
-run  = 'cd ~/Pictures'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "p", "u", "t" ]
-run  = 'cd ~/Documents/put/sem9'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "s", "c" ]
-run  = 'cd ~/.scripts'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "s", "o" ]
-run  = 'cd ~/Software'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "t", "r" ]
-run  = 'cd ~/.local/share/Trash/files'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "v", "i" ]
-run  = 'cd ~/Videos'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "w", "a", "l", "l" ]
-run  = 'cd ~/.local/share/wallpapers'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "r", "u" ]
-run  = 'cd ~/Software/randoutils'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "s", "p" ]
-run  = 'cd ~/Software/libstaple'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "r", "i" ]
-run  = 'cd ~/nixos-config/modules/home-manager/river/river'
-[[manager.prepend_keymap]]
-on   = [ "c", "d", "n", "v" ]
-run  = 'cd ~/nixos-config/modules/home-manager/nvim/nvim'
+	# Open with EDITOR
+	{ on = "e", run = '''shell --block '$EDITOR -- "$@"'''', desc = "Open with $EDITOR" },
+
+	# Open with less
+	{ on = "i", run = '''shell --block '{ highlight -O ansi -- "$1" || cat -- "$f"; } | less -R -f +g +k'''', desc = "Open with less" },
+
+	# Run fls
+	{ on = "I", run = '''shell --block 'fls "$@" | less -f -R +g +k'''', desc = "Display file information" },
+
+	# Ripdrag support
+	{ on = [ ",", "d" ], run = '''shell 'echo "$@" | xargs ripdrag'''', desc = "Open selected files in ripdrag" },
+	{ on = [ ",", "D" ], run = '''shell 'find . -type f | xargs ripdrag'''', desc = "Open PWD files in ripdrag" },
+
+	# Follow symlink
+	{ on = [ "g", "f" ], run = "noop" },
+	{ on = [ "g", "l" ], run = [ "follow", "reveal" ], desc = "Follow hovered symlink" },
+
+	# Run chmod plugin
+	{ on = [ ",", "c" ], run = "plugin chmod", desc = "Chmod on selected files" },
+
+	# Run the mount plugin
+	{ on = "M", run = "plugin mount", desc = "Open mount menu" },
+
+	# Toggle-pane plugin
+	{ on = [ ",", "p" ], run = "plugin toggle-pane min-preview", desc = "Toggle preview" },
+
+	# Open image previews
+	{ on = [ ",", "i" ], run = '''shell "find . -maxdepth 1 -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --"''', desc = "Open CWD images in vimiv" },
+	{ on = [ ",", "I" ], run = '''shell "find . -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --"''', desc = "Open recursively images in vimiv" },
+
+	# Sorting
+	{ on = [ ",", "m" ], run = "noop" },
+	{ on = [ ",", "M" ], run = "noop" },
+	{ on = [ ",", "b" ], run = "noop" },
+	{ on = [ ",", "B" ], run = "noop" },
+	{ on = [ ",", "e" ], run = "noop" },
+	{ on = [ ",", "E" ], run = "noop" },
+	{ on = [ ",", "a" ], run = "noop" },
+	{ on = [ ",", "A" ], run = "noop" },
+	{ on = [ ",", "n" ], run = "noop" },
+	{ on = [ ",", "N" ], run = "noop" },
+	{ on = [ ",", "s" ], run = "noop" },
+	{ on = [ ",", "S" ], run = "noop" },
+	{ on = [ ",", "r" ], run = "noop" },
+	{ on = [ ",", "s", "m" ], run = [ "sort mtime --reverse=no", "linemode mtime" ], desc = "Sort by modified time" },
+	{ on = [ ",", "s", "M" ], run = [ "sort mtime --reverse", "linemode mtime" ],desc = "Sort by modified time (reverse)" },
+	{ on = [ ",", "s", "b" ], run = [ "sort btime --reverse=no", "linemode btime" ], desc = "Sort by birth time" },
+	{ on = [ ",", "s", "B" ], run = [ "sort btime --reverse", "linemode btime" ], desc = "Sort by birth time (reverse)" },
+	{ on = [ ",", "s", "e" ], run = [ "sort extension --reverse=no", "linemode none" ], desc = "Sort by extension" },
+	{ on = [ ",", "s", "E" ], run = [ "sort extension --reverse", "linemode none" ], desc = "Sort by extension (reverse)" },
+	{ on = [ ",", "s", "a" ], run = [ "sort alphabetical --reverse=no", "linemode none" ], desc = "Sort alphabetically" },
+	{ on = [ ",", "s", "A" ], run = [ "sort alphabetical --reverse", "linemode none" ], desc = "Sort alphabetically (reverse)" },
+	{ on = [ ",", "s", "n" ], run = [ "sort natural --reverse=no", "linemode none" ], desc = "Sort naturally" },
+	{ on = [ ",", "s", "N" ], run = [ "sort natural --reverse", "linemode none" ], desc = "Sort naturally (reverse)" },
+	{ on = [ ",", "s", "s" ], run = [ "sort size --reverse=no", "linemode size" ], desc = "Sort by size" },
+	{ on = [ ",", "s", "S" ], run = [ "sort size --reverse", "linemode size" ], desc = "Sort by size (reverse)" },
+	{ on = [ ",", "s", "r" ], run = "sort random --reverse=no", desc = "Sort randomly" },
+
+	# Linemode
+	{ on = [ "m", "s" ], run = "noop" },
+	{ on = [ "m", "p" ], run = "noop" },
+	{ on = [ "m", "b" ], run = "noop" },
+	{ on = [ "m", "m" ], run = "noop" },
+	{ on = [ "m", "o" ], run = "noop" },
+	{ on = [ "m", "n" ], run = "noop" },
+	{ on = [ ",", "S", "s" ], run = "linemode size", desc = "Linemode: size" },
+	{ on = [ ",", "S", "p" ], run = "linemode permissions", desc = "Linemode: permissions" },
+	{ on = [ ",", "S", "b" ], run = "linemode btime", desc = "Linemode: btime" },
+	{ on = [ ",", "S", "m" ], run = "linemode mtime", desc = "Linemode: mtime" },
+	{ on = [ ",", "S", "o" ], run = "linemode owner", desc = "Linemode: owner" },
+	{ on = [ ",", "S", "n" ], run = "linemode none", desc = "Linemode: none" },
+
+	# Bookmarks plugin
+	{ on = [ "m" ], run = "plugin bookmarks save", desc = "Save current position as a bookmark" },
+	{ on = [ "'" ], run = "plugin bookmarks jump", desc = "Jump to a bookmark" },
+	{ on = [ "b", "d" ], run = "plugin bookmarks delete", desc = "Delete a bookmark" },
+	{ on = [ "b", "D" ], run = "plugin bookmarks delete_all", desc = "Delete all bookmarks" },
+
+	# jumprc
+	{ on = [ "g", "c" ], run = "noop" },
+	{ on = [ "g", "d" ], run = "noop" },
+	{ on = [ "g", "<Space>" ], run = "noop" },
+	{ on = [ "g", "l" ], run = "noop" },
+	{ on = [ "c", "d", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
+	{ on = [ "c", "d", "n", "i" ], run = "cd ~/nixos-config" },
+	{ on = [ "c", "d", "h", "n", "i" ], run = "cd ~/nixos-config/modules/home-manager/" },
+	{ on = [ "c", "d", "n", "s", "c" ], run = "cd ~/nixos-config/modules/home-manager/scripts/scripts" },
+	{ on = [ "c", "d", "n", "l", "b" ], run = "cd ~/nixos-config/modules/home-manager/scripts/localbin" },
+	{ on = [ "c", "d", "a", "p" ], run = "cd ~/.local/share/applications" },
+	{ on = [ "c", "d", "c" ], run = "cd ~/.config" },
+	{ on = [ "c", "d", "d", "m", "u" ], run = "cd ~/Downloads/Music" },
+	{ on = [ "c", "d", "p", "r" ], run = "cd ~/Production" },
+	{ on = [ "c", "d", "l", "b" ], run = "cd ~/.local/bin" },
+	{ on = [ "c", "d", "l", "s" ], run = "cd ~/.local/share" },
+	{ on = [ "c", "d", "l", "t" ], run = "cd ~/.local/state" },
+	{ on = [ "c", "d", "m", "n" ], run = "cd /mnt" },
+	{ on = [ "c", "d", "m", "u" ], run = "cd ~/Music" },
+	{ on = [ "c", "d", "p", "l" ], run = "cd ~/Music/Playlists" },
+	{ on = [ "c", "d", "o", "c" ], run = "cd ~/Documents" },
+	{ on = [ "c", "d", "s", "y" ], run = "cd ~/Sync" },
+	{ on = [ "c", "d", "o", "w" ], run = "cd ~/Downloads" },
+	{ on = [ "c", "d", "p", "a" ], run = "cd ~/.local/share/pass" },
+	{ on = [ "c", "d", "n", "o" ], run = "cd ~/.local/share/notes" },
+	{ on = [ "c", "d", "h", "l" ], run = "cd ~/.local/share/ledger" },
+	{ on = [ "c", "d", "p", "i" ], run = "cd ~/Pictures" },
+	{ on = [ "c", "d", "p", "u", "t" ], run = "cd ~/Documents/put/sem10" },
+	{ on = [ "c", "d", "s", "c" ], run = "cd ~/.scripts" },
+	{ on = [ "c", "d", "s", "o" ], run = "cd ~/Software" },
+	{ on = [ "c", "d", "t", "r" ], run = "cd ~/.local/share/Trash/files" },
+	{ on = [ "c", "d", "v", "i" ], run = "cd ~/Videos" },
+	{ on = [ "c", "d", "w", "a", "l", "l" ], run = "cd ~/.local/share/wallpapers" },
+	{ on = [ "c", "d", "r", "u" ], run = "cd ~/Software/randoutils" },
+	{ on = [ "c", "d", "s", "p" ], run = "cd ~/Software/libstaple" },
+	{ on = [ "c", "d", "r", "i" ], run = "cd ~/nixos-config/modules/home-manager/river/river/" },
+	{ on = [ "c", "d", "n", "v" ], run = "cd ~/nixos-config/modules/home-manager/nvim/nvim/" },
+]
+
+[input]
+prepend_keymap = [
+	# Disable vim-mode for prompt windows
+	{ on = "<Esc>", run = "close", desc = "Cancel input" },
+]
+
+[spot]
+prepend_keymap = [
+	{ on = [ "c", "c" ], run = "noop" },
+	{ on = "y", run = "copy cell", desc = "Copy selected cell" },
+]
+
+[tasks]
+prepend_keymap = [
+	{ on = "w", run = "noop" },
+	{ on = "T", run = "close", desc = "Close task manager" },
+]

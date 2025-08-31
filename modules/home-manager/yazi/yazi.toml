@@ -1,14 +1,40 @@
 # https://yazi-rs.github.io/docs/configuration/yazi
+[mgr]
+ratio = [1, 2, 3]
+sort_sensitive = false
+sort_dir_first = true
+
 [which]
 sort_translit = true
 
 # Always use xdg-open for opening
 [open]
-rules = [
+prepend_rules = [
 	{ name = "*", use = [ "open" ] },
+	{ name = "bulk-rename.txt", use = "bulk-rename" },
+]
+
+[opener]
+bulk-rename = [
+	{ run = 'nvim "$@"', block = true },
 ]
 
 [plugin]
 prepend_previewers = [
-    { mime = "audio/*",   run = "exifaudio"}
+	# Preview some archive types with piper
+	{ name = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
+	{ name = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
+	{ name = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
+
+	# Preview mp3 files
+	{ name = "*.mp3", run = '''piper --
+		soxi -- "$1" | tail -n+2
+		artist="$(rsid3 --TPE1 -- "$1" 2>/dev/null)"
+		albumartist="$(rsid3 --TPE2 -- "$1" 2>/dev/null)"
+		title="$(rsid3 --TIT2 -- "$1" 2>/dev/null)"
+		album="$(rsid3 --TALB -- "$1" 2>/dev/null)"
+		track="$(rsid3 --TRCK -- "$1" 2>/dev/null)"
+		printf 'artist: %s\ntitle:  %s\nalbum:  %s\ntrack:  %s\nalbum artist: %s\n' \
+		    "$artist" "$title" "$album" "$track" "$albumartist"
+		''' },
 ]

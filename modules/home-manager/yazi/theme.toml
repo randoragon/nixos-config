@@ -1,8 +1,17 @@
 # https://yazi-rs.github.io/docs/configuration/theme
 
+[mgr]
+border_symbol = " "
+
 [status]
-separator_open  = ""
-separator_close = ""
+sep_left = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+[tabs]
+active = { fg = "black", bg = "blue", bold = true }
+inactive = { bg = "black" }
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
 
 [which]
 separator = ": "
@@ -190,7 +199,7 @@ conds = [
 	{ if = "fifo",          text = "➡️" },
 	{ if = "sock",          text = "↔️" },
 	{ if = "sticky",        text = "🤝" },
-	#{ if = "link",          text = "📎" },
+	#{ if = "link",          text = "📎" }, Does not get highest priority and is therefore unreliable
 	{ if = "dummy",         text = "❓" },
 
 	{ if = "dir",           text = "📁" },
