@@ -19,10 +19,10 @@ exit_code () {
   echo "%{$bg[$col]$fg[black]%}${tile}%{$reset_color%}"
 }
 
-# Prints the level of nested LF sessions
+# Prints the level of nested yazi sessions
 lf_level () {
-  [ -n "$LF_LEVEL" ] && {
-      [ $(printf "%d" "$LF_LEVEL" | wc -c) = 1 ] && tile="$LF_LEVEL " || tile="$LF_LEVEL"
+  [ -n "$YAZI_LEVEL" ] && {
+      [ $(printf "%d" "$YAZI_LEVEL" | wc -c) = 1 ] && tile="$YAZI_LEVEL " || tile="$YAZI_LEVEL"
       echo "%{$bg[magenta]$fg[black]%}${tile}%{$reset_color%}"
   }
 }
@@ -51,17 +51,8 @@ setopt shwordsplit
 DIRSTACKSIZE=8
 setopt autopushd pushdminus pushdsilent pushdtohome
 
-# Use lf to switch directories and bind it to ctrl-o
-lfcd () {
-    tmp="$(mktemp)"
-    lf -last-dir-path="$tmp" "$@"
-    if [ -f "$tmp" ]; then
-        dir="$(cat "$tmp")"
-        rm -f "$tmp"
-        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
-    fi
-}
-bindkey -s '^o' 'lfcd\n'
+# Bind ctrl-o to yazicd
+bindkey -s '^o' 'yazicd\n'
 
 # Enable light-up menu
 zstyle ':completion:*' menu select

@@ -38,7 +38,7 @@ o.backupdir = os.getenv("HOME") .. "/.local/share/nvim/backup/"
 -- https://jdhao.github.io/2019/11/03/vim_custom_statusline/
 -- https://shapeshed.com/vim-statuslines/
 o.statusline =
-	"%#MyRunningInLf#%{%luaeval(\"os.getenv('LF_LEVEL')\")?'[LF]':''%}"  -- Running inside lf indicator
+	"%#MyRunningInLf#%{%luaeval(\"os.getenv('YAZI_LEVEL')\")?'[YZ]':''%}"  -- Running inside yazi indicator
 	.. "%#MyProjectMode#%{g:project_mode?'·':''}"    -- Project Mode indicator
 	.. "%{%luaeval(\"lsp_get_status_str()\")%}"      -- LSP warnings/errors
 	.. "%#Visual# %f "                               -- File path

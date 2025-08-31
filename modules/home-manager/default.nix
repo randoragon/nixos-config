@@ -6,12 +6,12 @@
     ./gnupg
     ./lazygit
     ./less
-    ./lf
     ./scripts
     ./tmux
     ./wget
     ./zsh
     ./xdg-mime
+    ./yazi
   ];
 
   # User packages that should always be installed.

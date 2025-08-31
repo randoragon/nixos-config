@@ -79,9 +79,9 @@
 
     file = {
       type = "Application";
-      name = "lf";
+      name = "yazi";
       genericName = "File Browser";
-      exec = "${pkgs.foot}/bin/foot -- ${pkgs.lf}/bin/lf -- %f";
+      exec = "${pkgs.foot}/bin/foot -- ${pkgs.yazi}/bin/yazi -- %f";
       terminal = false;
       mimeType = [ "inode/directory" ];
     };
