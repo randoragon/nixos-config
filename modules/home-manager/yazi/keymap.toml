@@ -154,7 +154,6 @@ prepend_keymap = [
 	{ on = [ "c", "d", "w", "a", "l", "l" ], run = "cd ~/.local/share/wallpapers" },
 	{ on = [ "c", "d", "r", "u" ], run = "cd ~/Software/randoutils" },
 	{ on = [ "c", "d", "s", "p" ], run = "cd ~/Software/libstaple" },
-	{ on = [ "c", "d", "r", "i" ], run = "cd ~/nixos-config/modules/home-manager/river/river/" },
 	{ on = [ "c", "d", "n", "v" ], run = "cd ~/nixos-config/modules/home-manager/nvim/nvim/" },
 ]
 
