@@ -358,7 +358,7 @@ window-rule {
 
 // Flameshot
 window-rule {
-	match app-id="flameshot" title="flameshot-pin"
+	match title="flameshot-pin"
 	open-floating true
 	shadow {
 		off
