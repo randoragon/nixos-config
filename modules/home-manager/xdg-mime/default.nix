@@ -13,6 +13,7 @@
       "application/x-troff-man" = [ "text.desktop" ];
       "text/x-tex" = [ "text.desktop" ];
       "text/x-typst" = [ "text.desktop" ];
+      "text/x-patch" = [ "text.desktop" ];
       "text/html" = [ "firefox.desktop" "text.desktop" ];
 
       # Code
