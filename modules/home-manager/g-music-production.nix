@@ -22,7 +22,6 @@
     infamousPlugins
     helm
     geonkick
-    sfizz
     vmpk
     hydrogen
     zynaddsubfx
@@ -33,7 +32,7 @@
     # For running Windows plugins
     yabridge
     yabridgectl
-  ] ++ [ rsid3 ];
+  ] ++ [ rsid3 ] ++ [ spkgs.sfizz ];  # TODO: bring back unstable sfizz when it's not broken anymore
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   # musnix also does a similar thing, but uses default home paths and I prefer my own one
