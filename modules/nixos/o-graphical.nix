@@ -9,6 +9,9 @@
     extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
   };
 
+  # Required to make some gtk features work
+  programs.dconf.enable = true;
+
   # Allow swaylock to authenticate (https://github.com/swaywm/sway/issues/2773#issuecomment-427570877)
   security.pam.services.swaylock = {
     text = "auth include login";
