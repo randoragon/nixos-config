@@ -435,3 +435,9 @@ window-rule {
 	match app-id="xdg-desktop-portal-gtk" title="Load SFZ file"
 	open-floating true
 }
+
+// Vitalium
+window-rule {
+	match title="Vitalium \\(GUI\\)"
+	open-floating true
+}
