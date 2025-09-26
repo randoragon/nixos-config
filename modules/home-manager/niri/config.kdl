@@ -348,6 +348,10 @@ window-rule {
 	open-maximized true
 	open-on-workspace "e"
 }
+window-rule {
+	match app-id="thunderbird" title="Activity Manager"
+	open-floating true
+}
 
 // Discord
 window-rule {
