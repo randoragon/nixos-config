@@ -445,3 +445,9 @@ window-rule {
 	match title="Vitalium \\(GUI\\)"
 	open-floating true
 }
+
+// Krita
+window-rule {
+	match app-id="krita" title="Krita - Edit Text\\b.*"
+	open-floating true
+}
