@@ -449,5 +449,6 @@ window-rule {
 // Krita
 window-rule {
 	match app-id="krita" title="Krita - Edit Text\\b.*"
+	match app-id="krita" title="PNG image\\b.*"
 	open-floating true
 }
