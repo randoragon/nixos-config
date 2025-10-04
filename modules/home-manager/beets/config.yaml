@@ -47,6 +47,7 @@ paths:
 # duplicates     : finds duplicate tracks or albums
 # fromfilename   : guesses missing artist/title from filename
 plugins: >
+  musicbrainz
   fetchart
   edit
   embedart
