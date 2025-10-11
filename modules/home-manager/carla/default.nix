@@ -1,5 +1,5 @@
 { config, lib, pkgs, ... }: {
-  home.packages = with pkgs; [ carla ];  # TODO: switch back to unstable pkgs
+  home.packages = with pkgs; [ carla ];
 
   # Disable carla quit confirmation dialog and configure paths.
   # Use activation, because we want the config file to be writeable.
