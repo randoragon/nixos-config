@@ -23,7 +23,6 @@
     geonkick
     vmpk
     hydrogen
-    zynaddsubfx
     sfizz
     setbfree
     lilypond
@@ -32,7 +31,7 @@
     # For running Windows plugins
     yabridge
     yabridgectl
-  ] ++ [ rsid3 ];
+  ] ++ [ rsid3 ] ++ [ spkgs.zynaddsubfx ];  # TODO: bring back unstable zynaddsubfx when it's not broken anymore
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   # musnix also does a similar thing, but uses default home paths and I prefer my own one
