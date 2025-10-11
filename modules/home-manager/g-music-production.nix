@@ -24,6 +24,7 @@
     vmpk
     hydrogen
     zynaddsubfx
+    sfizz
     setbfree
     lilypond
     #tonelib-zoom depends on libsoup-2.74.3, which is EOL
@@ -31,7 +32,7 @@
     # For running Windows plugins
     yabridge
     yabridgectl
-  ] ++ [ rsid3 ] ++ [ spkgs.sfizz ];  # TODO: bring back unstable sfizz when it's not broken anymore
+  ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   # musnix also does a similar thing, but uses default home paths and I prefer my own one
