@@ -16,6 +16,7 @@
     audacity
     x42-plugins
     distrho-ports
+    guitarix
     gxplugins-lv2
     lsp-plugins
     tap-plugins
