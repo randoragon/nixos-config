@@ -10,7 +10,6 @@
   # 8. Done!
   programs.coolercontrol = {
     enable = true;
-    nvidiaSupport = true;
   };
 
   boot.kernelModules = [ "coretemp" "nct6775" ];
