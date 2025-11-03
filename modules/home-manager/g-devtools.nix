@@ -11,6 +11,6 @@
 
   home.packages = with pkgs; [
     unixtools.xxd
-    linuxPackages_latest.perf hotspot
+    perf hotspot
   ];
 }
