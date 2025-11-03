@@ -10,7 +10,7 @@
     # Audio
     qpwgraph pulsemixer
     ffmpeg
-    poppler_utils
+    poppler-utils
 
     # Video / images
     imagemagick graphicsmagick
