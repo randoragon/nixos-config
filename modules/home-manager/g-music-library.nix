@@ -10,7 +10,7 @@
   ];
 
   home.packages = with pkgs; [
-    mpc-cli
+    mpc
     mp3gain rsgain
     (python3.withPackages (ps: with ps; [
       musicbrainzngs
