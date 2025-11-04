@@ -9,7 +9,6 @@
         pagers = [
           {
             pager = "delta --dark --paging=never";
-            colorArg = "always";
           }
         ];
       };
