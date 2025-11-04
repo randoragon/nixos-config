@@ -1,6 +1,7 @@
 # The basis for all sub-configuration modules. Every system is built on top of this.
 { pkgs, secrets, ... }: {
   imports = [
+    ./delta
     ./direnv
     ./git
     ./gnupg
