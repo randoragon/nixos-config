@@ -1,7 +1,7 @@
 {
   programs.less = {
     enable = true;
-    keys = ''
+    config = ''
       #command
       h left-scroll
       l right-scroll
