@@ -6,6 +6,7 @@
   home.file.".local/bin/pl2wavs".source = ./localbin/pl2wavs;
   home.file.".local/bin/pladd".source = ./localbin/pladd;
   home.file.".local/bin/pldel".source = ./localbin/pldel;
+  home.file.".local/bin/plexport".source = ./localbin/plexport;
   home.file.".local/bin/regain".source = ./localbin/regain;
   home.file.".local/bin/scanfairuse".source = ./localbin/scanfairuse;
 
