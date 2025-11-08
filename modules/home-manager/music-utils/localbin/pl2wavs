@@ -18,15 +18,11 @@ help () {
 
     pl2wavs PLAYLIST [DIR]
 
-    PLAYLIST
-    an m3u playlist file with paths
-    relative to '%s'
+    PLAYLIST - an m3u playlist file with paths relative to '%s'
 
-    DIR
-    The directory to be created, containing
-    all files listed in PLAYLIST converted to
-    the right format. If no dir is passed,
-    extensionless name of PLAYLIST is used.
+    DIR - The directory to be created, containing all files listed in PLAYLIST
+    converted to the right format. If no dir is passed, extensionless name of
+    PLAYLIST is used.
 " "$rootdir"
 }
 
