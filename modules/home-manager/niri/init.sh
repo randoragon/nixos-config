@@ -1,8 +1,5 @@
 #!/bin/sh -e
 
-# Enable XWayland support
-xwayland-satellite :0 &
-
 # Lock idle session
 swayidle -w \
     timeout 600 swaylock \
