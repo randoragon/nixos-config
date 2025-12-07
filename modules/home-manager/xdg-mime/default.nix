@@ -32,6 +32,7 @@
       # Audio
       "audio/mpeg" = [ "mpv.desktop" ];
       "audio/mp4" = [ "mpv.desktop" ];
+      "audio/flac" = [ "mpv.desktop" ];
       "audio/x-wave" = [ "mpv.desktop" ];
       "audio/x-wav" = [ "mpv.desktop" ];
       "audio/ogg" = [ "mpv.desktop" ];
