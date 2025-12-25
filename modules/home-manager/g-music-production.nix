@@ -21,7 +21,7 @@
     lsp-plugins
     tap-plugins
     helm
-    geonkick
+    geonkick drumgizmo
     vmpk
     hydrogen
     setbfree
