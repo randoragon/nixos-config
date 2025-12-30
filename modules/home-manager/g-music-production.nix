@@ -36,7 +36,7 @@
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   # musnix also does a similar thing, but uses default home paths and I prefer my own one
   home.sessionVariables = let
-    pluginsPath = "${config.xdg.userDirs.extraConfig.XDG_PRODUCTION_DIR}/000_audio-bank/plugins";
+    pluginsPath = "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/plugins";
   in {
     DSSI_PATH = "${pluginsPath}/dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi:/etc/profiles/per-user/$USER/lib/dssi";
     LADSPA_PATH = "${pluginsPath}/ladspa:$HOME/.nix-profile/lib/ladspa:/run/current-system/sw/lib/ladspa:/etc/profiles/per-user/$USER/lib/ladspa";

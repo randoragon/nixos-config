@@ -164,8 +164,8 @@
     <Option name="tail-duration-sec" value="2"/>
     <Option name="max-tail-samples" value="4294967295"/>
     <Option name="plugin-path-vst" value="/home/pcache/.vst:/home/pcache/.nix-profile/lib/vst:/run/current-system/sw/lib/vst:/etc/profiles/per-user/pcache/lib/vst"/>
-    <Option name="plugin-path-lxvst" value="/home/pcache/Production/000_audio-bank/plugins/vst2:/home/pcache/.lxvst:/home/pcache/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst:/etc/profiles/per-user/pcache/lib/lxvst"/>
-    <Option name="plugin-path-vst3" value="/home/pcache/Production/000_audio-bank/plugins/vst3"/>
+    <Option name="plugin-path-lxvst" value="/home/pcache/Assets/audio/plugins/vst2:/home/pcache/.lxvst:/home/pcache/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst:/etc/profiles/per-user/pcache/lib/lxvst"/>
+    <Option name="plugin-path-vst3" value="/home/pcache/Assets/audio/plugins/vst3"/>
     <Option name="denormal-protection" value="0"/>
     <Option name="denormal-model" value="DenormalFTZDAZ"/>
     <Option name="pingback-url" value="http://community.ardour.org/pingback/ignored/"/>

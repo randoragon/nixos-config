@@ -2,7 +2,7 @@
 
 # Convert a lilypond score to audio.
 
-SFZ=~/Production/000_audio-bank/soundfonts/SalamanderGrandPianoV3_48khz24bit/SalamanderGrandPianoV3Retuned.sfz
+SFZ="$XDG_ASSETS_DIR/audio/soundfonts/SalamanderGrandPianoV3_48khz24bit/SalamanderGrandPianoV3Retuned.sfz"
 
 if [ ! -f "$SFZ" ]; then
     echo "ly2audio: soundfont file not found" >&2

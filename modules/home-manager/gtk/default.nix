@@ -26,6 +26,7 @@
 
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
     gtk3.bookmarks = [
+      "file://${config.home.homeDirectory}/Assets"
       "file://${config.home.homeDirectory}/Documents"
       "file://${config.home.homeDirectory}/Pictures"
       "file://${config.home.homeDirectory}/Music"

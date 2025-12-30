@@ -132,6 +132,7 @@ prepend_keymap = [
 	{ on = [ "c", "d", "a", "p" ], run = "cd ~/.local/share/applications" },
 	{ on = [ "c", "d", "c" ], run = "cd ~/.config" },
 	{ on = [ "c", "d", "d", "m", "u" ], run = "cd ~/Downloads/Music" },
+	{ on = [ "c", "d", "a", "s" ], run = "cd ~/Assets" },
 	{ on = [ "c", "d", "p", "r" ], run = "cd ~/Production" },
 	{ on = [ "c", "d", "l", "b" ], run = "cd ~/.local/bin" },
 	{ on = [ "c", "d", "l", "s" ], run = "cd ~/.local/share" },
