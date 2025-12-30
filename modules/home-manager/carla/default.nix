@@ -7,11 +7,15 @@
     configDir = "${config.xdg.configHome}/falkTX";
     configFile = "${configDir}/Carla2.conf";
     configFileContent = ''
+      [General]
+      DiskFolders=${config.home.homeDirectory}, ${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio
+
       [Main]
       ConfirmExit=false
 
       [Engine]
       AudioDriver=JACK
+      ProcessMode=1
 
       [Paths]
       DSSI=${builtins.replaceStrings [":"] [", "] config.home.sessionVariables.DSSI_PATH}
