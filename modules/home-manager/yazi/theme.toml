@@ -28,9 +28,9 @@ icon_command = "✴️"
 
 [icon]
 globs = [
-	{ name = "**/LICENSE-*",          text = "©️" },
-	{ name = "**/*.so.*",             text = "🧰" },
-	{ name = "**/*.a.*",              text = "🧰" },
+	{ url = "**/LICENSE-*",           text = "©️" },
+	{ url = "**/*.so.*",              text = "🧰" },
+	{ url = "**/*.a.*",               text = "🧰" },
 ]
 dirs = []
 files = [

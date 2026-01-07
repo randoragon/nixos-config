@@ -10,8 +10,8 @@ sort_translit = true
 # Always use xdg-open for opening
 [open]
 prepend_rules = [
-	{ name = "*", use = [ "open" ] },
-	{ name = "bulk-rename.txt", use = "bulk-rename" },
+	{ url = "*", use = [ "open" ] },
+	{ url = "bulk-rename.txt", use = "bulk-rename" },
 ]
 
 [opener]
@@ -22,12 +22,12 @@ bulk-rename = [
 [plugin]
 prepend_previewers = [
 	# Preview some archive types with piper
-	{ name = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
-	{ name = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
-	{ name = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
+	{ url = "*.tar*", run = 'piper --format=url -- tar tf "$1"' },
+	{ url = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
+	{ url = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
 
 	# Preview mp3 files
-	{ name = "*.mp3", run = '''piper --
+	{ url = "*.mp3", run = '''piper --
 		soxi -- "$1" | tail -n+2
 		artist="$(rsid3 --TPE1 -- "$1" 2>/dev/null)"
 		albumartist="$(rsid3 --TPE2 -- "$1" 2>/dev/null)"
