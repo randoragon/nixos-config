@@ -12,5 +12,6 @@
   home.packages = with pkgs; [
     unixtools.xxd
     perf hotspot
+    sshfs
   ];
 }
