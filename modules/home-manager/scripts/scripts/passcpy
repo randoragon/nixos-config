@@ -19,7 +19,10 @@ time="${PASSWORD_STORE_CLIP_TIME:-45}"
 [ -z "$(command -v pass)" ] && notify-send 'passcpy' 'pass is not available' && exit 1
 
 entry="$( \
-    find "$passdir" -type f -name '[^_]*.gpg' -exec realpath --relative-to "$passdir" '{}' \; \
+    find "$passdir" -type f -name '[^_]*.gpg' -printf '%T@ %p\n' \
+    | sort | sort -nrs \
+    | cut -d' ' -f2- \
+    | xargs -- realpath --relative-to "$passdir" -- \
     | sed 's/\.gpg$//' \
     | bemenu -p 'Pass query:' "$@" \
 )"
