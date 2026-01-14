@@ -34,6 +34,6 @@ printf "%s" "$username" | wl-copy -n &&
     notify-send -u low -i "$icon" "Username copied" "$time seconds remaining"
 
 sleep "$time"
-if [ "$(wl-paste)" = "$password" ]; then
+if [ "$(wl-paste)" = "$username" ]; then
     wl-copy -c && notify-send -u low -i "$icon" "Clipboard cleared"
 fi
