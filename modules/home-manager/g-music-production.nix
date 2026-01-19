@@ -4,6 +4,7 @@
     ./ardour
     ./carla
     ./sox
+    ./vitalium
     ./wine  # For yabridge
   ];
 
