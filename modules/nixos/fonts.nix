@@ -3,6 +3,7 @@
   fonts.packages = with pkgs; [
     jetbrains-mono
     dejavu_fonts
+    noto-fonts-color-emoji
     texlivePackages.opensans
     cm_unicode  # Computer Modern; LaTeX's default font
     font-awesome
