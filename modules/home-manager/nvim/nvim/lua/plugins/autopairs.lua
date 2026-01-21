@@ -18,11 +18,7 @@ autopairs.setup({
 		map = "<M-e>",
 		chars = { "{", "[", "(", '"', "'" },
 		pattern = [=[[%'%"%>%]%)%}%,]]=],
-		end_key = "$",
-		keys = "qwertyuiopzxcvbnmasdfghjkl",
-		check_comma = true,
-		highlight = "Search",
-		highlight_grey = "Comment"
+		manual_position = true,
 	},
 	break_undo = true,
 	check_ts = true,
