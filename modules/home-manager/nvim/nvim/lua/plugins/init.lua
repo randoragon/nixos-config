@@ -8,7 +8,7 @@ require("paq") {
 	"tpope/vim-speeddating",
 	"tpope/vim-repeat",
 	"tpope/vim-abolish",
-	"tpope/vim-commentary",
+	"numToStr/Comment.nvim",
 	"glts/vim-radical",
 	"glts/vim-magnum",
 	"kepano/flexoki-neovim",
@@ -31,6 +31,7 @@ require("paq") {
 }
 
 require(modpath .. ".autopairs")
+require(modpath .. ".comment")
 require(modpath .. ".coq")
 require(modpath .. ".fswitch")
 require(modpath .. ".gitsigns")
