@@ -29,6 +29,7 @@ require("paq") {
 		build = function() vim.cmd("TSUpdate") end,
 	},
 	"ms-jpq/coq_nvim",
+	"Wansmer/treesj",
 }
 
 require(modpath .. ".autopairs")
@@ -44,5 +45,6 @@ require(modpath .. ".surround")
 require(modpath .. ".tabular")
 require(modpath .. ".telescope")
 require(modpath .. ".treesitter")
+require(modpath .. ".treesj")
 require(modpath .. ".vimtex")
 require(modpath .. ".zig")
