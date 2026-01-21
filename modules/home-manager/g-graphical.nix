@@ -27,7 +27,6 @@
     brightnessctl
     ripdrag
     waypipe wayvnc wlvncc
-    xwayland-satellite
     zenity
 
     firefox ungoogled-chromium
