@@ -41,7 +41,7 @@ map("n", "<M-l>", "<C-w>l")
 map("n", "<Bar>", "<C-w><Bar>")
 map("n", "_", "<C-w>_")
 map("n", "<M-s>", vim.cmd.vsplit)
-map("n", "<Leader><M-s>",vim.cmd.split)
+map("n", "<Leader><M-s>", vim.cmd.split)
 
 -- Window buffers
 map("n", "<M-CR>", vim.cmd.write)
