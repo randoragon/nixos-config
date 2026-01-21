@@ -23,6 +23,7 @@ require("paq") {
 	"Vigemus/iron.nvim",
 	"famiu/bufdelete.nvim",
 	"tiagovla/scope.nvim",
+	"folke/flash.nvim",
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = function() vim.cmd("TSUpdate") end,
@@ -33,6 +34,7 @@ require("paq") {
 require(modpath .. ".autopairs")
 require(modpath .. ".comment")
 require(modpath .. ".coq")
+require(modpath .. ".flash")
 require(modpath .. ".fswitch")
 require(modpath .. ".gitsigns")
 require(modpath .. ".iron")
