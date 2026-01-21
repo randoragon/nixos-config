@@ -55,6 +55,15 @@
       ];
     };
 
+    nixosConfigurations.work = inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = inherited-inputs;
+      modules = [
+        ./hosts/work/configuration.nix
+        inputs.home-manager.nixosModules.home-manager
+        inputs.nix-index-database.nixosModules.nix-index
+      ];
+    };
+
     nixosConfigurations.vps = inputs.nixpkgs.lib.nixosSystem {
       specialArgs = inherited-inputs;
       modules = [
