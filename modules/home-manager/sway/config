@@ -1,0 +1,285 @@
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $menu bemenu-run
+
+### Startup script
+
+exec ~/.config/sway/init.sh
+
+### Input configuration
+
+input type:touchpad {
+	dwt enabled
+	tap enabled
+	natural_scroll enabled
+	middle_emulation enabled
+}
+
+input type:keyboard {
+	xkb_layout "pl"
+	repeat_rate 30
+	repeat_delay 250
+}
+
+### Appearance
+
+font Liberation Sans 10
+
+# Title bars and borders
+title_align center
+titlebar_border_thickness 1
+client.focused #16A83F #12732D #dcfccf #f0be00e6 #178522e6
+client.focused_inactive #142414e6 #142414e6 #badabde6 #141414e6 #141414e6
+client.unfocused #242424e6 #242424e6 #cccccce6 #141414e6 #141414e6
+client.urgent #cc3010e6 #882222e6 #ffffffe6 #f0be00e6 #cc1010e6
+
+# Give title bars only to floating windows
+default_border pixel 2
+default_floating_border normal
+for_window [tiling] border pixel 2
+for_window [floating] border normal
+
+### Key bindings
+
+# Start a terminal
+bindsym $mod+Return exec $TERMINAL
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start your launcher
+bindsym $mod+o exec $menu
+
+# Passthrough mode for remote desktop sessions
+mode passthrough {
+	bindsym $mod+Ctrl+Shift+Escape mode default
+}
+bindsym $mod+Ctrl+Shift+Escape mode passthrough
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Quitmenu
+bindsym $mod+Ctrl+q exec quitmenu
+
+# Toggle bar
+bindsym $mod+b exec ironbar bar mybar toggle-visible
+
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+bindsym $mod+Ctrl+Shift+N move position center
+
+# Workspaces
+
+# Switch to workspace
+bindsym $mod+tab workspace back_and_forth
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+w workspace 11:w
+bindsym $mod+e workspace 12:e
+bindsym $mod+d workspace 13:d
+bindsym $mod+n workspace 14:n
+bindsym $mod+m workspace 15:m
+bindsym $mod+BracketLeft workspace prev
+bindsym $mod+BracketRight workspace next
+
+# Move focused container to workspace
+bindsym $mod+Shift+tab move container to workspace back_and_forth
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+Shift+w move container to workspace 11:w
+bindsym $mod+Shift+e move container to workspace 12:e
+bindsym $mod+Shift+d move container to workspace 13:d
+bindsym $mod+Shift+n move container to workspace 14:n
+bindsym $mod+Shift+m move container to workspace 15:m
+bindsym $mod+Shift+BracketLeft move container to workspace prev
+bindsym $mod+Shift+BracketRight move container to workspace next
+
+# Outputs
+bindsym $mod+comma focus output left
+bindsym $mod+period focus output right
+bindsym $mod+Shift+comma move container to output left
+bindsym $mod+Shift+period move container to output right
+bindsym $mod+Ctrl+comma move workspace to output left
+bindsym $mod+Ctrl+period move workspace to output right
+
+# Layout
+bindsym $mod+i split h
+bindsym $mod+u split v
+bindsym $mod+s layout toggle split
+bindsym $mod+a layout toggle tabbed stacking
+bindsym $mod+Shift+s sticky toggle
+
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+q focus parent
+bindsym $mod+escape focus child; split none
+
+# Scratchpad
+bindsym $mod+Shift+BackSlash move scratchpad
+bindsym $mod+BackSlash scratchpad show
+
+# Resizing containers
+bindsym $mod+Ctrl+$left resize shrink width 50px
+bindsym $mod+Ctrl+$down resize grow height 50px
+bindsym $mod+Ctrl+$up resize shrink height 50px
+bindsym $mod+Ctrl+$right resize grow width 50px
+bindsym $mod+Ctrl+Left resize shrink width 50px
+bindsym $mod+Ctrl+Down resize grow height 50px
+bindsym $mod+Ctrl+Up resize shrink height 50px
+bindsym $mod+Ctrl+Right resize grow width 50px
+
+# Special keys to adjust volume via PulseAudio
+bindsym --locked $mod+equal exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 2%+
+bindsym --locked $mod+minus exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 2%-
+bindsym --locked $mod+BackSpace exec wpctl set-mute \@DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 2%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume \@DEFAULT_AUDIO_SINK@ 2%-
+bindsym --locked XF86AudioMute exec wpctl set-mute \@DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute \@DEFAULT_AUDIO_SOURCE@ toggle
+
+# MPD
+bindsym --locked $mod+p exec mpc toggle
+bindsym --locked $mod+Shift+p exec mpc stop
+bindsym --locked $mod+semicolon exec mpc prev
+bindsym --locked $mod+apostrophe exec mpc next
+bindsym --locked $mod+Shift+semicolon exec mpc seek -5
+bindsym --locked $mod+Shift+apostrophe exec mpc seek +5
+bindsym --locked XF86AudioPlay exec mpc toggle
+bindsym --locked XF86AudioPause exec mpc toggle
+bindsym --locked XF86AudioStop exec mpc stop
+bindsym --locked XF86AudioPrev exec mpc prev
+bindsym --locked XF86AudioNext exec mpc next
+bindsym --locked Shift+XF86AudioPrev exec mpc seek -5
+bindsym --locked Shift+XF86AudioNext exec mpc seek +5
+
+# Audio sink picker
+bindsym $mod+Ctrl+p exec ~/.scripts/choose_default_sink.sh
+
+# Special keys to adjust brightness via brightnessctl
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+
+# Launchers
+bindsym $mod+c exec snippet
+bindsym $mod+Shift+o exec ~/.scripts/passcpy
+bindsym $mod+Ctrl+o exec ~/.scripts/usercpy
+bindsym $mod+Shift+y exec note --bemenu || notify-send -u critical note 'Exited with error'
+bindsym $mod+Ctrl+y exec note --bemenu -e || notify-send -u critical note 'Exited with error'
+bindsym $mod+Ctrl+equal exec ~/.scripts/pladd_select
+bindsym Ctrl+Mod1+h exec $TERMINAL -W 150x45 -a floatme htop
+bindsym Ctrl+Mod1+w exec firefox
+bindsym Ctrl+Mod1+e exec thunderbird
+bindsym Ctrl+Mod1+d exec vesktop
+bindsym Ctrl+Mod1+m exec $TERMINAL ncmpcpp
+bindsym Ctrl+Mod1+n exec $TERMINAL newsraft
+bindsym Ctrl+Mod1+slash exec $TERMINAL qalc
+bindsym Ctrl+Mod1+t exec $TERMINAL $EDITOR ~/Sync/todo.txt
+bindsym Ctrl+Mod1+b exec ~/.scripts/book
+bindsym Ctrl+Mod1+l exec swaylock
+bindsym Ctrl+Mod1+a exec anki
+
+bindsym $mod+Ctrl+Shift+slash exec swww clear 111111
+bindsym $mod+Ctrl+slash exec ~/.scripts/wallpaper_random.sh
+
+bindsym Ctrl+grave exec makoctl dismiss -a
+bindsym $mod+grave exec makoctl dismiss restore
+
+# Screenshots
+bindsym Print exec flameshot gui
+bindsym Ctrl+Print exec grim
+
+# Status Bar
+bar {
+	swaybar_command ironbar
+}
+
+### Custom window rules
+
+for_window [app_id="floatme"] floating enable
+
+# Firefox
+assign [app_id="firefox"] workspace 11:w
+for_window [app_id="firefox" title="Picture-in-Picture"] floating enable
+
+# Thunderbird
+assign [app_id="thunderbird"] workspace 12:e
+for_window [app_id="thunderbird" title="Activity Manager"] floating enable
+
+# Discord
+assign [app_id="discord|vesktop"] workspace 13:d
+
+# Flameshot
+for_window [title="Save screenshot"] floating enable
+
+# GPG Pinentry
+for_window [app_id="Pinentry"] floating enable
+
+# Ardour
+for_window [app_id="Ardour-"] floating enable
+for_window [app_id="Ardour" title="Add Existing Media"] floating enable
+
+# sfizz
+for_window [app_id="zenity" title="Load SFZ file"] floating enable
+for_window [app_id="xdg-desktop-portal-gtk" title="Load SFZ file"] floating enable
+
+# setBfree as plugin (not standalone)
+for_window [title="setBfree DSP Tonewheel Organ"] floating enable
+
+# Hydrogen
+for_window [app_id="hydrogen" title="Audio File Browser"] floating enable
+for_window [app_id="hydrogen" title="Mixer"] floating enable
+
+# Olive Editor
+for_window [app_id="Olive"] floating enable
+for_window [app_id="Olive" title="^Olive [0-9\.]+-[0-9a-f]+ - .*$"] floating disable
+
+# XDG Open Files dialog
+for_window [app_id="xdg-desktop-portal-gtk" title="Open Files"] floating enable
+
+include @sysconfdir@/sway/config.d/*

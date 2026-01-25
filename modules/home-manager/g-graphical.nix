@@ -10,7 +10,7 @@
     ./gtk
     ./krita
     ./mako
-    ./niri
+    ./sway
     ./swaylock
     ./vimiv-qt
     ./wlsunset

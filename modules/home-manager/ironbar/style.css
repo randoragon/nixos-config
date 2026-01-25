@@ -1,7 +1,28 @@
 * {
-	font-family: Liberation Sans;
+	font-family: "Liberation Sans", "Font Awesome 7 Brands", "Font Awesome 7 Free";
 	font-size: 13px;
 	border: none;
 	margin: 0px;
 	padding: 0px;
+}
+
+.background {
+	background-color: #1d1d29dd;
+}
+
+.workspaces .item.urgent {
+	background-color: red;
+}
+
+.workspaces .item.focused {
+	color: white;
+	background-color: #605f54;
+}
+
+.bindmode {
+	font-weight: bold;
+	padding: 0px 8px;
+	corner-radius: 8px;
+	color: white;
+	background-color: red;
 }

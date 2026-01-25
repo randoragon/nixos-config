@@ -15,6 +15,19 @@ let {
 		mode = "watch"
 	}
 
+	$sway_workspace = {
+		type = "workspaces"
+		name_map.11:w = ""
+		name_map.12:e = ""
+		name_map.13:d = ""
+		name_map.14:n = ""
+		name_map.15:m = ""
+	}
+
+	$sway_mode = {
+		type = "bindmode"
+	}
+
 	$focused = {
 		type = "focused"
 		icon_size = 16
@@ -63,7 +76,7 @@ let {
 	height = 20
 	icon_theme = "Kanagawa-BL"
 
-	start = [ $pad $niri_workspace ]
+	start = [ $pad $sway_workspace $sway_mode ]
 	center = [ $focused ]
 	end = [ $volume $sep $storage $sep $gpg_expire $sep $clock $battery $pad ]
 }
