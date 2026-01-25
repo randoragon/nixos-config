@@ -18,4 +18,10 @@
       persistencedSha256 = lib.fakeSha256;
     };
   };
+
+  nixpkgs.overlays = [
+    (final: prev: {
+      obs-studio = prev.obs-studio.override { cudaSupport = true; };
+    })
+  ];
 }
