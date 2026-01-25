@@ -396,6 +396,7 @@ window-rule {
 // sfizz
 window-rule {
 	match app-id="zenity" title="Load SFZ file"
+	match app-id="xdg-desktop-portal-gtk" title="Load SFZ file"
 	open-floating true
 }
 
@@ -431,12 +432,6 @@ window-rule {
 // XDG Open Files dialog
 window-rule {
 	match app-id="xdg-desktop-portal-gtk" title="Open Files"
-	open-floating true
-}
-
-// sfizz
-window-rule {
-	match app-id="xdg-desktop-portal-gtk" title="Load SFZ file"
 	open-floating true
 }
 
