@@ -19,6 +19,7 @@
       # Code
       "application/x-shellscript" = [ "text.desktop" ];
       "text/x-script.python" = [ "text.desktop" ];
+      "text/x-python" = [ "text.desktop" ];
       "text/x-python3" = [ "text.desktop" ];
       "text/x-c" = [ "text.desktop" ];
       "text/x-csrc" = [ "text.desktop" ];
