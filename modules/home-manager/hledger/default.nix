@@ -9,6 +9,7 @@
   home.file.".local/bin/hledger-bsee".source = ./hledger-bsee;
   home.file.".local/bin/hledger-pozyczki".source = ./hledger-pozyczki;
   home.file.".local/bin/hledger-bud".source = ./hledger-bud;
+  home.file.".local/bin/hledger-debt".source = ./hledger-debt;
   home.file.".local/bin/hledger-for".source = ./hledger-for;
   home.file.".local/bin/hledger-inv".source = ./hledger-inv;
 

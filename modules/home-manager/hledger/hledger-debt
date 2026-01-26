@@ -1,0 +1,14 @@
+#!/bin/sh -e
+# Show a summary of how much money everyone owes me / I owe to everyone.
+
+hledger bal \
+    --auto \
+    --strict \
+    --infer-equity \
+    --real \
+    --pretty \
+    --color=always \
+    --cost \
+    --pivot=payee \
+    --pending \
+    "$@"
