@@ -228,7 +228,7 @@ bindsym $mod+Ctrl+Shift+slash exec swww clear 111111
 bindsym $mod+Ctrl+slash exec ~/.scripts/wallpaper_random.sh
 
 bindsym Ctrl+grave exec makoctl dismiss -a
-bindsym $mod+grave exec makoctl dismiss restore
+bindsym $mod+grave exec makoctl restore
 
 # Screenshots
 bindsym Print exec flameshot gui
