@@ -2,7 +2,7 @@
 
 # Lock idle session
 swayidle -w \
-	timeoum 600 swaylock \
+	timeout 600 swaylock \
 	timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
 	before-sleep swaylock &
 
