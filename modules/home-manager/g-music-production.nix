@@ -21,6 +21,7 @@
     gxplugins-lv2
     lsp-plugins
     tap-plugins
+    zam-plugins
     helm
     geonkick drumgizmo
     vmpk
