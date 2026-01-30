@@ -10,7 +10,7 @@
   ];
 
   home.packages = with pkgs; [
-    unixtools.xxd
+    unixtools.xxd hyx
     perf hotspot
     sshfs
   ];
