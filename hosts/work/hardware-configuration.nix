@@ -30,4 +30,7 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # Fix sway: https://discourse.nixos.org/t/egl-ext-platform-base-not-supported-after-upgrade-moving-to-flakes/29521
+  hardware.opengl.enable = true;
 }
