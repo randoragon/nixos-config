@@ -2,7 +2,6 @@
 { pkgs, ... }: {
   imports = [
     ./bemenu
-    ./carla
     ./cursor-theme
     ./flameshot
     ./foot
