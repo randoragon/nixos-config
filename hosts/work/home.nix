@@ -1,5 +1,6 @@
 { lib, pkgs, config, ... }: {
   imports = [
+    ./git.nix
     ./svn.nix
     ../../modules/home-manager
     ../../modules/home-manager/g-daily-driver.nix
