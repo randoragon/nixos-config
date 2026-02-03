@@ -11,4 +11,5 @@ hledger bal \
     --cost \
     --pivot=payee \
     --pending \
+    ^liabilities \
     "$@"
