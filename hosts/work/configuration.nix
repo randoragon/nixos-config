@@ -1,4 +1,4 @@
-{ pkgs, spkgs, secrets, ... }: {
+{ lib, pkgs, spkgs, secrets, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -37,6 +37,7 @@
   };
 
   # Extra work stuff
+  programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
   virtualisation.docker = {
     enable = true;
     extraPackages = with pkgs; [ docker-buildx ];
