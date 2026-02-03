@@ -19,7 +19,7 @@
   # User configuration
   users.users.piotrkas = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" "uinput" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "uinput" "docker" ];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys_p ];
   };
@@ -36,6 +36,16 @@
     };
   };
 
+  # Extra work stuff
+  virtualisation.docker = {
+    enable = true;
+    extraPackages = with pkgs; [ docker-buildx ];
+  };
+  environment.systemPackages = with pkgs; [
+    poppler-utils
+    subversion
+    python3
+  ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

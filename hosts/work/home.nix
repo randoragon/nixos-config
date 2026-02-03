@@ -4,7 +4,6 @@
     ../../modules/home-manager/g-daily-driver.nix
     ../../modules/home-manager/g-devtools.nix
     ../../modules/home-manager/g-graphical.nix
-    ../../modules/home-manager/g-media.nix
     ../../modules/home-manager/sway
   ];
 
