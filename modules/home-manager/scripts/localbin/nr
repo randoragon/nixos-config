@@ -1,0 +1,3 @@
+#!/bin/sh -e
+
+exec nix run nixpkgs#"$1"

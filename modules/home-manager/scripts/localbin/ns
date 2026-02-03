@@ -1,0 +1,14 @@
+#!/bin/sh -e
+
+cmd='nix shell'
+
+for arg in "$@"; do
+    arg_sanitized="$(echo "$arg" | tr -cd '[:alnum:]+-._?=')"
+    if [ "$arg" != "$arg_sanitized" ]; then
+        echo "ns: illegal package name '$arg'" >&2
+        exit 1
+    fi
+    cmd="$cmd nixpkgs#'$arg_sanitized'"
+done
+
+eval "exec $cmd"
