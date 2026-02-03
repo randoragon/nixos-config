@@ -16,6 +16,7 @@ treesitter.install({
 	"go", "gosum", "gowork",
 	"html", "css", "javascript", "typescript", "jsdoc",
 	"json", "yaml",
+	"kdl",
 	"latex", "bibtex",
 	"ledger",
 	"lua", "luadoc", "luap",
