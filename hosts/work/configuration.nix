@@ -43,7 +43,6 @@
   };
   environment.systemPackages = with pkgs; [
     poppler-utils
-    subversion
     python3
   ];
 
