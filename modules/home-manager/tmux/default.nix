@@ -10,11 +10,19 @@
     keyMode = "vi";
     prefix = "C-a";
     terminal = "screen-256color";
+    focusEvents = true;
+    mouse = true;
 
     extraConfig = ''
       # Automatically set window title
       set-window-option -g automatic-rename on
       set-option -g set-titles on
+
+      # use Alt-Shift-vim keys without prefix key to switch panes
+      bind-key -n M-H select-pane -L
+      bind-key -n M-J select-pane -D
+      bind-key -n M-K select-pane -U
+      bind-key -n M-L select-pane -R
 
       # Use n and p to switch windows
       bind-key n next-window
