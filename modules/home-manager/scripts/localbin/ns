@@ -1,5 +1,16 @@
 #!/bin/sh -e
 
+if [ $# -eq 0 ]; then
+    if [ -f flake.nix ]; then
+        exec nix shell
+    elif [ -f shell.nix ]; then
+        exec nix-shell
+    else
+        echo 'ns: flake.nix and shell.nix missing in the current directory' >&2
+        exit 1
+    fi
+fi
+
 cmd='nix shell'
 
 for arg in "$@"; do
