@@ -39,10 +39,7 @@
 
   # Extra work stuff
   programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
-  virtualisation.docker = {
-    enable = true;
-    extraPackages = with pkgs; [ docker-buildx ];
-  };
+  virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
     poppler-utils
     python3
