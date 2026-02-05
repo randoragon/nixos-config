@@ -1,6 +1,7 @@
 { lib, pkgs, spkgs, secrets, ... }: {
 
   imports = [
+    ./boot.nix
     ./hardware-configuration.nix
     ./ssh.nix
     ../../modules/nixos
