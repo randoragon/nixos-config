@@ -254,6 +254,9 @@ for_window [app_id="thunderbird" title="Activity Manager"] floating enable
 # Discord
 assign [app_id="discord|vesktop"] workspace 13:d
 
+# MS Teams
+assign [app_id="teams-for-linux"] workspace 13:d
+
 # Flameshot
 for_window [title="Save screenshot"] floating enable
 

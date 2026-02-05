@@ -41,6 +41,7 @@
   programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
   virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
+    teams-for-linux
     poppler-utils
     python3
   ];
