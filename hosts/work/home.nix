@@ -19,6 +19,15 @@
     maxCacheTtl = 34560000;
   };
 
+  # Configure sway outputs
+  xdg.configFile."sway/outputs".text = ''
+    # vim: ft=swayconfig
+    output "AU Optronics 0x63ED Unknown" pos 0 0
+    output "HP Inc. HP Z27q G3 CN44092NF0" pos 1920 0
+    output "HP Inc. HP Z27q G3 CN44092NFQ" pos 4480 0
+    bindsym $mod+F12 --release output "AU Optronics 0x63ED Unknown" toggle
+  '';
+
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";
 }
