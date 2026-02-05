@@ -16,7 +16,14 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     export __GLX_VENDOR_LIBRARY_NAME=nvidia
 
     exec sway --unsupported-gpu
-elif command -v tmux; then
-    export VIM_TTY_COLORSCHEME=1  # Tell (Neo)Vim to use a tty-suitable colorscheme. This is my own convention.
+fi
+
+# Tell (Neo)Vim to use a tty-suitable colorscheme. This is my own convention.
+case "$(tty)" in
+    /dev/tty*) export VIM_TTY_COLORSCHEME=1 ;;
+esac
+
+# Start tmux, if available and not already inside tmux
+if command -v tmux && [ -z "$TMUX" ]; then
     tmux
 fi
