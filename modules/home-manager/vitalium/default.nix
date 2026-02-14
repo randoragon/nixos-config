@@ -11,20 +11,20 @@
       {
         "author": "randoragon",
         "synth_version": "1.0.6",
-        "data_directory": "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/presets/Vitalium",
+        "data_directory": "${config.xdg.userDirs.extraConfig.ASSETS}/audio/presets/Vitalium",
         "wavetable_folders": [
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Analog",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Basics",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Chill",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Digital",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW FM",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Growl",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Instruments",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Metallic",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Modular",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Spectral",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Synth One Shots",
-          "${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio/wavetables/ESW Vocal"
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Analog",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Basics",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Chill",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Digital",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW FM",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Growl",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Instruments",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Metallic",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Modular",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Spectral",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Synth One Shots",
+          "${config.xdg.userDirs.extraConfig.ASSETS}/audio/wavetables/ESW Vocal"
         ],
         "window_size": 1.0
       }

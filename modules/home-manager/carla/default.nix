@@ -8,7 +8,7 @@
     configFile = "${configDir}/Carla2.conf";
     configFileContent = ''
       [General]
-      DiskFolders=${config.home.homeDirectory}, ${config.xdg.userDirs.extraConfig.XDG_ASSETS_DIR}/audio
+      DiskFolders=${config.home.homeDirectory}, ${config.xdg.userDirs.extraConfig.ASSETS}/audio
 
       [Main]
       ConfirmExit=false
