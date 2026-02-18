@@ -28,7 +28,6 @@
     hydrogen
     setbfree
     lilypond
-    #tonelib-zoom depends on libsoup-2.74.3, which is EOL
 
     # For running Windows plugins
     yabridge
