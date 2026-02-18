@@ -28,11 +28,13 @@
     hydrogen
     setbfree
     lilypond
+    sfizz-ui
+    zynaddsubfx
 
     # For running Windows plugins
     yabridge
     yabridgectl
-  ] ++ [ rsid3 ] ++ (with spkgs; [ sfizz zynaddsubfx ]);  # TODO: bring back unstable sfizz and zynaddsubfx when they're not broken anymore
+  ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   home.sessionVariables = let
