@@ -39,6 +39,7 @@
   };
 
   # Extra work stuff
+  programs.wayvnc.enable = true;
   programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
   virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
