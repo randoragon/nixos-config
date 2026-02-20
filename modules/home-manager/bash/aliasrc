@@ -50,7 +50,10 @@ alias gstp='git stash pop'
 alias gstl='git stash list'
 alias gf='git fetch'
 alias gfs='git fetch --recurse-submodules=on'
-alias gig='$EDITOR -- "$(git rev-parse --show-toplevel)/.gitignore"'
+alias gg='pushd -- "$(git rev-parse --show-toplevel)"'
+alias gig='$EDITOR .gitignore'
+alias gwa='git worktree add'
+alias gwr='git worktree remove'
 
 # SSH
 alias sshp='ssh-add ~/.ssh/p'

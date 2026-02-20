@@ -1,0 +1,56 @@
+#!/bin/sh -e
+
+# Clone and set up a git worktree project.
+
+help () {
+    echo 'Usage:'
+    echo '  gwc [-h,--help] REPO'
+    echo
+    echo 'Clones and sets up a git worktree project layout inside PWD.'
+    echo "Files '.bare/' and '.git' will be created inside PWD!"
+}
+
+status () {
+    printf "%s%s%s\n%s %s %s\n\n" \
+        "$(tput bold setaf 3)" "$1" "$(tput sgr0)" \
+        "$(tput setaf 5 setab 0)" "$2" "$(tput sgr0)"
+}
+
+if [ "$1" = '-h' ] || [ "$1" = '--help' ]; then
+    help
+    exit
+fi
+if [ $# -ne 1 ]; then
+    help
+    exit 1
+fi
+
+repo="$1"
+
+if [ -n "$(ls -A)" ]; then
+    printf '%sCurrent directory is not empty. Continue? [y/N]%s ' \
+        "$(tput bold setaf 1)" "$(tput sgr0)"
+    read -r ans
+    if [ "$ans" = y ] || [ "$ans" = Y ]; then
+        printf '%sContinuing ...%s\n\n' "$(tput bold setaf 1)" "$(tput sgr0)"
+    else
+        printf '%sQuitting.%s\n' "$(tput bold setaf 1)" "$(tput sgr0)"
+        exit
+    fi
+fi
+
+status '1. Cloning repository' "git clone --bare -- \"$repo\" .bare"
+git clone --bare -- "$repo" .bare
+
+status "2. Creating '.git' to point to '.bare/'" "echo 'gitdir: ./.bare' >.git"
+echo 'gitdir: ./.bare' >.git
+
+status '3. Adding heads and remotes' "git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'"
+git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+
+status '4. Fetching heads and remotes' "git fetch"
+git fetch
+
+tput bold setaf 3
+echo 'All done.'
+tput sgr0
