@@ -12,8 +12,6 @@ if [ "$(tty)" = "/dev/tty1" ]; then
     export QT_QPA_PLATFORM=wayland
     export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
     export GDK_BACKEND=wayland
-    export GBM_BACKEND=nvidia-drm
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
 
     exec sway --unsupported-gpu
 fi

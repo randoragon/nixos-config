@@ -1,6 +1,7 @@
 # The basis for all sub-configuration modules. Every system is built on top of this.
 { pkgs, secrets, ... }: {
   imports = [
+    ./bash
     ./broot
     ./delta
     ./direnv
@@ -11,7 +12,6 @@
     ./scripts
     ./tmux
     ./wget
-    ./zsh
     ./xdg-mime
     ./yazi
   ];

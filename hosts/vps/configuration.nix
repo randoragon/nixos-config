@@ -24,7 +24,7 @@
   users.users.pcache = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    shell = pkgs.zsh;
+    shell = pkgs.bash;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys_p ../authorized_keys_r ];
   };
 

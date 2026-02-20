@@ -22,7 +22,7 @@
   users.users.piotrkas = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "input" "uinput" "docker" ];
-    shell = pkgs.zsh;
+    shell = pkgs.bash;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys_p ];
   };
 

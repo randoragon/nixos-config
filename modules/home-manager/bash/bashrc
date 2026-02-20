@@ -1,0 +1,81 @@
+set -o vi
+bind Tab:menu-complete
+bind '"[Z":menu-complete-backward'
+bind '"":"0Cyazicd\n"'
+
+# Emacs keybindings
+bind -m vi-insert '"":backward-char'
+bind -m vi-insert '"":forward-char'
+bind -m vi-insert '"":beginning-of-line'
+bind -m vi-insert '"":end-of-line'
+bind -m vi-insert '"":"#Da"'
+bind -m vi-insert '"":#d0i'
+bind -m vi-insert '"":next-history'
+bind -m vi-insert '"":previous-history'
+
+# Easier navigation with alt-{hjkl}
+bind -m vi-insert '"h":backward-char'
+bind -m vi-insert '"j":next-history'
+bind -m vi-insert '"k":previous-history'
+bind -m vi-insert '"l":forward-char'
+
+__exit_code () {
+  code=$?
+  if [ $code -ne 0 ]; then
+      col='\[[30m[41m\]'
+      if [ -z "${code#?}" ]; then
+          tile="$code "
+      else
+          tile="$code"
+      fi
+  else
+      col='\[[30m[42m\]'
+      tile="  "
+  fi
+  echo -n "$col$tile\[(B[m\]"
+}
+
+__yazi_level () {
+  if [ -n "$YAZI_LEVEL" ]; then
+      if [ -z "${YAZI_LEVEL#?}" ]; then
+          tile="$YAZI_LEVEL "
+      else
+          tile="$YAZI_LEVEL"
+      fi
+      echo -n "\[[30m[45m\]$tile\[(B[m\]"
+  fi
+}
+
+__no_jobs () {
+  num="$(jobs | wc -l)"
+  if [ "$num" != 0 ]; then
+      if [ -z "${num#?}" ]; then
+          tile="$num "
+      else
+          tile="$num"
+      fi
+      echo -n "\[[30m[44m\]$tile\[(B[m\]"
+  fi
+}
+
+__git_branch () {
+    if branch="$(git branch --show-current 2>/dev/null)"; then
+        echo -n "\[[32m\]($branch)\[(B[m\]"
+    fi
+}
+
+__prompt_command () {
+    exit_code="$(__exit_code)"  # Must be first to capture $?
+    user='\[[1m[33m\]\u'
+    at='\[[32m\]@'
+    host='\[[1m[34m\]\h'
+    cwd='\[[1m[35m\]\w'
+    PS1="$exit_code$(__yazi_level)$(__no_jobs) $user$at$host $cwd $(__git_branch)\[(B[m\]\n\$ "
+    unset exit_code user at host cwd
+}
+
+PROMPT_COMMAND=__prompt_command
+
+# Load jumplist and aliases
+[ -f "$HOME/.config/jumprc" ] && . "$HOME/.config/jumprc"
+[ -f "$HOME/.config/aliasrc" ] && . "$HOME/.config/aliasrc"

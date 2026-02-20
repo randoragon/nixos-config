@@ -7,7 +7,7 @@
   home.homeDirectory = "/home/${config.home.username}";
 
   # Disable running the WM or tmux after login
-  programs.zsh.loginExtra = lib.mkForce "";
+  programs.bash.profileExtra = lib.mkForce "";
 
   programs.home-manager.enable = true;
   home.stateVersion = "24.11";

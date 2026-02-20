@@ -2,8 +2,8 @@
 # The directories section is read by genlfjmp script
 
 # Files
-alias jmp='$EDITOR ~/nixos-config/modules/home-manager/zsh/jumprc'
-alias als='$EDITOR ~/nixos-config/modules/home-manager/zsh/aliasrc'
+alias jmp='$EDITOR ~/nixos-config/modules/home-manager/bash/jumprc'
+alias als='$EDITOR ~/nixos-config/modules/home-manager/bash/aliasrc'
 alias mml='$EDITOR ~/nixos-config/modules/home-manager/xdg-mime/default.nix'
 alias rit='(cd ~/nixos-config/modules/home-manager/river/river && $EDITOR init)'
 alias vrc='(cd ~/nixos-config/modules/home-manager/nvim/nvim && $EDITOR init.lua)'
