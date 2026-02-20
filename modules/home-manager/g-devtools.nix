@@ -13,5 +13,7 @@
     unixtools.xxd hyx
     perf hotspot
     sshfs
+    glibcInfo
+    man-pages
   ];
 }
