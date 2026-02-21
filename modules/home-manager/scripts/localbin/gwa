@@ -1,0 +1,126 @@
+#!/bin/sh -e
+
+# A slightly opinionated, interactive git worktree add wrapper.
+# Assumes a '.bare' repository is present on the top-level.
+
+help () {
+    echo 'Usage:'
+    echo '  gwa [OPTIONS] [NAME...]'
+    echo
+    echo "Add Git worktrees in the current project. Assumes a structure with top-level '.bare' repo."
+    echo 'Supports automatic hard linking of flake.nix, flake.lock and envrc from top-level.'
+    echo "If run without any arguments, it behaves like '--interactive'."
+    echo
+    echo 'Options:'
+    echo '  -h, --help          Print this help message.'
+    echo '  -a, --all           Add all local and remote branches.'
+    echo '  -i, --interactive   Ask to add each branch interactively. If used alone, implies --all.'
+}
+
+all=
+interactive=
+opts="$(getopt -n gwa -s sh -o hai -l help,all,interactive -- "$@")"
+eval set -- "$opts"
+while true; do
+    case "$1" in
+        -h|--help) help; exit ;;
+        -a|--all) all=1 ; shift ;;
+        -i|--interactive) interactive=1 ; shift ;;
+        --) shift ; break ;;
+        *) break ;;
+    esac
+done
+if [ $# -eq 0 ]; then
+    interactive=1
+elif [ -n "$all" ]; then
+    echo "gwa: received both '--all' and branch names; ignoring branch names"
+    set --
+fi
+
+# Find directory with the .bare repository
+root_dir="$PWD"
+while [ ! -d "$root_dir/.bare" ]; do
+    if [ "$root_dir" = '/' ]; then
+        echo "gwa: could not find '.bare' repository; aborting" 2>&1
+        exit 1
+    fi
+    root_dir="$(realpath -- "$root_dir/..")"
+done
+
+if [ -n "$all" ] || { [ $# -eq 0 ] && [ -n "$interactive" ]; }; then
+    git branch -a --format='%(refname)' \
+        | sed -e 's|^refs/heads/||' -e 's|refs/remotes/[^/]\+/||' -e '/^HEAD$/d' \
+        | sort | uniq
+else
+    for branch in "$@"; do
+        echo "$branch"
+    done
+fi | while read -r name; do
+    wpath="$root_dir/$(echo "$name" | tr / _)"
+
+    if [ -d "$wpath" ]; then
+        tput bold setaf 3
+        printf "Worktree '%s' already exists.\n" "$name"
+        tput sgr0
+        continue
+    fi
+
+    if [ "$interactive" ]; then
+        tput bold setaf 1
+        printf "Add worktree '%s'? [y/N] " "$name"
+        tput sgr0
+        read -r ans </dev/tty
+        if [ "$ans" != y ] && [ "$ans" != y ]; then
+            continue
+        fi
+    fi
+
+    git worktree add -- "$wpath" "$name"
+
+    # Offer to hard link flake.nix and flake.lock, if adequate
+    has_flake_nix=0
+    has_flake_lock=0
+    has_envrc=0
+    if [ -f "$root_dir/flake.nix" ] && [ ! -f "$wpath/flake.nix" ]; then
+        has_flake_nix=1
+    fi
+    if [ -f "$root_dir/flake.lock" ] && [ ! -f "$wpath/flake.lock" ]; then
+        has_flake_lock=1
+    fi
+    if [ -f "$root_dir/envrc" ] && [ ! -f "$wpath/.envrc" ]; then
+        has_envrc=1
+    elif [ -f "$wpath/.envrc" ]; then
+        direnv allow "$wpath/"
+    fi
+
+    case "$has_flake_nix$has_flake_lock$has_envrc" in
+        000)
+            tput bold setaf 2
+            printf "[+] Successfully set up '%s'.\n" "$name"
+            tput sgr0
+            continue ;;
+        100) msg='flake.nix' ;;
+        010) msg='flake.lock' ;;
+        001) msg='envrc' ;;
+        110) msg='flake.nix and flake.lock' ;;
+        011) msg='flake.lock and envrc' ;;
+        101) msg='flake.nix and envrc' ;;
+        111) msg='flake.nix, flake.lock and envrc' ;;
+    esac
+    tput bold setaf 1
+    printf 'Hard link top-level %s? [Y/n] ' "$msg"
+    tput sgr0
+    read -r ans </dev/tty
+    if [ "$ans" = n ] || [ "$ans" = N ]; then
+        continue
+    fi
+    ln -- "$root_dir/flake.nix" "$wpath/flake.nix" 2>/dev/null || true
+    ln -- "$root_dir/flake.lock" "$wpath/flake.lock" 2>/dev/null || true
+    if ln -- "$root_dir/envrc" "$wpath/.envrc" 2>/dev/null; then
+        direnv allow "$wpath/"
+    fi
+
+    tput bold setaf 2
+    printf "[+] Successfully set up '%s'.\n" "$name"
+    tput sgr0
+done

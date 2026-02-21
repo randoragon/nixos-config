@@ -52,7 +52,6 @@ alias gf='git fetch'
 alias gfs='git fetch --recurse-submodules=on'
 alias gg='pushd -- "$(git rev-parse --show-toplevel)"'
 alias gig='$EDITOR .gitignore'
-alias gwa='git worktree add'
 alias gwr='git worktree remove'
 
 # SSH
