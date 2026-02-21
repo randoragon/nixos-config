@@ -20,6 +20,7 @@
       status.submoduleSummary = 1;
       submodule.fetchJobs = 0;
       rerere.enabled = true;
+      worktree.guessRemote = true;
 
       # Sign pass commits (https://www.passwordstore.org/)
       pass.signcommits = true;
