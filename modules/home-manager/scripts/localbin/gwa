@@ -15,17 +15,20 @@ help () {
     echo '  -h, --help          Print this help message.'
     echo '  -a, --all           Add all local and remote branches.'
     echo '  -i, --interactive   Ask to add each branch interactively. If used alone, implies --all.'
+    echo '  -c, --copy          Browse through existing worktrees and offer to hard link nix files.'
 }
 
 all=
 interactive=
-opts="$(getopt -n gwa -s sh -o hai -l help,all,interactive -- "$@")"
+copy=
+opts="$(getopt -n gwa -s sh -o haic -l help,all,interactive,copy -- "$@")"
 eval set -- "$opts"
 while true; do
     case "$1" in
         -h|--help) help; exit ;;
         -a|--all) all=1 ; shift ;;
         -i|--interactive) interactive=1 ; shift ;;
+        -c|--copy) copy=1 ; shift ;;
         --) shift ; break ;;
         *) break ;;
     esac
@@ -35,6 +38,10 @@ if [ $# -eq 0 ]; then
 elif [ -n "$all" ]; then
     echo "gwa: received both '--all' and branch names; ignoring branch names"
     set --
+fi
+if [ -n "$check" ] && { [ -n "$interactive" ] || [ -n "$all" ]; }; then
+    echo "gwa: '--check' cannot be used with other options" 2>&1
+    exit 1
 fi
 
 # Find directory with the .bare repository
@@ -47,7 +54,10 @@ while [ ! -d "$root_dir/.bare" ]; do
     root_dir="$(realpath -- "$root_dir/..")"
 done
 
-if [ -n "$all" ] || { [ $# -eq 0 ] && [ -n "$interactive" ]; }; then
+if [ -n "$check" ]; then
+    git worktree list  --porcelain \
+        | sed -n -e '/\/.bare$/d' -e 's/^worktree .*\///p'
+elif [ -n "$all" ] || { [ $# -eq 0 ] && [ -n "$interactive" ]; }; then
     git branch -a --format='%(refname)' \
         | sed -e 's|^refs/heads/||' -e 's|refs/remotes/[^/]\+/||' -e '/^HEAD$/d' \
         | sort | uniq
@@ -58,24 +68,30 @@ else
 fi | while read -r name; do
     wpath="$root_dir/$(echo "$name" | tr / _)"
 
-    if [ -d "$wpath" ]; then
-        tput bold setaf 3
-        printf "Worktree '%s' already exists.\n" "$name"
-        tput sgr0
-        continue
-    fi
-
-    if [ "$interactive" ]; then
-        tput bold setaf 1
-        printf "Add worktree '%s'? [y/N] " "$name"
-        tput sgr0
-        read -r ans </dev/tty
-        if [ "$ans" != y ] && [ "$ans" != y ]; then
+    if [ -z "$copy" ]; then
+        if [ -d "$wpath" ]; then
+            tput bold setaf 3
+            printf "Worktree '%s' already exists.\n" "$name"
+            tput sgr0
             continue
         fi
-    fi
 
-    git worktree add -- "$wpath" "$name"
+        if [ "$interactive" ]; then
+            tput bold setaf 1
+            printf "Add worktree '%s'? [y/N] " "$name"
+            tput sgr0
+            read -r ans </dev/tty
+            if [ "$ans" != y ] && [ "$ans" != y ]; then
+                continue
+            fi
+        fi
+
+        git worktree add -- "$wpath" "$name"
+    else
+        tput bold setaf 3
+        printf "Checking worktree '%s'\n" "$name"
+        tput sgr0
+    fi
 
     # Offer to hard link flake.nix and flake.lock, if adequate
     has_flake_nix=0
