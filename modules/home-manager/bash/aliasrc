@@ -10,7 +10,6 @@ alias xpo='setsid >/dev/null 2>&1 xdg-open'
 alias pm='pulsemixer'
 alias mt='udisksctl mount -b'
 alias umt='udisksctl unmount -b'
-alias dh='dirs -v'
 alias e='$EDITOR'
 alias fe='als_tmp="$(find . -type f | fzf)"; [ -n "$als_tmp" ] && $EDITOR -- "$als_tmp"'
 alias fd='cd -- "$(find . -type d | fzf)"'
@@ -27,6 +26,11 @@ alias der='direnv reload'
 alias ss.='secrets save .'
 alias sd.='secrets decrypt .'
 alias sc.='secrets clean .'
+
+# Bash directory stack
+alias sd='pushd'
+alias pd='popd'
+alias dh='dirs -v'
 
 # Git
 alias gs='git status'
@@ -52,6 +56,7 @@ alias gf='git fetch'
 alias gfs='git fetch --recurse-submodules=on'
 alias gg='pushd -- "$(git rev-parse --show-toplevel)"'
 alias gig='$EDITOR .gitignore'
+alias gw='git worktree'
 alias gwr='git worktree remove'
 
 # SSH

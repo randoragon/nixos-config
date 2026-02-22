@@ -1,17 +1,17 @@
 #!/bin/sh -e
 
-# Copyright © 2020 Randoragon
-# 
+# Copyright (C) 2026 randoragon
+#
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
 # in the Software without restriction, including without limitation the rights
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all
 # copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,36 +39,46 @@ ERR_MERGEDUPE=3
 ERR_BADPATH=4
 ERR_ORPHANPATH=5
 ERR_EXECUTION=6
-HELP_MSG="Try 'mkar --help' for more information."
 
 # stderr wrappers
-eecho ()   { [ "$noerr" -ne 1 ] && printf "%s\n%s\n" "$@" "$HELP_MSG" >&2 ; } # Errors
-wecho ()   { [ "$nowarn" -ne 1 ] && printf "%s\n" "$@" >&2 ; }           # Warnings
-debug ()   { [ -n "$DEBUG" ] && printf "%s\n" "$@" >&2 ; }
-DEBUG=
+eecho () {
+    if [ "$noerr" -ne 1 ]; then
+        printf "mkar: %s\nTry 'mkar --help' for more information.\n" "$1" >&2
+    fi
+}
+wecho () {
+    if [ "$nowarn" -ne 1 ]; then
+        printf "mkar: %s\n" "$1" >&2
+    fi
+}
 
 # Checks if every argument is a file/directory/symlink
 exists () {
     for y in "$@"; do
-        [ ! -f "$y" ] && [ ! -d "$y" ] && [ ! -L "$y" ] && return
+        if [ ! -f "$y" ] && [ ! -d "$y" ] && [ ! -L "$y" ]; then
+            return 1
+        fi
     done
-    printf '1'
+    return 0
 }
 
 # Ranks a path by the number of parent dirs
 dirrank () {
-    printf "%s" "$(printf "%s" "$(realpath -s -- "$1")" | tr -cd '/' | wc -m)"
+    realpath -s -- "$1" | tr -cd '/' | wc -m
 }
 
 # Finds the nth parent dir of a path (1st is always root)
 ndirname () {
-    [ "$2" -eq 1 ] && printf "/" && return 0
+    if [ "$2" -eq 1 ]; then
+        printf '/'
+        return
+    fi
     p="$(realpath -s -- "$1")"
     max="$(dirrank "$p")"
     for i in $(seq "$((max - $2 + 1))"); do
         p="$(dirname -- "$p")"
     done
-    printf "%s" "$p/"
+    printf '%s' "$p/"
 }
 
 # Does the same thing as ndirname, but 1 is basename, 2 is basename of basename, etc.
@@ -79,7 +89,7 @@ nbasename () {
         p="$(basename -- "$b")/$p"
         b="$(dirname -- "$b")"
     done
-    printf "%s" "$p"
+    printf '%s' "$p"
 }
 
 # Help page
@@ -88,30 +98,27 @@ echo \
 "MKAR - MaKe ARchive
 
 NAME
-        mkar - a simple tar/zip/rar/jar/7z wrapper for creating archives
+        mkar - a simple tar/zip/rar/7z wrapper for creating archives
 
 SYNOPSIS
     mkar OPTIONS PATH... [NAME]
 
 DESCRIPTION
-    Creates an archive \"NAME.EXT\" with all PATHs stored within.
-    EXT is dependant on the used (if used) compression program,
-    which can be defined using similar options as GNU tar,
-    or omitted for a plain \"NAME.tar\" file.
+    Creates an archive \"NAME.EXT\" with all PATHs stored within. EXT is
+    dependant on the used (if used) compression program, which can be defined
+    using similar options as GNU tar, or omitted for a plain \"NAME.tar\" file.
 
-    Symlinks are automatically dereferenced. Orphaned symlinks
-    are skipped with a warning issued to stderr.
+    Symlinks are automatically dereferenced. Orphaned symlinks are skipped with
+    a warning issued to stderr.
 
-    An additional feature is subdirectory trimming.
-    Most archiving utilities doesn't handle absolute paths well
-    and unnecessarily recreate the entire subdirectory structure.
-    For example, running:
+    An additional feature is subdirectory trimming. Most archiving utilities
+    doesn't handle absolute paths well and unnecessarily recreate the entire
+    subdirectory structure. For example, running:
 
         tar -chzf archive.tar.gz /home/user/file
 
-    ...creates an archive with two subdirectories: home and user
-    mkar cleverly cuts off as much of the path from the left
-    as possible, so that running:
+    ...creates an archive with two subdirectories: home and user mkar cleverly
+    cuts off as much of the path from the left as possible, so that running:
 
         mkar -z /home/user/file archive
 
@@ -119,13 +126,11 @@ DESCRIPTION
 
         tar -chzf archive.tar.gz -C /home/user file
 
-    When given multiple PATHs, the script will figure out the
-    \"lowest common subdirectory\" and make that the root of
-    the newly created archive.
+    When given multiple PATHs, the script will figure out the \"lowest common
+    subdirectory\" and make that the root of the newly created archive.
 
-    NAME can be omitted if only one PATH is supplied. When
-    that happens, NAME is assumed to be \"PATH.EXT\".
-    NAME cannot be omitted if using the --input option.
+    NAME can be omitted if only one PATH is supplied. When that happens, NAME is
+    assumed to be \"PATH.EXT\".
 
 OPTIONS
     -f, --force
@@ -133,32 +138,27 @@ OPTIONS
         By default the operation will be aborted.
 
     -m, --merge
-        By default, if PATHs reference files/dirs from different
-        subdirectories, the subdirectory structure is preserved
-        inside the new archive. This option prevents that by
-        dropping all of the files/dirs in one common directory
-        prior to compression. Aborts in case of name collisions.
-        You can pass this parameter twice to skip colliding
-        files instead of aborting the entire operation. PATHs
-        passed earlier take priority over the latter ones.
+        By default, if PATHs reference files/dirs from different subdirectories,
+        the subdirectory structure is preserved inside the new archive.
+        This option prevents that by dropping all of the files/dirs in one
+        common directory prior to compression. Aborts in case of name
+        collisions. You can pass this parameter twice to skip colliding files
+        instead of aborting the entire operation. PATHs passed earlier take
+        priority over the latter ones.
 
     -i, --input
-        Reads newline-delimited paths from stdin. NAME must
-        be passed as an argument and cannot be omitted.
+        Reads newline-delimited paths from stdin.
 
     -v, --verbose
-        Enables verbose output from the compression program.
-        This usually results in paths getting printed during
-        the creation of an archive.
-        If using tar (gzip, bzip2, xz or no compression),
-        you can pass this option multiple times for extra
-        levels of verbosity (read tar's man page on -v).
+        Enables verbose output from the compression program. This usually
+        results in paths getting printed during the creation of an archive. If
+        using tar (gzip, bzip2, xz or no compression), you can pass this option
+        multiple times for extra levels of verbosity (see tar's man page on -v).
 
     -p, --pretend
-        Prints the command(s) that would be run and exits.
-        Note that if using the -m option, a temporary location
-        will be created to dump symlinks to all the PATHs in,
-        and those alternate paths will be printed instead.
+        Prints the command(s) that would be run and exits. Note that if using
+        the -m option, a temporary location will be created to dump symlinks to
+        all the PATHs in, and those alternate paths will be printed instead.
 
     -z, --gzip
         Compress to NAME.tar.gz
@@ -175,19 +175,14 @@ OPTIONS
     -r, --rar
         Compress to NAME.rar
 
-    -R, --jar
-        Compress to NAME.jar
-
     -7, --7z
         Compress to NAME.7z
 
     -q, --quiet
-        Pass it once to suppress just warnings, or twice
-        to suppress all messages.
-        Note that this only affects direct output from mkar,
-        any third-party programs will still print their
-        respective warnings and errors. This option does
-        not contradict the --verbose option.
+        Pass it once to suppress just warnings, or twice to suppress all
+        messages. Note that this only affects direct output from mkar, any
+        third-party programs will still print their respective warnings and
+        errors. This option is NOT mutually exclusive with --verbose.
 
 EXAMPLES
     Create a tar archive for system and user xinitrcs:
@@ -206,7 +201,7 @@ EXAMPLES
 
         find ~ -maxdepth 1 -type f -name '*.txt' | mkar -i txts
 
-RETURN CODES
+EXIT CODES
     0 - finished successfully
     1 - failed to parse arguments
     2 - FILE exists and no --force option passed
@@ -238,10 +233,14 @@ stdin=0
 pretend=0
 verbose=
 compress=t
+ext=tar
 nowarn=0
 noerr=0
-OPTS="$(getopt -n mkar -s sh -o qhfmivpzjJZrR7 -l quiet,help,merge,input,verbose,force,pretend,gzip,bzip2,xz,zip,rar,jar,7z -- "$@")"
-[ $? -eq 1 ] && echo "$HELP_MSG" && exit $ERR_BADARG
+OPTS="$(getopt -n mkar -s sh -o qhfmivpzjJZr7 -l quiet,help,merge,input,verbose,force,pretend,gzip,bzip2,xz,zip,rar,7z -- "$@")"
+if [ $? -eq 1 ]; then
+    eecho 'failed to parse command-line arguments'
+    exit $ERR_BADARG
+fi
 eval set -- "$OPTS"
 while true; do
     case "$1" in
@@ -250,27 +249,40 @@ while true; do
         -i|--input) stdin=1 ; shift ;;
         -v|--verbose) verbose="v$verbose" ; shift ;;
         -p|--pretend) pretend=1 ; shift ;;
-        -z|--gzip) compress=z ; shift ;;
-        -j|--bzip2) compress=j ; shift ;;
-        -J|--xz) compress=J ; shift ;;
-        -Z|--zip) compress=Z ; shift ;;
-        -r|--rar) compress=r ; shift ;;
-        -R|--jar) compress=R ; shift ;;
-        -7|--7z) compress=7 ; shift ;;
-        -h|--help) usage ; exit ; shift ;;
-        -q|--quiet) [ $nowarn -eq 1 ] && noerr=1 || nowarn=1 ; exit ; shift ;;
+        -z|--gzip) compress=z; ext=tar.gz; shift ;;
+        -j|--bzip2) compress=j; ext=tar.bz; shift ;;
+        -J|--xz) compress=J; ext=tar.xz; shift ;;
+        -Z|--zip) compress=Z; ext=zip; shift ;;
+        -r|--rar) compress=r; ext=rar; shift ;;
+        -7|--7z) compress=7; ext=7z; shift ;;
+        -h|--help) usage ; exit ;;
+        -q|--quiet)
+            if [ $nowarn -eq 1 ]; then
+                noerr=1
+            else
+                nowarn=1
+            fi
+            exit
+            ;;
         --) shift ; break ;;
         *) break ;;
     esac
 done
-[ $# -eq 1 ] && [ $stdin -ne 1 ] && autoname=1
+if [ $# -eq 1 ] && [ $stdin -ne 1 ]; then
+    autoname=1
+fi
 
-# Set up some variables
-paths=
-[ $# -eq 0 ] && eecho "mkar: Not enough arguments." && exit $ERR_BADARG
+if [ $# -eq 0 ]; then
+    eecho "not enough arguments"
+    exit $ERR_BADARG
+fi
 
 # Handle reading from stdin
-[ $stdin -eq 1 ] && {
+if [ $stdin -eq 1 ]; then
+    if [ $# -gt 1 ]; then
+        eecho 'too many arguments'
+        exit $ERR_BADARG
+    fi
     cmd="$0"
     opts="$verbose$compress"
     opts="$opts$([ $merge -eq 1 ] && printf m)"
@@ -280,82 +292,92 @@ paths=
     opts="$opts$([ $nowarn -eq 1 ] && printf q)"
     opts="$opts$([ $noerr -eq 1 ] && printf q)"
     opts="$([ -n "$opts" ] && printf -- '-')$opts"
-    outfile="$1"
-    while read -r line; do
-        paths="$paths
-$line"
-    done
-    handlestdin () {
-        IFS="
-"
-        "$cmd" "$opts" -- $@ "$outfile"
-        unset IFS
-    }
-    handlestdin "$paths"
-    exit
-}
+    tmpf="$(mktemp --tmpdir mkar.XXXXX)"
+    # shellcheck disable=SC2064
+    trap "rm -f -- '$tmpf'" INT QUIT TERM EXIT
+    cat >"$tmpf"
+    echo >>"$tmpf"
+    sed -i '/^$/d' "$tmpf"
+    if [ -n "$1" ]; then
+        outfile="$1"
+    elif [ "$(wc -l <"$tmpf")" -eq 1 ]; then
+        outfile="$(cat -- "$tmpf")"
+        outfile="$(basename -- "${outfile%%.*}")"
+    else
+        eecho 'failed to determine output filename; either argument missing or too many lines in input file'
+        exit $ERR_BADARG
+    fi
+    printf "\n%s\n" "$outfile" >>"$tmpf"
+    eval xargs -a "$tmpf" -d '\n' -- "$cmd" "$opts" --
+fi
 
-# Validate and parse paths
-i=1
-tmp="$(mktemp -dp /tmp mkar_validateXXX)"
+# Validate and parse input paths
+paths=
 for x in "$@"; do
-    [ -z "$(exists "$x")" ] && { [ $autoname -eq 1 ] || [ $i -ne $# ]; } && eecho "mkar: Invalid path: '$x'" && exit $ERR_BADPATH
-    [ -z "$(readlink -e -- "$x")" ] && { [ $autoname -eq 1 ] || [ $i -ne $# ]; } && eecho "mkar: Orphaned symlink: '$x'" && exit $ERR_ORPHANPATH
-    [ -n "$(exists "$tmp/$(realpath -s -- "$x")")" ] 
-    [ $i -lt $# ] || [ $autoname -eq 1 ] && paths="$paths
+    if [ $autoname -ne 1 ] && [ $# -eq 1 ]; then
+        # $x is the outfile; it will be dealt with after this loop
+        break
+    fi
+    if ! exists "$x"; then
+        eecho "invalid path: '$x'"
+        exit $ERR_BADPATH
+    fi
+    if ! realpath -e -- "$x" >/dev/null 2>&1; then
+        eecho "orphaned symlink: '$x'"
+        exit $ERR_ORPHANPATH
+    fi
+    paths="$paths
 $x"
-    [ $i -eq $# ] && {
-        ext () {
-            [ $compress = t ] && printf tar && return
-            [ $compress = z ] && printf tar.gz && return
-            [ $compress = j ] && printf tar.bz && return
-            [ $compress = J ] && printf tar.xz && return
-            [ $compress = Z ] && printf zip    && return
-            [ $compress = r ] && printf rar    && return
-            [ $compress = R ] && printf jar    && return
-            [ $compress = 7 ] && printf 7z     && return
-        }
-        outfile="$PWD/""$(basename -- "$x")"".$(ext)"
-        [ -n "$(exists "$outfile")" ] && {
-            if [ "$overwrite" -ne 1 ]; then
-                eecho "mkar: '$outfile' already exists. Use -f to force an overwrite."
-                exit $ERR_EXISTINGFILE
-            else
-                rm -rf -- "$outfile"
-            fi
-        }
-    }
-    i=$((i + 1))
+    shift
 done
 
+# Validate and parse output path
+if [ $# -eq 1 ]; then
+    outfile="$PWD/$(basename -- "$x").$ext"
+    if [ -f "$outfile" ]; then
+        if [ "$overwrite" -ne 1 ]; then
+            eecho "a file '$outfile' already exists; use -f to overwrite"
+            exit $ERR_EXISTINGFILE
+        else
+            rm -f -- "$outfile"
+        fi
+    elif [ -e "$outfile" ]; then
+        eecho "'$outfile' already exists and is not a file; aborting"
+        exit $ERR_EXISTINGFILE
+    fi
+    shift
+fi
+
 # Branch by compression program
-case $compress in
+case "$compress" in
     t|z|j|J)
         # Handle merge option
         if [ $merge -eq 1 ]; then
-            tmp="$(mktemp -dp /tmp mkar_mergeXXX)"
-            rootdir="$tmp"
-            move () {
-                IFS="
-"
-                trimmedpaths=
-                for x in $@; do
-                    [ -z "$(readlink -e -- "$x")" ] && wecho "Warning: '$x' is an orphaned symlink (skipping)." && continue
-                    t="$(basename -- "$x")"
-                    d="$tmp/$t"
-                    [ -n "$(exists "$d")" ] && {
-                        [ $mnoskip -eq 1 ] && wecho "Warning: duplicate name '$t' (skipping)." && continue
-                        eecho "mkar: duplicate name '$t'." && exit $ERR_MERGEDUPE
-                    }
-                    ln -s "$(realpath -- "$x")" "$d"
-                    trimmedpaths="$trimmedpaths
+            tmpd="$(mktemp -d --tmpdir mkar.XXXXX)"
+            # shellcheck disable=SC2064
+            trap "rm -rf -- '$tmpd'" INT QUIT TERM EXIT
+            rootdir="$tmpd"
+            trimmedpaths=
+            echo "$paths" | while read -r x; do
+                if ! realpath -e -- "$x" >/dev/null 2>&1; then
+                    wecho "Warning: '$x' is an orphaned symlink (skipping)."
+                    continue
+                fi
+                t="$(basename -- "$x")"
+                d="$tmpd/$t"
+                if exists "$d"; then
+                    if [ $mnoskip -eq 1 ]; then
+                        wecho "Warning: duplicate name '$t' (skipping)."
+                        continue
+                    fi
+                    eecho "duplicate name '$t'"
+                    exit $ERR_MERGEDUPE
+                fi
+                ln -s -- "$(realpath -- "$x")" "$d"
+                trimmedpaths="$trimmedpaths
 $t"
-                done
-                unset IFS
-            }
-            move "$paths"
+            done
         else
-
             # Find the lowest common parent dir
             check () {
                 IFS="
@@ -411,13 +433,15 @@ $(nbasename "$q" "$(($(dirrank "$q") - rootdirindex + 1))")"
         createtar "$trimmedpaths"
 
         # Delete temporary data
-        [ -d "$tmp" ] && rm -rf "$tmp"
+        [ -d "$tmpd" ] && rm -rf "$tmpd"
     ;;
-    Z|r|R|7)
+    Z|r|7)
         # Handle merge option
         if [ $merge -eq 1 ]; then
-            tmp="$(mktemp -dp /tmp mkar_mergeXXX)"
-            rootdir="$tmp"
+            tmpd="$(mktemp -d --tmpdir mkar.XXXXX)"
+            # shellcheck disable=SC2064
+            trap "rm -rf -- '$tmpd'" INT QUIT TERM EXIT
+            rootdir="$tmpd"
             move () {
                 IFS="
 "
@@ -425,10 +449,10 @@ $(nbasename "$q" "$(($(dirrank "$q") - rootdirindex + 1))")"
                 for x in $@; do
                     [ -z "$(readlink -e -- "$x")" ] && wecho "Warning: '$x' is an orphaned symlink (skipping)." && continue
                     t="$(basename -- "$x")"
-                    d="$tmp/$t"
-                    [ -n "$(exists "$d")" ] && {
+                    d="$tmpd/$t"
+                    exists "$d" && {
                         [ $mnoskip -eq 1 ] && wecho "Warning: duplicate name '$t' (skipping)." && continue
-                        eecho "mkar: duplicate name '$t'." && exit $ERR_MERGEDUPE
+                        eecho "duplicate name '$t'" && exit $ERR_MERGEDUPE
                     }
                     ln -s "$(realpath -- "$x")" "$d"
                     trimmedpaths="$trimmedpaths
@@ -438,11 +462,11 @@ $t"
             }
             move "$paths"
         else
-            # tar supports the -C parameter when creating archives, which basically allows us
-            # to set the "root directory" of an archive to anything we want, which is useful.
-            # The programs for zipping, raring, jaring and 7zipping do not have that option,
-            # so instead we have to cd into the "root directory" of the soon-to-be archive,
-            # create it from the root with relative paths, and cd back to where we came from.
+            # tar supports the -C parameter when creating archives, which basically allows us to set
+            # the "root directory" of an archive to anything we want, which is useful. The programs
+            # for zipping, raring and 7zipping do not have that option, so instead we have to cd
+            # into the "root directory" of the soon-to-be archive, create it from the root with
+            # relative paths, and cd back to where we came from.
 
             # Find the lowest common parent dir (rootdir)
             check () {
@@ -491,8 +515,6 @@ $(nbasename "$q" $(($(dirrank "$q") - rootdirindex + 1)))"
                         ;;
                     r) printf "%s" "rar $([ -z "$verbose" ] && printf "%s" '-idq') a '$outfile' "
                         ;;
-                    R) printf "%s" "jar Mc$([ -n "$verbose" ] && printf v)f '$outfile' "
-                        ;;
                     7) printf "%s" "7z a -l -y -t7z '$outfile' "
                         ;;
                 esac
@@ -508,8 +530,6 @@ $(nbasename "$q" $(($(dirrank "$q") - rootdirindex + 1)))"
                         ;;
                     r) rar "$([ -z "$verbose" ] && printf "%s" '-idq')" a "$outfile" $@
                         ;;
-                    R) jar Mc"$([ -n "$verbose" ] && printf v)"f "$outfile" $@
-                        ;;
                     7) if [ -z $verbose ]; then 7z a -l -y -t7z "$outfile" $@ >&-; else 7z a -l -y -t7z "$outfile" $@; fi
                         ;;
                 esac
@@ -520,6 +540,6 @@ $(nbasename "$q" $(($(dirrank "$q") - rootdirindex + 1)))"
         create "$trimmedpaths"
 
         # Delete temporary data
-        [ -d "$tmp" ] && rm -rf "$tmp"
+        [ -d "$tmpd" ] && rm -rf "$tmpd"
     ;;
 esac
