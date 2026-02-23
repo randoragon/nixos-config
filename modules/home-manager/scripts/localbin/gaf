@@ -9,7 +9,7 @@ git_root="$(git rev-parse --show-toplevel)"
 
 for fname in flake.nix flake.lock .direnv .envrc; do
     fpath="$git_root/$fname"
-    [ -f "$fpath" ] && git reset --quiet -- "$fpath"
+    [ -e "$fpath" ] && git reset --quiet -- "$fpath"
 done
 
 for fname in flake.nix flake.lock; do
