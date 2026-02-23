@@ -51,6 +51,9 @@ git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 status '4. Fetching heads and remotes' "git fetch"
 git fetch
 
+status '5. Deleting local branches' "git branch -l --format='%(refname:short)' | xargs git branch -D"
+git branch -l --format='%(refname:short)' | xargs git branch -D
+
 tput bold setaf 3
 echo 'All done.'
 tput sgr0
