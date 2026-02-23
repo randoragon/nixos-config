@@ -38,7 +38,9 @@ if [ -n "$check" ] && { [ -n "$interactive" ] || [ -n "$all" ]; }; then
     exit 1
 fi
 if [ $# -eq 0 ]; then
-    interactive=1
+    if [ -z "$all$interactive$check" ]; then
+        interactive=1
+    fi
 elif [ -n "$all" ]; then
     echo "gwa: received both '--all' and branch names; ignoring branch names"
     set --
