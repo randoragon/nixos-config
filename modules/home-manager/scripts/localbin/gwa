@@ -15,33 +15,33 @@ help () {
     echo '  -h, --help          Print this help message.'
     echo '  -a, --all           Add all local and remote branches.'
     echo '  -i, --interactive   Ask to add each branch interactively. If used alone, implies --all.'
-    echo '  -c, --copy          Browse through existing worktrees and offer to hard link nix files.'
+    echo '  -c, --check         Browse through existing worktrees and offer to hard link nix files.'
 }
 
 all=
 interactive=
-copy=
-opts="$(getopt -n gwa -s sh -o haic -l help,all,interactive,copy -- "$@")"
+check=
+opts="$(getopt -n gwa -s sh -o haic -l help,all,interactive,check -- "$@")"
 eval set -- "$opts"
 while true; do
     case "$1" in
         -h|--help) help; exit ;;
         -a|--all) all=1 ; shift ;;
         -i|--interactive) interactive=1 ; shift ;;
-        -c|--copy) copy=1 ; shift ;;
+        -c|--check) check=1 ; shift ;;
         --) shift ; break ;;
         *) break ;;
     esac
 done
+if [ -n "$check" ] && { [ -n "$interactive" ] || [ -n "$all" ]; }; then
+    echo "gwa: '--check' cannot be used with other options" 2>&1
+    exit 1
+fi
 if [ $# -eq 0 ]; then
     interactive=1
 elif [ -n "$all" ]; then
     echo "gwa: received both '--all' and branch names; ignoring branch names"
     set --
-fi
-if [ -n "$check" ] && { [ -n "$interactive" ] || [ -n "$all" ]; }; then
-    echo "gwa: '--check' cannot be used with other options" 2>&1
-    exit 1
 fi
 
 # Find directory with the .bare repository
@@ -68,7 +68,7 @@ else
 fi | while read -r name; do
     wpath="$root_dir/$(echo "$name" | tr / _)"
 
-    if [ -z "$copy" ]; then
+    if [ -z "$check" ]; then
         if [ -d "$wpath" ]; then
             tput bold setaf 3
             printf "Worktree '%s' already exists.\n" "$name"
