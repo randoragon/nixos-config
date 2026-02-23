@@ -20,6 +20,7 @@
       status.submoduleSummary = 1;
       submodule.fetchJobs = 0;
       rerere.enabled = true;
+      worktree.guessRemote = true;
     };
   };
 }
