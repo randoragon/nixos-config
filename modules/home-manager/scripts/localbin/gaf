@@ -9,10 +9,14 @@ git_root="$(git rev-parse --show-toplevel)"
 
 for fname in flake.nix flake.lock .direnv .envrc; do
     fpath="$git_root/$fname"
-    [ -e "$fpath" ] && git reset --quiet -- "$fpath"
+    if [ -e "$fpath" ]; then
+        git reset --quiet -- "$fpath"
+    fi
 done
 
 for fname in flake.nix flake.lock; do
     fpath="$git_root/$fname"
-    [ -f "$fpath" ] && git add --intent-to-add --force -- "$fpath"
+    if [ -f "$fpath" ]; then
+        git add --intent-to-add --force -- "$fpath"
+    fi
 done
