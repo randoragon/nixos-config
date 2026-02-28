@@ -85,7 +85,7 @@ envrc="$(direnv status --json | jq -r '.["state"].["foundRC"].["path"] // empty'
 
 # Determine flake type
 flake_type=git+file
-git status -s >/dev/null 2>&1 || {
+git rev-parse --git-dir >/dev/null 2>&1 || {
     status 'Not inside a git repository. Choose action:\n'
     status '[g] Start a new repository here (default)\n'
     status '[p] Use "path:."\n'
