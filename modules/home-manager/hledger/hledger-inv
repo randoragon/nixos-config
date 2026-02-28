@@ -19,7 +19,6 @@ hledger bal \
     --strict \
     --infer-equity \
     --real \
-    --no-total \
     --layout=bare \
     --historical \
     --daily \
@@ -34,7 +33,6 @@ hledger bal \
     --strict \
     --infer-equity \
     --real \
-    --no-total \
     --layout=bare \
     --historical \
     --daily \
@@ -43,6 +41,8 @@ hledger bal \
     --transpose \
     ^assets:investments \
     | tail -n+3 >"$value_csv"
+
+no_columns=$(( $(awk -F, '{print NF; exit}' "$cost_csv") ))
 
 cat >"$gnuplot_script" <<EOF
 set terminal svg size 640,360
@@ -55,8 +55,8 @@ set ylabel 'Money'
 set grid
 set key top left
 set datafile separator ','
-plot '$cost_csv' using 1:2 with lines title 'Invested Amount', \
-     '$value_csv' using 1:2 with lines title 'Market Value'
+plot '$cost_csv' using 1:$no_columns with lines title 'Invested Amount', \
+     '$value_csv' using 1:$no_columns with lines title 'Market Value'
 EOF
 
 gnuplot "$gnuplot_script" \
