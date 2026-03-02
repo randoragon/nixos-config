@@ -19,14 +19,14 @@ inoremap <buffer> <Leader>p print()<Left>
 inoremap <buffer> <Leader>a assert 
 
 command LSPFileTogglePy    lua lsp_toggle({
-            \   name = "pyright",
-            \   cmd  = {"pyright-langserver", "--stdio"},
-            \   settings = require("lsp.settings.pyright"),
+            \   name = "ty",
+            \   cmd  = {"ty", "server"},
+            \   settings = require("lsp.settings.ty"),
             \ })
 command LSPProjectTogglePy lua lsp_toggle({
-            \   name = "pyright",
-            \   cmd  = {"pyright-langserver", "--stdio"},
-            \   settings = require("lsp.settings.pyright"),
+            \   name = "ty",
+            \   cmd  = {"ty", "server"},
+            \   settings = require("lsp.settings.ty"),
             \ },
             \ {
             \  ".git",
@@ -36,6 +36,7 @@ command LSPProjectTogglePy lua lsp_toggle({
             \  "requirements.txt",
             \  "Pipfile",
             \  "pyrightconfig.json",
+            \  "ty.toml",
             \  "Makefile", "makefile", "GNUmakefile",
             \  "CMakeLists.txt"
             \ })

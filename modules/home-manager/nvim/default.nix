@@ -24,7 +24,7 @@
       shellcheck
       nodePackages.bash-language-server
       rust-analyzer rustc
-      pyright ruff
+      ty ruff
       tinymist
       texlab
       neocmakelsp
