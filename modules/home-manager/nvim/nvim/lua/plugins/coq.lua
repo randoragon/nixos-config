@@ -29,5 +29,3 @@ local function ifelsepumvisible(iftrue, iffalse)
 end
 map("i", "<Esc>", ifelsepumvisible("<C-e><Esc>", "<Esc>"), {expr=true})
 map("i", "<C-c>", ifelsepumvisible("<C-e><C-c>", "<C-c>"), {expr=true})
-map("i", "<Tab>", ifelsepumvisible("<C-n>", "<Tab>"), {expr=true})
-map("i", "<S-Tab>", ifelsepumvisible("<C-p>", "<BS>"), {expr=true})
