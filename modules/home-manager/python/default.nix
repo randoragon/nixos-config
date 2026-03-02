@@ -12,15 +12,4 @@
     readline.write_history_file = lambda *args: None
     '';
   };
-
-  config.xdg.configFile."mypy/config" = {
-    text = ''
-      # https://mypy.readthedocs.io/en/stable/config_file.html#config-file
-      # vim: ft=dosini
-
-      [mypy]
-      ignore_missing_imports = true
-      allow_redefinition = true
-    '';
-  };
 }
