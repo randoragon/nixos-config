@@ -47,6 +47,8 @@
     poppler-utils
     python3
   ];
+  systemd.coredump.enable = false;
+  boot.kernel.sysctl."kernel.core_pattern" = "core";
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
