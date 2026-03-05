@@ -26,6 +26,13 @@ prepend_previewers = [
 	{ url = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
 	{ url = "*.rar", run = 'piper --format=url -- unrar lb "$1"' },
 
+	# Preview binary files
+	{ url = "*.bin", run = 'piper -- xxd -R always -- "$1"' },
+
+	# Preview MIDI files
+	{ url = "*.midi", run = 'piper -- midiinfo -- "$1"' },
+	{ url = "*.mid", run = 'piper -- midiinfo -- "$1"' },
+
 	# Preview mp3 files
 	{ url = "*.mp3", run = '''piper --
 		soxi -- "$1" | tail -n+2
