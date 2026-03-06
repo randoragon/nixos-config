@@ -27,7 +27,7 @@
     tmux
     tree ripgrep fzf
     htop lm_sensors
-    neofetch
+    fastfetch
     gdu
     md4c typst gnuplot
     paperkey qrencode
