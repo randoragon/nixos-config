@@ -17,7 +17,6 @@
     audacity
     x42-plugins
     distrho-ports
-    guitarix
     gxplugins-lv2
     lsp-plugins
     tap-plugins
@@ -30,7 +29,7 @@
     lilypond
     sfizz-ui
     zynaddsubfx
-  ] ++ [ rsid3 ] ++ (with spkgs; [ yabridge yabridgectl ]);  # TODO: bring back unstable when they're not broken anymore
+  ] ++ [ rsid3 ] ++ (with spkgs; [ yabridge yabridgectl guitarix ]);  # TODO: bring back unstable when they're not broken anymore
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   home.sessionVariables = let
