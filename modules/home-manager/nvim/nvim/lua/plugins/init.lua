@@ -30,6 +30,7 @@ require("paq") {
 	},
 	"ms-jpq/coq_nvim",
 	"Wansmer/treesj",
+	"s3rvac/vim-syntax-jira",
 }
 
 require(modpath .. ".autopairs")

@@ -13,4 +13,5 @@ augroup filetypedetect
   au! BufNewFile,BufRead *.msc   setfiletype mscgen | set syntax=dot
   au! BufNewFile,BufRead *.tex   setfiletype tex
   au! BufNewFile,BufRead *.typ   setfiletype typst
+  au! BufNewFile,BufRead *.jira  setfiletype jira
 augroup END
