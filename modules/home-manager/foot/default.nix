@@ -10,7 +10,7 @@
         resize-by-cells = "no";
       };
 
-      colors = {
+      colors-dark = {
         foreground = "dadada";
         background = "141414";
         alpha = "0.9";
