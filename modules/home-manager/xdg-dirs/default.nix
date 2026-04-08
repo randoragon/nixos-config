@@ -5,6 +5,7 @@
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+    setSessionVariables = true;
     desktop = null;
     publicShare = null;
     templates = null;
