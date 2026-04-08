@@ -22,7 +22,7 @@
       zls
       lua-language-server
       shellcheck
-      nodePackages.bash-language-server
+      bash-language-server
       rust-analyzer rustc
       ty ruff
       tinymist
