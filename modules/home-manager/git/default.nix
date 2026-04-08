@@ -2,6 +2,7 @@
   programs.git = {
     enable = true;
 
+    signing.format = "openpgp";
     signing.key = "0x8A07E8710BC97B4D5478E419D0693F85BC6D731F!";
     signing.signByDefault = true;
 
