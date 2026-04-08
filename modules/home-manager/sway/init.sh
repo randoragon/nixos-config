@@ -15,9 +15,9 @@ mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
 # Start wallpaper manager
 (
     set +e
-    swww-daemon --no-cache &
+    awww-daemon --no-cache &
     sleep 1
-    swww img -t fade ~/.config/wallpaper
+    awww img -t fade ~/.config/wallpaper
 ) &
 
 # Fix screen capture

@@ -20,7 +20,7 @@
 
   home.packages = with pkgs; [
     swayidle
-    swww
+    awww
     wl-clipboard
     wlr-randr wdisplays
     brightnessctl

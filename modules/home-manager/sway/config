@@ -228,7 +228,7 @@ bindsym Ctrl+Mod1+b exec ~/.scripts/book
 bindsym Ctrl+Mod1+l exec swaylock
 bindsym Ctrl+Mod1+a exec anki
 
-bindsym $mod+Ctrl+Shift+slash exec swww clear 111111
+bindsym $mod+Ctrl+Shift+slash exec awww clear 111111
 bindsym $mod+Ctrl+slash exec ~/.scripts/wallpaper_random.sh
 
 bindsym Ctrl+grave exec makoctl dismiss -a
