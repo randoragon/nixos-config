@@ -9,6 +9,7 @@
 
     withNodeJs = true;
     withPython3 = true;
+    withRuby = false;
 
     extraPackages = with pkgs; [
       git
