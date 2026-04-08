@@ -38,5 +38,6 @@
       "file://${config.home.homeDirectory}/.config .config"
       "file://${config.home.homeDirectory}/.local/share .local/share"
     ];
+    gtk4.theme = config.gtk.theme;
   };
 }
