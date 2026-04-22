@@ -2,6 +2,7 @@
 
   imports = [
     ./boot.nix
+    ./certificates.nix
     ./filesystems.nix  # secret, purposefully left out
     ./hardware-configuration.nix
     ./ssh.nix

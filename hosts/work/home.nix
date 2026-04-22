@@ -28,6 +28,12 @@
     bindsym $mod+F12 --release output "AU Optronics 0x63ED Unknown" toggle
   '';
 
+  # Without this some scripts throw SSL errors
+  home.sessionVariables = {
+    REQUESTS_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+    SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+  };
+
   programs.home-manager.enable = true;
   home.stateVersion = "24.05";
 }
