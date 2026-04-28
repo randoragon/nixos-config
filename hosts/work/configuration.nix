@@ -8,6 +8,7 @@
     ./ssh.nix
     ../../modules/nixos
     ../../modules/nixos/o-audio.nix
+    ../../modules/nixos/o-binbash.nix
     ../../modules/nixos/o-bluetooth.nix
     ../../modules/nixos/o-graphical.nix
     ../../modules/nixos/o-kanata.nix

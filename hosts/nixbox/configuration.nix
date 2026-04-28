@@ -6,6 +6,7 @@
     ../../modules/nixos
     ../../modules/nixos/o-audio.nix
     ../../modules/nixos/o-audio-production.nix
+    ../../modules/nixos/o-binbash.nix
     ../../modules/nixos/o-bluetooth.nix
     ../../modules/nixos/o-gaming.nix
     ../../modules/nixos/o-graphical.nix
