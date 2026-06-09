@@ -17,4 +17,12 @@
       extraArgs = "--keep 5 --keep-since 7w";
     };
   };
+
+  # Configure nix-index-database
+  programs.nix-index = {
+    enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
+    enableFishIntegration = false;
+  };
 }
