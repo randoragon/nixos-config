@@ -2,7 +2,6 @@
 { pkgs, secrets, ... }: {
   imports = [
     ./bash
-    ./broot
     ./delta
     ./direnv
     ./git
