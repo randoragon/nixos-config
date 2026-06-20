@@ -48,7 +48,7 @@ function lsp_toggle(config, query_list)
 		vim.g.active_lsp_config = vim.b.active_lsp_config
 		vim.b.active_lsp_client = vim.lsp.start(vim.b.active_lsp_config)
 	else
-		vim.lsp.stop_client(vim.b.active_lsp_client)
+		vim.lsp.get_client_by_id(vim.b.active_lsp_client):stop()
 		vim.b.active_lsp_client = nil
 		vim.b.active_lsp_config = nil
 	end
@@ -63,12 +63,6 @@ function lsp_get_status_str()
 	local errors   = #vim.diagnostic.get(0, {severity=vim.diagnostic.severity.ERROR})
 	return "%#MyStatusBarWarn# " .. warnings .. " %#MyStatusBarError# " .. errors .. " "
 end
-
--- Add borders to floating windows
--- https://vi.stackexchange.com/a/39075
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border="rounded"})
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {border="rounded"})
-vim.diagnostic.config({float={border="rounded"}})
 
 require(modpath .. ".autocommands")
 

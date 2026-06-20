@@ -13,6 +13,7 @@ wo.list = true
 o.timeoutlen = 500
 o.history = 1000
 bo.spelllang = "en_us"
+vim.o.winborder = "rounded"
 o.foldlevelstart = 99
 
 -- Searching
