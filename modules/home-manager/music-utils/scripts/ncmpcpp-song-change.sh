@@ -90,7 +90,7 @@ if [ -n "$NCMPCPP_KEEP_PLAYCOUNT" ] || [ -n "$NCMPCPP_KEEP_HISTORY" ]; then
         [ -n "$NCMPCPP_KEEP_HISTORY" ] && {
             mkdir -p -- ~/Music/Playlists
             host="$(cat /etc/hostname)"
-            sed -i "1i$file" "$HOME/Music/Playlists/hist.$host.m3u"
+            sed -i -e '2000,$ d' -e "1i$file" "$HOME/Music/Playlists/hist.$host.m3u"
         }
     ) &
 fi

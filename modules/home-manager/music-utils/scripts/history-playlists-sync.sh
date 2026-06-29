@@ -26,7 +26,7 @@ myhist="hist.$host.m3u"
 
 # Import other devices' histories from Sync
 # Preprocess: my phone app export m3u with some metadata and absolute paths - clean it up
-grep -q '^#' "$PLSYNCDIR/hist.phone.m3u" && sed -i -e '/^#/d' -e 's|^Sync/Music/||' "$PLSYNCDIR/hist.phone.m3u"
+grep -q '^#' "$PLSYNCDIR/hist.phone.m3u" && sed -i -e '/^#/d' -e 's|^Sync/Music/||' "$PLSYNCDIR/hist.phone.m3u" && sed -i '2001,$ d' "$PLSYNCDIR/hist.phone.m3u"
 
 # Report sync conflicting histories
 find "$PLSYNCDIR" -maxdepth 1 -type f -name 'hist.*.sync-conflict-*.m3u' \
