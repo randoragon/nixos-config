@@ -12,4 +12,5 @@
     virtiofsd
   ];
   users.extraGroups.libvirtd.members = ["pcache"];
+  programs.nbd.enable = true;
 }
