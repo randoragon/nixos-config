@@ -5,6 +5,7 @@
   boot.loader.limine = {
     enable = true;
     secureBoot.enable = true;
+    maxGenerations = 3;
   };
 
   environment.systemPackages = with pkgs; [ sbctl ];
