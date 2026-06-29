@@ -44,4 +44,6 @@ prepend_previewers = [
 		printf 'artist: %s\ntitle:  %s\nalbum:  %s\ntrack:  %s\nalbum artist: %s\n' \
 		    "$artist" "$title" "$album" "$track" "$albumartist"
 		''' },
+
+	{ url = "\\s*id:*src:*time:*execs:*op:*", run = 'piper -- xxd -R always -- "$1"' },
 ]
