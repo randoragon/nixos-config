@@ -126,8 +126,8 @@ elif [ -d "$target" ]; then
     if [ -n "$output_dir" ]; then
         echo 'ffedit: the -d option can only be used with files' >&2
         exit 1
-    elif [ -e "$output" ]; then
-        printf "ffedit: '%s' already exists\n" "$output" >&2
+    elif [ -e "$output" ] && [ -n "$(ls -- "$output")" ]; then
+        printf "ffedit: '%s' already exists and is not empty\n" "$output" >&2
         exit 1
     fi
     mkdir -p -- "$output"
