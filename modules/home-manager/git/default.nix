@@ -3,7 +3,7 @@
     enable = true;
 
     signing.format = "openpgp";
-    signing.key = "0x8A07E8710BC97B4D5478E419D0693F85BC6D731F!";
+    signing.key = "0xEFE4E6F7BF76B823DFB5D7B7A8C82721C07BA3FD!";
     signing.signByDefault = true;
 
     settings = {
