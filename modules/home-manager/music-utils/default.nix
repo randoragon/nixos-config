@@ -3,7 +3,7 @@
   home.file.".local/bin/beetcp".source = ./localbin/beetcp;
   home.file.".local/bin/mpdplay".source = ./localbin/mpdplay;
   home.file.".local/bin/normalize".source = ./localbin/normalize;
-  home.file.".local/bin/pl2wavs".source = ./localbin/pl2wavs;
+  home.file.".local/bin/pl2cd".source = ./localbin/pl2cd;
   home.file.".local/bin/pladd".source = ./localbin/pladd;
   home.file.".local/bin/pldel".source = ./localbin/pldel;
   home.file.".local/bin/plexport".source = ./localbin/plexport;
