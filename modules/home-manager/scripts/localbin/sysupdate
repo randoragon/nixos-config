@@ -49,6 +49,4 @@ nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
 echo
 nvim --headless +TSUpdate +qall
 echo
-nvim --headless +COQdeps +qall
-echo
 sectionend
