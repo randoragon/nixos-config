@@ -17,11 +17,11 @@ let {
 
 	$sway_workspace = {
 		type = "workspaces"
-		name_map.11:w = ""
-		name_map.12:e = ""
-		name_map.13:d = ""
-		name_map.14:n = ""
-		name_map.15:m = ""
+		name_map.'11:w' = ""
+		name_map.'12:e' = ""
+		name_map.'13:d' = ""
+		name_map.'14:n' = ""
+		name_map.'15:m' = ""
 	}
 
 	$sway_mode = {
@@ -36,12 +36,13 @@ let {
 	$volume = {
 		type = "volume"
 		format = "{icon} {percentage}"
+		mute_format = "{icon} {percentage}"
 		max_volume = 100
-		icons.volume_high = ">"
-		icons.volume_medium = ">"
-		icons.volume_low = ">"
-		icons.muted = "X"
 		on_click_right = "qpwgraph"
+		icons.volume = ">"
+		icons.muted = "X"
+		use_default_profiles = false
+		show_sources = false
 	}
 
 	$storage = {
