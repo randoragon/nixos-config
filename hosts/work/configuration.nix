@@ -27,6 +27,7 @@
     extraGroups = [ "wheel" "networkmanager" "input" "uinput" "docker" ];
     shell = pkgs.bash;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys_p ];
+    linger = true;
   };
 
   home-manager = {
@@ -53,6 +54,20 @@
   ];
   systemd.coredump.enable = false;
   boot.kernel.sysctl."kernel.core_pattern" = "core";
+
+  # Adapted from https://github.com/wayland-transpositor/wprs/blob/master/wprsd.service
+  systemd.user.services.wprsd = {
+    enable = true;
+    description = "wprsd instance for %I";
+    path = [ pkgs.wprs pkgs.xwayland ];
+    after = [ "network.target" ];
+    wantedBy = [ "default.target" ];
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = "${pkgs.wprs}/bin/wprsd";
+      Environment = "RUST_BACKTRACE=1";
+    };
+  };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
