@@ -3,13 +3,11 @@
     enable = true;
 
     theme = {
-      package = pkgs.kanagawa-gtk-theme;
-      name = "Kanagawa-BL";
+      name = "Adwaita";
     };
 
     iconTheme = {
-      package = pkgs.kanagawa-icon-theme;
-      name = "Kanagawa-BL";
+      name = "Adwaita";
     };
 
     cursorTheme = {
@@ -38,6 +36,8 @@
       "file://${config.home.homeDirectory}/.config .config"
       "file://${config.home.homeDirectory}/.local/share .local/share"
     ];
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk4.theme = config.gtk.theme;
   };
 }
