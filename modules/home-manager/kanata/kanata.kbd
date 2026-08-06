@@ -1,6 +1,7 @@
 (defcfg
 	linux-dev-names-exclude (
 		"MoErgo Glove80 Left Keyboard"
+		"Glove80 Keyboard"
 	)
 )
 (defsrc esc caps)
