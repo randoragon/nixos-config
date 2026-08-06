@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   home.pointerCursor = {
+    enable = true;
     package = pkgs.simp1e-cursors;
     name = "Simp1e-Adw-Dark";
     size = 24;
