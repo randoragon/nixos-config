@@ -1,6 +1,10 @@
 # Ensure VIM_PREVIEW_HOME exists
 mkdir -p -- "$VIM_PREVIEW_HOME"
 
+# Some programs, notably SVN, need this to access the gpg-agent socket
+GPG_AGENT_INFO="$(gpgconf --list-dirs agent-socket | tr -d '\n' && echo -n ::)"
+export GPG_AGENT_INFO
+
 # Start graphical server on tty1 if not already running, otherwise start tmux
 if [ "$(tty)" = "/dev/tty1" ]; then
     export XDG_CURRENT_DESKTOP=sway  # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
