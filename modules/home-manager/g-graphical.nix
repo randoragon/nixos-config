@@ -7,6 +7,7 @@
     ./foot
     ./grim
     ./gtk
+    ./ironbar
     ./krita
     ./mako
     ./sway
@@ -14,7 +15,6 @@
     ./vimiv-qt
     ./wlsunset
     ./xorg
-    ./ironbar
     ./zathura
   ];
 
