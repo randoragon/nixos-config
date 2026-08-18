@@ -9,7 +9,8 @@
 # platforms is made easier.
 #
 # DEPENDENCIES:
-# - id3ted
+# - rsid3
+# - awk
 
 pl="$HOME/Music/Playlists/#Fair Use.m3u"
 base="$HOME/Music"
@@ -27,16 +28,17 @@ while read -r relative; do
     }
 
     # Extract relevant information
-    tags="$(id3ted -l "$f")"
-    artist="$(echo "$tags" | sed -n "s/^TPE1: //p")"
-    title="$(echo "$tags" | sed -n "s/^TIT2: //p")"
-    url="$(echo "$tags" | sed -n "s/^WXXX: \[origin\]: //p")"
-
-    # Exit if any information is missing
-    if [ -z "$artist" ] || [ -z "$title" ] || [ -z "$url" ]; then
+    set +e
+    tags="$(rsid3 --TPE1 --TIT2 --WXXX origin -- "$f" 2>/dev/null)"
+    if [ $? -eq 1 ]; then
+        # Exit if any information is missing
         echo "gensmul: tags missing from file '$f'. Aborting."
         exit 1
     fi
+    set -e
+    artist="$(echo "$tags" | head -n1)"
+    title="$(echo "$tags" | head -n2 | tail -n1)"
+    url="$(echo "$tags" | tail -n1)"
 
     # Keep the outfile sorted while adding more lines
     # (method source: https://stackoverflow.com/a/10658677/10792539)

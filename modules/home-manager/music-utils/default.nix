@@ -10,7 +10,6 @@
   home.file.".local/bin/regain".source = ./localbin/regain;
   home.file.".local/bin/scanfairuse".source = ./localbin/scanfairuse;
 
-  home.file.".scripts/cppubtourl".source = ./scripts/cppubtourl;
   home.file.".scripts/gens".source = ./scripts/gens;
   home.file.".scripts/gensac".source = ./scripts/gensac;
   home.file.".scripts/genslic".source = ./scripts/genslic;
