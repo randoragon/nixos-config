@@ -6,9 +6,9 @@
         autoStageResolvedConflicts = false;
         autoForwardBranches = "none";
         overrideGpg = true;
-        pagers = [
+        diffRenderers = [
           {
-            pager = "delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format='lazygit-edit://{path}:{line}'";
+            command = "delta --dark --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format='lazygit-edit://{path}:{line}'";
           }
         ];
       };
