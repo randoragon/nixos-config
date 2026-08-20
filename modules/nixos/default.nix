@@ -17,7 +17,7 @@
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryPackage = pkgs.pinentry-gtk2;
+    pinentryPackage = pkgs.pinentry-gnome3;
   };
-  environment.systemPackages = with pkgs; [ pinentry-gtk2 pinentry-curses ];
+  environment.systemPackages = with pkgs; [ pinentry-gnome3 pinentry-curses ];
 }
