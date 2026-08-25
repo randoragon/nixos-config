@@ -42,17 +42,17 @@ prepend_keymap = [
 	{ on = "o", run = "plugin fzf", desc = "Jump to a file/directory via fzf" },
 
 	# Open with EDITOR
-	{ on = "e", run = '''shell --block '$EDITOR -- "$@"'''', desc = "Open with $EDITOR" },
+	{ on = "e", run = '''shell --block -- $EDITOR -- %s''', desc = "Open with $EDITOR" },
 
 	# Open with less
-	{ on = "i", run = '''shell --block '{ highlight -O ansi -- "$1" || cat -- "$f"; } | less -R -f +g +k'''', desc = "Open with less" },
+	{ on = "i", run = '''shell --block -- { highlight -O ansi -- %h || cat -- %h; } | less -R -f +g +k''', desc = "Open with less" },
 
 	# Run fls
-	{ on = "I", run = '''shell --block 'fls "$@" | less -f -R +g +k'''', desc = "Display file information" },
+	{ on = "I", run = '''shell --block -- fls %s | less -f -R +g +k''', desc = "Display file information" },
 
 	# Ripdrag support
-	{ on = [ ",", "d" ], run = '''shell 'echo "$@" | xargs ripdrag'''', desc = "Open selected files in ripdrag" },
-	{ on = [ ",", "D" ], run = '''shell 'find . -type f | xargs ripdrag'''', desc = "Open PWD files in ripdrag" },
+	{ on = [ ",", "d" ], run = '''shell -- echo %s | xargs ripdrag''', desc = "Open selected files in ripdrag" },
+	{ on = [ ",", "D" ], run = '''shell -- find . -type f | xargs ripdrag''', desc = "Open PWD files in ripdrag" },
 
 	# Follow symlink
 	{ on = [ "g", "f" ], run = "noop" },
@@ -68,8 +68,8 @@ prepend_keymap = [
 	{ on = [ ",", "p" ], run = "plugin toggle-pane min-preview", desc = "Toggle preview" },
 
 	# Open image previews
-	{ on = [ ",", "i" ], run = '''shell "find . -maxdepth 1 -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --"''', desc = "Open CWD images in vimiv" },
-	{ on = [ ",", "I" ], run = '''shell "find . -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --"''', desc = "Open recursively images in vimiv" },
+	{ on = [ ",", "i" ], run = '''shell -- find . -maxdepth 1 -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --''', desc = "Open CWD images in vimiv" },
+	{ on = [ ",", "I" ], run = '''shell -- find . -type f -print0 | xargs -0 vimiv --command 'enter thumbnail' --''', desc = "Open recursively images in vimiv" },
 
 	# Sorting
 	{ on = [ ",", "m" ], run = "noop" },
