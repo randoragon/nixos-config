@@ -18,22 +18,11 @@
       set-window-option -g automatic-rename on
       set-option -g set-titles on
 
-      # use Alt-Shift-vim keys without prefix key for basic actions
-      bind-key -n M-C new-window
-      bind-key -n M-H select-pane -L
-      bind-key -n M-J select-pane -D
-      bind-key -n M-K select-pane -U
-      bind-key -n M-L select-pane -R
-      bind-key -n M-N next-window
-      bind-key -n M-P previous-window
-      bind-key -n M-% split-window -h
-      bind-key -n M-\" split-window -v
-      bind-key -n M-\{ swap-window -d -t -1
-      bind-key -n M-\} swap-window -d -t +1
-
       # Use n and p to switch windows
       bind-key n next-window
       bind-key p previous-window
+      bind-key N swap-window -d -t +1
+      bind-key P swap-window -d -t -1
 
       # THEME
       set -g status-bg black
