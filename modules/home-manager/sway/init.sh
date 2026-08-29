@@ -41,9 +41,6 @@ swayidle -w \
 	timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
 	before-sleep swaylock &
 
-# Screen dimming
-wlsunset &
-
 # Make sure the screenshots directory exists
 mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
 
