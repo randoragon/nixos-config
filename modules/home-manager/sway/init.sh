@@ -20,13 +20,13 @@ mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
     awww img -t fade ~/.config/wallpaper
 ) &
 
-# Fix screen capture
-# Source: https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
-# Import the WAYLAND_DISPLAY env var from sway into the systemd user session.
-dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+# Load necessary envs into systemd and dbus (for portals/screenshare/etc.)
+# Source #1: https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
+# Source #2: https://github.com/swaywm/sway/wiki#systemd-and-dbus-activation-environments
+systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
 # Stop any services that are running, so that they receive the new env var when they restart.
-systemctl --user stop pipewire wireplumber xdg-desktop-portal xdg-desktop-portal-wlr
-systemctl --user start wireplumber
+systemctl --user stop pipewire wireplumber flameshot xdg-desktop-portal xdg-desktop-portal-wlr
+systemctl --user start wireplumber flameshot
 
 # Run custom autostart, if present
 [ -f ~/.config/autostart.sh ] && . ~/.config/autostart.sh

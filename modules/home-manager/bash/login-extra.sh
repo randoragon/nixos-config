@@ -8,7 +8,9 @@ export GPG_AGENT_INFO
 # Start graphical server on tty1 if not already running, otherwise start tmux
 if [ "$(tty)" = "/dev/tty1" ]; then
     export XDG_CURRENT_DESKTOP=sway  # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/%22It-doesn't-work%22-Troubleshooting-Checklist
+    export XDG_SESSION_DESKTOP=sway  # https://github.com/flameshot-org/flameshot/blob/master/docs/UsageHyprlandSwayWlroots.md#basic-steps
     export _JAVA_AWT_WM_NONREPARENTING=1
+    export SDL_VIDEODRIVER=wayland
 
     # This helped resolve issues with OBS, Flameshot and Pinta on Sway + NVIDIA 580
     # https://forum.endeavouros.com/t/sway-with-nvidia-tutorial/23733/2
