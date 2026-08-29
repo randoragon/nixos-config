@@ -37,12 +37,12 @@ graphical_setup || exit 1
 
 # Lock idle session
 swayidle -w \
-	timeout 600 swaylock \
-	timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
-	before-sleep swaylock &
+    timeout 600 swaylock \
+    timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    before-sleep swaylock &
 
 # Make sure the screenshots directory exists
-mkdir -p "${XDG_PICTURES_DIR}/Screenshots"
+mkdir -p -- "${XDG_PICTURES_DIR}/Screenshots"
 
 # Start wallpaper manager
 (
