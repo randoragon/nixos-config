@@ -33,6 +33,7 @@
     libreoffice
     android-file-transfer
     anki
+    aseprite
   ];
 
   home.sessionVariables = {
