@@ -18,6 +18,7 @@ sectionend() {
 
 # Figure out NixOS flake profile
 if [ ! -f "$NIXOS_FLAKE_PROFILE" ]; then
+    # shellcheck disable=SC2088
     printf '~/.config/nixos-config-profile not found. Which one to use?\n> '
     read -r profile
     echo "$profile" >"$NIXOS_FLAKE_PROFILE"
@@ -50,23 +51,26 @@ sudo true
 
 snow=1
 
-set -e
 section UPDATING 'NixOS flake'
-if command -v nh >/dev/null; then
-    nh os switch --accept-flake-config --update --ask --hostname "$profile" ~/nixos-config/
-else
-    cd ~/nixos-config/
-    nix flake update
-    sudo nixos-rebuild switch --accept-flake-config --flake ~/nixos-config#"$profile"
-fi
+{
+    if command -v nh >/dev/null; then
+        nh os switch --accept-flake-config --update --ask --hostname "$profile" ~/nixos-config/
+    else
+        cd ~/nixos-config/
+        nix flake update
+        sudo nixos-rebuild switch --accept-flake-config --flake ~/nixos-config#"$profile"
+    fi
+}
 sectionend
-set +e
 
 section UPDATING 'neovim plugins'
-nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
-echo
-nvim --headless +TSUpdate +qall
-echo
+{
+    set +e
+    nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
+    echo
+    nvim --headless +TSUpdate +qall
+    echo
+}
 sectionend
 
 section PUSHING 'binaries to Cachix'
