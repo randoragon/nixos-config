@@ -27,6 +27,24 @@ else
     printf "Using profile '%s' from %s\n" "$profile" "$NIXOS_FLAKE_PROFILE"
 fi
 
+# Check preemptively if Cachix is configured for the final step
+if [ ! -f "${XDG_CONFIG_HOME:-$HOME/.config}/cachix/cachix.dhall" ] && [ -z "$CACHIX_SIGNING_KEY" ]; then
+    echo
+    echo   '│ Cachix signing key is not configured. To have the cache updated, run this first:'
+    echo   '│'
+    echo   '│ $  pass websites/cachix.org | tail -n1 | cachix authtoken --stdin'
+    echo   '│'
+    printf '│ Run the above command? [y/N] '
+    read -r ans
+    if [ "$ans" = y ] || [ "$ans" = Y ]; then
+        pass websites/cachix.org | tail -n1 | cachix authtoken --stdin
+    else
+        echo '│'
+        echo '│ Continuing without Cachix ...'
+        echo
+    fi
+fi
+
 # Refresh superuser privilages
 sudo true
 
@@ -35,11 +53,11 @@ snow=1
 set -e
 section UPDATING 'NixOS flake'
 if command -v nh >/dev/null; then
-    nh os switch --update --ask --hostname "$profile" ~/nixos-config/
+    nh os switch --accept-flake-config --update --ask --hostname "$profile" ~/nixos-config/
 else
     cd ~/nixos-config/
     nix flake update
-    sudo nixos-rebuild switch --flake ~/nixos-config#"$profile"
+    sudo nixos-rebuild switch --accept-flake-config --flake ~/nixos-config#"$profile"
 fi
 sectionend
 set +e
@@ -49,4 +67,17 @@ nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
 echo
 nvim --headless +TSUpdate +qall
 echo
+sectionend
+
+section PUSHING 'binaries to Cachix'
+{
+    set +e
+    nix-store -qR /run/current-system/ | grep \
+        -e '-rsid3-' \
+        -e '-music-tools-' \
+        -e '-aseprite-' \
+        -e '-obs-studio-' \
+        -e '-ncmpcpp-' \
+    | xargs nix-store -qR | cachix push pcache
+}
 sectionend
