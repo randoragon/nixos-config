@@ -63,16 +63,6 @@ section UPDATING 'NixOS flake'
 }
 sectionend
 
-section UPDATING 'neovim plugins'
-{
-    set +e
-    nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
-    echo
-    nvim --headless +TSUpdate +qall
-    echo
-}
-sectionend
-
 section PUSHING 'binaries to Cachix'
 {
     set +e
@@ -83,5 +73,15 @@ section PUSHING 'binaries to Cachix'
         -e '-obs-studio-' \
         -e '-ncmpcpp-' \
     | xargs nix-store -qR | cachix push pcache
+}
+sectionend
+
+section UPDATING 'neovim plugins'
+{
+    set +e
+    nvim --headless +'autocmd User PaqDoneSync qall' +PaqSync
+    echo
+    nvim --headless +TSUpdate +qall
+    echo
 }
 sectionend
