@@ -1,0 +1,546 @@
+#!/bin/sh -e
+# Dependencies:
+# - sed, gawk, grep
+# - getopt
+# - tar, pv, sox or ffmpeg
+
+help () {
+    echo 'Usage:'
+    echo '  archive-ardour-session [OPTIONS] INPUT [OUTPUT]'
+    echo
+    echo 'Compresses an Ardour session directory into a single *.tar.xz file and back.'
+    echo 'Audio files are transcoded to 48kHz 24bit FLAC, or reversed to 48kHz 24bit WAV.'
+    echo 'INPUT is never modified. If OUTPUT is omitted, it is derived from INPUT.'
+    echo
+    echo 'This script can also decompress *.ardour-session-archive files and transcode'
+    echo 'all the audio sources to 48kHz 24bit WAV.'
+    echo
+    echo 'Options:'
+    echo '  --help, -h         Print this help and exit.'
+    echo '  -s, --slim         Exclude unused sources (keeps only those tied to regions).'
+    echo '  -0, --no-compress  Do not use compression (no transcoding, uncompressed *.tar).'
+    echo
+    echo 'If extracting, the -0/--no-compress option skips transcoding entirely,'
+    echo 'leaving whatever format was in the archive (presumably 48kHz 24bit FLAC).'
+    echo
+    echo 'Examples:'
+    echo '  archive-ardour-session -s session'
+    echo '  archive-ardour-session session.tar.xz new_dir'
+    echo '  archive-ardour-session -0 session.ardour-session-archive'
+}
+
+is_ardour_session () {
+    if [ ! -d "$1/interchange" ]; then
+        return 1
+    fi
+    if ! find "$1"/*.ardour -maxdepth 0 -quit >/dev/null 2>&1; then
+        return 1
+    fi
+    return 0
+}
+
+# remove_source ID FILE...
+#
+# Removes a <Source id="ID" ...> element from FILEs. Supports two variants:
+# (1) <Source ... />
+# (2) <Source ... >
+#       ... more stuff ...
+#     </Source>
+# Very naive implementation, but it should work with Ardour XMLs.
+remove_source () {
+    id="$1"
+    shift
+    gawk -i inplace '
+        BEGIN {
+            multiline_delete = 0
+            pat = "<Source\\>.*\\<id=\"" '"$id"' "\""
+        }
+
+        {
+            if ($0 ~ pat) {
+                if ($0 !~ /\/>$/) {
+                    multiline_delete = 1
+                }
+            } else if (multiline_delete != 1) {
+                print $0
+            } else if ($0 ~ /<Source[[:space:]]/) {
+                print "error: new source encountered in the middle of a multiline delete" >"/dev/stderr"
+                exit 1
+            } else if ($0 ~ /<\/Source>/) {
+                multiline_delete = 0
+            }
+        }
+    ' "$@"
+}
+
+# get_sources TYPE FILE...
+#
+# Extracts all <Source> XMLs. TYPE is either "audio" or "midi".
+# Notably, this only affects <Source> elements inside <Sources></Sources>,
+# but not <NestedSource>'s, which should not be included.
+get_sources () {
+    type="$1"
+    shift
+    gawk '
+        BEGIN {
+            inside = 0
+        }
+
+        /<Sources>/ {
+            inside = 1
+        }
+
+        /<\/Sources>/ {
+            inside = 0
+        }
+
+        {
+            if (inside == 1 && $0 ~ /<Source\>.*\<type="'"$type"'"/) {
+                print $0
+            }
+        }
+    ' "$@"
+}
+
+# rewrite_sources_ext NEW_EXT FILE...
+#
+# Rewrites <Source name="audio.ext" ...> elements with a new extension.
+# Notably, this only affects <Source> elements inside <Sources></Sources>,
+# but not <NestedSource>'s, which should not be modified.
+rewrite_sources_ext () {
+    ext="$1"
+    shift
+    gawk -i inplace '
+        BEGIN {
+            inside = 0
+        }
+
+        /<Sources>/ {
+            inside = 1
+        }
+
+        /<\/Sources>/ {
+            inside = 0
+        }
+
+        {
+            if (inside == 1 && $0 ~ /<Source\>.*\<type="audio"/) {
+                print gensub(/(.*\<name="[^"]+\.)[^"]+"/, "\\1'"$ext"'\"", 1, $0)
+            } else {
+                print $0
+            }
+        }
+    ' "$@"
+}
+
+# get_plugin_state_dirs ID FILE...
+#
+# Scans FILEs for "stateN" directories which are used by plugin ID.
+get_plugin_state_dirs () {
+    id="$1"
+    shift
+    gawk '
+        BEGIN {
+            inside = 0
+        }
+
+        /<Processor[[:space:]]/ {
+            if (inside == 0) {
+                if ($0 ~ /[[:space:]]id="'"$id"'"/) {
+                    inside = 1
+                }
+            } else {
+                inside = 0
+            }
+        }
+
+        {
+            if (inside == 1) {
+                if (match($0, /[[:space:]]state-dir="[^"]+"/)) {
+                    print substr($0, RSTART + 12, RLENGTH - 13)
+                }
+            }
+        }
+    ' "$@"
+}
+
+# transcode_to_flac INPUT OUTPUT
+#
+# Transcodes an audio file into 48kHz 24bit FLAC using either sox or ffmpeg.
+transcode_to_flac () {
+    if [ -n "$(command -v sox)" ]; then
+        sox -V1 "$1" -tflac -r48k -b24 "$2"
+    elif [ -n "$(command -v ffmpeg)" ]; then
+        ffmpeg -y -loglevel fatal \
+            -i "$1" \
+            -f flac -c:a flac -ar 48000 -sample_fmt s32 -bits_per_raw_sample 24 \
+            "$2"
+    else
+        echo 'archive-ardour-session: sox or ffmpeg required' >&2
+        exit 1
+    fi
+}
+
+# transcode_to_wav INPUT OUTPUT
+#
+# Transcodes an audio file into 48kHz 24bit WAV using either sox or ffmpeg.
+transcode_to_wav () {
+    if [ -n "$(command -v ffmpeg)" ]; then
+        ffmpeg -y -loglevel fatal \
+            -i "$1" \
+            -f wav -c:a pcm_s24le -ar 48000 -sample_fmt s32 -bits_per_raw_sample 24 \
+            "$2"
+    elif [ -n "$(command -v sox)" ]; then
+        sox -V1 "$1" -twav -r48k -b24 "$2"
+    else
+        echo 'archive-ardour-session: sox or ffmpeg required' >&2
+        exit 1
+    fi
+}
+
+slim=
+no_compress=
+opts="$(getopt -n archive-ardour-session -s sh -o hs0 -l help,slim,no-compress -- "$@")"
+eval set -- "$opts"
+while true; do
+    case "$1" in
+        -h|--help) help; exit ;;
+        -s|--slim) slim=1; shift ;;
+        -0|--no-compress) no_compress=1; shift ;;
+        --) shift ; break ;;
+        *) break ;;
+    esac
+done
+
+if [ $# -eq 0 ]; then
+    help
+    exit 1
+fi
+
+input="$(realpath -- "$1")"
+output="$2"
+
+if [ -f "$input" ]; then
+    if [ -z "$output" ]; then
+        case "$input" in
+            *.tar.xz) output="${input%.tar.xz}" ;;
+            *.ardour-session-archive) output="${input%.ardour-session-archive}" ;;
+            *)
+                echo 'archive-ardour-session: Cannot infer output path; please specify OUTPUT explicitly.' >&2
+                exit 1
+                ;;
+        esac
+    fi
+    if [ -e "$output" ]; then
+        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$output")' already exists." >&2
+        exit 1
+    fi
+    :>"$output"
+    cleanup () {
+        if [ ! -s "$output" ]; then
+            rm -f -- "$output"
+        fi
+    }
+    trap cleanup INT QUIT TERM EXIT
+
+    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
+    # shellcheck disable=SC2064
+    trap "rm -rf -- '$tmpd'" INT QUIT TERM EXIT
+
+    echo "[*] Extracting $(realpath --relative-to "$PWD" -- "$input") ..."
+    # Use cmp to check for XZ magic bytes, because neither xz nor tar expose
+    # a clean way for checking this...
+    printf '\xfd\x37\x7a\x58\x5a\x00' >"$tmpd/xz-magic-bytes.bin"
+    if head -c6 "$input" | cmp -sn6 -- "$tmpd/xz-magic-bytes.bin" -; then
+        # Input is an XZ compressed file
+        if ! pv "$input" | tar -C "$tmpd" -xJf -; then
+            echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
+            exit 1
+        fi
+    else
+        # Assume input is a plain tar
+        if ! pv "$input" | tar -C "$tmpd" -xf -; then
+            echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
+            exit 1
+        fi
+    fi
+    rm -f -- "$tmpd/xz-magic-bytes.bin"
+    echo "done."
+    echo
+
+    # Validate archive contents
+    if [ "$(stat -c %F -- "$tmpd"/* 2>/dev/null)" != 'directory' ] || ! is_ardour_session "$tmpd"/*; then
+        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' does not seem to contain an Ardour session." >&2
+        exit 1
+    fi
+    output_dir="$(realpath -- "$tmpd"/*)"
+
+    if [ -z "$no_compress" ]; then
+        # Transcode FLAC files to 24-bit WAV
+        audiofiles="$(find "$output_dir/interchange" -type f -path '*/audiofiles/*')"
+        n_audiofiles="$(echo "$audiofiles" | wc -l)"
+        tmpf="$(mktemp -p "$output_dir/interchange" archive-ardour-session.XXXXX.wav)"
+        i=1
+        echo "$audiofiles" | while read -r fpath; do
+            printf '[%d/%d] Transcoding ... ' "$i" "$n_audiofiles"
+            transcode_to_wav "$fpath" "$tmpf" \
+                && printf '\r-> transcoded %-20s\n' "$(basename -- "$fpath")"
+            rm -f -- "$fpath"
+            cp -- "$tmpf" "${fpath%.*}.wav"
+            i=$((i + 1))
+        done
+        rm -f -- "$tmpf"
+        echo "[$n_audiofiles/$n_audiofiles] Finished transcoding all files."
+        echo
+
+        # Swap all audio filenames to WAV extensions
+        printf '[*] Rewriting filenames in session files ... '
+        rewrite_sources_ext 'wav' "$output_dir"/*.ardour
+        echo 'done.'
+    fi
+
+    printf '[*] Moving the extracted directory ... '
+    rm -f -- "$output"
+    mv -- "$output_dir" "$output"
+    echo 'done.'
+    echo
+    echo "Successfully extracted $(basename -- "$output")."
+elif [ -d "$input" ]; then
+    if ! is_ardour_session "$input"; then
+        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' does not look like an Ardour session." >&2
+        exit 1
+    fi
+
+    if [ -z "$no_compress" ]; then
+        output="${output:-$input.tar.xz}"
+    else
+        output="${output:-$input.tar}"
+    fi
+    if [ -e "$output" ] && [ ! -f "$output" ]; then
+        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$output")' already exists and is not a file." >&2
+        exit 1
+    fi
+    if [ -f "$output" ]; then
+        printf '\narchive-ardour-session: '%s' already exists and is a file. Overwrite? [Y/n] ' "$(realpath --relative-to "$PWD" -- "$output")" >&2
+        read -r ans
+        if [ "$ans" = n ] || [ "$ans" = N ]; then
+            exit
+        fi
+        rm -f -- "$output"
+    fi
+    :>"$output"
+
+    # Set up temporary output dir
+    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
+    cleanup () {
+        rm -rf -- "$tmpd"
+        if [ ! -s "$output" ]; then
+            rm -f -- "$output"
+        fi
+    }
+    trap cleanup INT QUIT TERM EXIT
+    output_dir="$tmpd/$(basename -- "$input")"
+    mkdir -- "$output_dir"
+
+    # Copy simple directories and files
+    for fname in externals instant.xml rus.xml; do
+        printf '[+] Copying %s ... ' "$fname"
+        if cp -ar -- "$input/$fname" "$output_dir" 1>/dev/null 2>&1; then
+            echo 'done.'
+        else
+            echo 'not found.'
+        fi
+    done
+
+    # Copy *.history files
+    find "$input" -maxdepth 0 -type f -name '*.history' | while read -r fpath; do
+        fname="$(basename -- "$fpath")"
+        printf '[+] Copying %s ... ' "$fname"
+        if cp -ar -- "$fpath" "$output_dir"; then
+            echo 'done.'
+        else
+            echo 'failed! continuing regardless ...'
+        fi
+    done
+
+    # Copy *.ardour files, with all source audio file extensions changed to FLAC
+    for fpath in "$input"/*.ardour; do
+        fname="$(basename -- "$fpath")"
+        printf '[+] Copying %s ... ' "$fname"
+        if cp -ar -- "$fpath" "$output_dir/$fname"; then
+            echo 'done.'
+        else
+            echo 'failed!'
+            exit 1
+        fi
+        if [ -z "$no_compress" ]; then
+            rewrite_sources_ext 'flac' "$output_dir"/*.ardour
+        fi
+    done
+
+    # Copy used plugin data
+    used_processor_ids="$tmpd/used_processor_ids"
+    printf '[*] Scanning session files for used plugins ... '
+    sed -n 's/.*<Processor\s.*\bid="\([0-9]\+\)".*/\1/p' "$output_dir"/*.ardour | sort -u >"$used_processor_ids"
+    for plugin_dir in "$input"/plugins/*; do
+        proc_id="$(basename -- "$plugin_dir")"
+        if grep -qF "$proc_id" "$used_processor_ids"; then
+            mkdir -p -- "$output_dir/plugins/$proc_id"
+            for state_dir in $(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour); do
+                find "$plugin_dir" -maxdepth 0 -type d -name "$state_dir" \
+                    -exec cp -ar -- '{}' "$output_dir/plugins/$proc_id/" \; \
+                    -quit
+            done
+        fi
+    done
+    rm -f -- "$used_processor_ids"
+    echo 'done.'
+
+    wanted_audiofile_names="$tmpd/wanted_audiofile_names"
+    wanted_midifile_names="$tmpd/wanted_midifile_names"
+    if [ -n "$slim" ]; then
+        # Cache all source IDs referenced by at least one Region
+        printf '[*] Scanning session files for used sources ... ' >/dev/tty
+        used_audiofile_ids="$tmpd/used_audiofile_ids"
+        used_midifile_ids="$tmpd/used_midifile_ids"
+        grep '<Region\s.*\stype="audio"' "$input"/*.ardour \
+            | grep -o '\b\(master-\)\?source-[0-9]\+="[^"]\+"' \
+            | sed 's/.*="\([^"]\+\)"/\1/' | sort -u >"$used_audiofile_ids"
+        grep '<Region\s.*\stype="midi"' "$input"/*.ardour \
+            | grep -o '\b\(master-\)\?source-[0-9]\+="[^"]\+"' \
+            | sed 's/.*="\([^"]\+\)"/\1/' | sort -u >"$used_midifile_ids"
+
+        # Find the name of every used source
+        all_audiofile_xmls="$(get_sources 'audio' "$input"/*.ardour)"
+        all_midifile_xmls="$(get_sources 'midi' "$input"/*.ardour)"
+        n_audiofile_xmls="$(echo "$all_audiofile_xmls" | wc -l)"
+        n_midifile_xmls="$(echo "$all_midifile_xmls" | wc -l)"
+        n_source_xmls=$((n_audiofile_xmls + n_midifile_xmls))
+        i=1
+        echo "$all_audiofile_xmls" | while read -r source_xml; do
+            printf '\r[*] Scanning session files for used sources ... [%d/%d] ' "$i" "$n_source_xmls" >/dev/tty
+            source_id="$(echo "$source_xml" | grep -o '\bid="[0-9]\+"')"
+            source_id="${source_id#id=\"}"
+            source_id="${source_id%\"}"
+            if grep -qF "$source_id" "$used_audiofile_ids"; then
+                source_name="$(echo "$source_xml" | grep -o '\bname="[^"]\+"')"
+                source_name="${source_name#name=\"}"
+                source_name="${source_name%\"}"
+                echo "$source_name"
+            else
+                # Remove this unused source from *.ardour files
+                remove_source "$source_id" "$output_dir"/*.ardour
+            fi
+            i=$((i + 1))
+        done | sort -u >"$wanted_audiofile_names"
+        i=$((n_audiofile_xmls + 1))
+        echo "$all_midifile_xmls" | while read -r source_xml; do
+            printf '\r[*] Scanning session files for used sources ... [%d/%d] ' "$i" "$n_source_xmls" >/dev/tty
+            source_id="$(echo "$source_xml" | grep -o '\bid="[0-9]\+"')"
+            source_id="${source_id#id=\"}"
+            source_id="${source_id%\"}"
+            if grep -q "$source_id" "$used_midifile_ids"; then
+                source_name="$(echo "$source_xml" | grep -o '\bname="[^"]\+"')"
+                source_name="${source_name#name=\"}"
+                source_name="${source_name%\"}"
+                echo "$source_name"
+            else
+                # Remove this unused source from *.ardour files
+                remove_source "$source_id" "$output_dir"/*.ardour
+            fi
+            i=$((i + 1))
+        done | sort -u >"$wanted_midifile_names"
+        unset all_audiofile_xmls all_midifile_xmls n_audiofile_xmls n_midifile_xmls n_source_xmls
+        echo 'done.'
+    else
+        # If not in --slim mode, consider every source wanted
+        get_sources 'audio' "$input"/*.ardour \
+            | sed -n 's/.*\bname="\([^"]\+\)".*/\1/p' | sort -u >"$wanted_audiofile_names"
+        get_sources 'midi' "$input"/*.ardour \
+            | sed -n 's/.*\bname="\([^"]\+\)".*/\1/p' | sort -u >"$wanted_midifile_names"
+    fi
+
+    # Copy used MIDI sources in interchange
+    for interchange_subdir in "$input"/interchange/*; do
+        interchange_subdir="$(basename -- "$interchange_subdir")"
+        mkdir -p -- "$output_dir/interchange/$interchange_subdir/midifiles"
+
+        printf '[+] Copying MIDI files for %s ... ' "$interchange_subdir"
+        while read -r midisrc; do
+            if [ ! -f "$input/interchange/$interchange_subdir/midifiles/$midisrc" ]; then
+                continue
+            fi
+            cp -a -- \
+                "$input/interchange/$interchange_subdir/midifiles/$midisrc" \
+                "$output_dir/interchange/$interchange_subdir/midifiles/" \
+                >/dev/null 2>&1 || true
+        done <"$wanted_midifile_names"
+        echo 'done.'
+    done
+    rm -rf -- "$wanted_midifile_names"
+    unset wanted_midifile_names
+
+    # This directory will cache symlinks to all transcoded files, for quick lookup
+    transcoded_dir="$tmpd/transcoded"
+    mkdir -p -- "$transcoded_dir"
+
+    # Copy used audio sources in interchange. Audio is transcoded to 24-bit FLAC.
+    # Do this last, because it is the longest step, and we want to minimize the risk
+    # of some files changing on disk while archive-ardour-session is running.
+    i=1
+    n_wanted_audiofiles="$(wc -l <"$wanted_audiofile_names")"
+    echo
+    for interchange_subdir in "$input"/interchange/*; do
+        interchange_subdir="$(basename -- "$interchange_subdir")"
+        mkdir -p -- "$output_dir/interchange/$interchange_subdir/audiofiles"
+        while read -r audiosrc; do
+            if [ ! -f "$input/interchange/$interchange_subdir/audiofiles/$audiosrc" ]; then
+                continue
+            fi
+            if [ -z "$no_compress" ]; then
+                if [ -L "$transcoded_dir/${audiosrc%.*}.flac" ]; then
+                    cp -L -- "$transcoded_dir/${audiosrc%.*}.flac" \
+                        "$output_dir/interchange/$interchange_subdir/audiofiles/${audiosrc%.*}.flac"
+                else
+                    printf '[%d/%d] Transcoding ... ' "$i" "$n_wanted_audiofiles"
+                    transcode_to_flac \
+                        "$input/interchange/$interchange_subdir/audiofiles/$audiosrc" \
+                        "$output_dir/interchange/$interchange_subdir/audiofiles/${audiosrc%.*}.flac" \
+                        && printf '\r-> transcoded %-20s\n' "$audiosrc"
+                    ln -s "$output_dir/interchange/$interchange_subdir/audiofiles/${audiosrc%.*}.flac" \
+                        "$transcoded_dir/${audiosrc%.*}.flac"
+                    i=$((i + 1))
+                fi
+            else
+                printf '[%d/%d] Copying ... ' "$i" "$n_wanted_audiofiles"
+                cp -a -- \
+                    "$input/interchange/$interchange_subdir/audiofiles/$audiosrc" \
+                    "$output_dir/interchange/$interchange_subdir/audiofiles/" \
+                    && printf '\r-> copied %-20s\n' "$audiosrc"
+                i=$((i + 1))
+            fi
+        done <"$wanted_audiofile_names"
+    done
+    if [ -z "$no_compress" ]; then
+        echo "[$((i - 1))/$n_wanted_audiofiles] Finished transcoding all files."
+    else
+        echo "[$((i - 1))/$n_wanted_audiofiles] Finished copying all files."
+    fi
+    rm -rf -- "$wanted_audiofile_names" "$transcoded_dir"
+    unset n_wanted_audiofiles wanted_audiofile_names
+
+    # Archive
+    rm -f -- "$output"
+    echo
+    if [ -z "$no_compress" ]; then
+        echo "[*] Compressing to $(realpath --relative-to "$PWD" -- "$output") ..."
+        tar -C "$output_dir/.." -cJf - "$(basename -- "$output_dir")" | pv >"$output"
+    else
+        echo "[*] Archiving (--no-compress) to $(realpath --relative-to "$PWD" -- "$output") ..."
+        tar -C "$output_dir/.." -cf - "$(basename -- "$output_dir")" | pv >"$output"
+    fi
+    echo "Successfully written $(basename -- "$output")."
+else
+    echo "archive-ardour-session: No such file or directory: $input" >&2
+    exit 1
+fi
