@@ -30,6 +30,7 @@
     gdu
     md4c typst gnuplot
     paperkey qrencode
+    pv
   ] ++ [ secrets ];
 
   # Environment variables that should always be present.
