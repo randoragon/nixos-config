@@ -21,7 +21,8 @@ help () {
     echo
     echo 'Options:'
     echo '  --help, -h         Print this help and exit.'
-    echo '  -s, --slim         Exclude unused sources and plugin data.'
+    echo '  -s, --slim         Exclude unused sources.'
+    echo '  -p, --plugins      Exclude unused plugin data (experimental).'
     echo '  -0, --no-compress  Do not use compression (no transcoding, uncompressed *.tar).'
     echo
     echo 'If extracting, the -0/--no-compress option skips transcoding entirely,'
@@ -224,13 +225,15 @@ transcode_to_wav () {
 }
 
 slim=
+plugins=
 no_compress=
-opts="$(getopt -n arsar -s sh -o hs0 -l help,slim,no-compress -- "$@")"
+opts="$(getopt -n arsar -s sh -o hsp0 -l help,slim,plugins,no-compress -- "$@")"
 eval set -- "$opts"
 while true; do
     case "$1" in
         -h|--help) help; exit ;;
         -s|--slim) slim=1; shift ;;
+        -p|--plugins) plugins=1; shift ;;
         -0|--no-compress) no_compress=1; shift ;;
         --) shift ; break ;;
         *) break ;;
@@ -399,7 +402,7 @@ elif [ -d "$input" ]; then
     done
 
     # Copy used plugin data
-    if [ -z "$slim" ]; then
+    if [ -z "$plugins" ]; then
         printf '[+] Copying plugins ... '
         if [ ! -e "$input/plugins" ]; then
             echo 'not found.'
