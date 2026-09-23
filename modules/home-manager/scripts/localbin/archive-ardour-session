@@ -1,6 +1,6 @@
 #!/bin/sh -e
 # Dependencies:
-# - sed, gawk, grep
+# - sed, gawk, grep, GNU find
 # - getopt
 # - tar, pv, sox or ffmpeg
 
@@ -444,10 +444,10 @@ elif [ -d "$input" ]; then
         echo 'done.'
     else
         # If not in --slim mode, consider every source wanted
-        get_sources 'audio' "$input"/*.ardour \
-            | sed -n 's/.*\bname="\([^"]\+\)".*/\1/p' | sort -u >"$wanted_audiofile_names"
-        get_sources 'midi' "$input"/*.ardour \
-            | sed -n 's/.*\bname="\([^"]\+\)".*/\1/p' | sort -u >"$wanted_midifile_names"
+        find "$input"/interchange/*/audiofiles -type f -printf '%f\n' \
+            | sort -u >"$wanted_audiofile_names"
+        find "$input"/interchange/*/midifiles -type f -printf '%f\n' \
+            | sort -u >"$wanted_midifile_names"
     fi
 
     # Copy used MIDI sources in interchange
