@@ -236,16 +236,15 @@ if [ -f "$input" ]; then
         exit 1
     fi
     :>"$output"
+
+    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
     cleanup () {
+        rm -rf -- "$tmpd"
         if [ ! -s "$output" ]; then
             rm -f -- "$output"
         fi
     }
     trap cleanup INT QUIT TERM EXIT
-
-    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
-    # shellcheck disable=SC2064
-    trap "rm -rf -- '$tmpd'" INT QUIT TERM EXIT
 
     echo "[*] Extracting $(realpath --relative-to "$PWD" -- "$input") ..."
     # Input is an XZ compressed file
