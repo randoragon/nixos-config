@@ -5,8 +5,12 @@
 # - tar, pv, sox or ffmpeg
 
 help () {
+    echo '---------------------------'
+    echo 'ARdour Session ARchive tool'
+    echo '---------------------------'
+    echo
     echo 'Usage:'
-    echo '  archive-ardour-session [OPTIONS] INPUT [OUTPUT]'
+    echo '  arsar [OPTIONS] INPUT [OUTPUT]'
     echo
     echo 'Compresses an Ardour session directory into a single *.tar.xz file and back.'
     echo 'Audio files are transcoded to 48kHz 24bit FLAC, or reversed to 48kHz 24bit WAV.'
@@ -24,9 +28,9 @@ help () {
     echo 'leaving whatever format was in the archive (presumably 48kHz 24bit FLAC).'
     echo
     echo 'Examples:'
-    echo '  archive-ardour-session -s session'
-    echo '  archive-ardour-session session.tar.xz new_dir'
-    echo '  archive-ardour-session -0 session.ardour-session-archive'
+    echo '  arsar -s session'
+    echo '  arsar session.tar.xz new_dir'
+    echo '  arsar -0 session.ardour-session-archive'
 }
 
 is_ardour_session () {
@@ -197,7 +201,7 @@ transcode_to_flac () {
             -f flac -c:a flac -ar 48000 -sample_fmt s32 -bits_per_raw_sample 24 \
             "$2"
     else
-        echo 'archive-ardour-session: sox or ffmpeg required' >&2
+        echo 'arsar: sox or ffmpeg required' >&2
         exit 1
     fi
 }
@@ -214,14 +218,14 @@ transcode_to_wav () {
     elif [ -n "$(command -v sox)" ]; then
         sox -V1 "$1" -twav -r48k -b24 "$2"
     else
-        echo 'archive-ardour-session: sox or ffmpeg required' >&2
+        echo 'arsar: sox or ffmpeg required' >&2
         exit 1
     fi
 }
 
 slim=
 no_compress=
-opts="$(getopt -n archive-ardour-session -s sh -o hs0 -l help,slim,no-compress -- "$@")"
+opts="$(getopt -n arsar -s sh -o hs0 -l help,slim,no-compress -- "$@")"
 eval set -- "$opts"
 while true; do
     case "$1" in
@@ -247,18 +251,18 @@ if [ -f "$input" ]; then
             *.tar.xz) output="${input%.tar.xz}" ;;
             *.ardour-session-archive) output="${input%.ardour-session-archive}" ;;
             *)
-                echo 'archive-ardour-session: Cannot infer output path; please specify OUTPUT explicitly.' >&2
+                echo 'arsar: Cannot infer output path; please specify OUTPUT explicitly.' >&2
                 exit 1
                 ;;
         esac
     fi
     if [ -e "$output" ]; then
-        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$output")' already exists." >&2
+        echo "arsar: '$(realpath --relative-to "$PWD" -- "$output")' already exists." >&2
         exit 1
     fi
     :>"$output"
 
-    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
+    tmpd="$(mktemp -d --tmpdir arsar.XXXXX)"
     cleanup () {
         rm -rf -- "$tmpd"
         if [ ! -s "$output" ]; then
@@ -271,7 +275,7 @@ if [ -f "$input" ]; then
     # Input is an XZ compressed file
     if ! pv "$input" | tar -C "$tmpd" -xJf - 1>/dev/null 2>&1; then
         if ! pv "$input" | tar -C "$tmpd" -xf - 1>/dev/null 2>&1; then
-            echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
+            echo "arsar: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
             exit 1
         fi
     fi
@@ -280,7 +284,7 @@ if [ -f "$input" ]; then
 
     # Validate archive contents
     if [ "$(stat -c %F -- "$tmpd"/* 2>/dev/null)" != 'directory' ] || ! is_ardour_session "$tmpd"/*; then
-        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' does not seem to contain an Ardour session." >&2
+        echo "arsar: '$(realpath --relative-to "$PWD" -- "$input")' does not seem to contain an Ardour session." >&2
         exit 1
     fi
     output_dir="$(realpath -- "$tmpd"/*)"
@@ -289,7 +293,7 @@ if [ -f "$input" ]; then
         # Transcode FLAC files to 24-bit WAV
         audiofiles="$(find "$output_dir/interchange" -type f -path '*/audiofiles/*')"
         n_audiofiles="$(echo "$audiofiles" | wc -l)"
-        tmpf="$(mktemp -p "$output_dir/interchange" archive-ardour-session.XXXXX.wav)"
+        tmpf="$(mktemp -p "$output_dir/interchange" arsar.XXXXX.wav)"
         i=1
         echo "$audiofiles" | while read -r fpath; do
             printf '[%d/%d] Transcoding ... ' "$i" "$n_audiofiles"
@@ -317,7 +321,7 @@ if [ -f "$input" ]; then
     echo "Successfully extracted $(basename -- "$output")."
 elif [ -d "$input" ]; then
     if ! is_ardour_session "$input"; then
-        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' does not look like an Ardour session." >&2
+        echo "arsar: '$(realpath --relative-to "$PWD" -- "$input")' does not look like an Ardour session." >&2
         exit 1
     fi
 
@@ -327,11 +331,11 @@ elif [ -d "$input" ]; then
         output="${output:-$input.tar}"
     fi
     if [ -e "$output" ] && [ ! -f "$output" ]; then
-        echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$output")' already exists and is not a file." >&2
+        echo "arsar: '$(realpath --relative-to "$PWD" -- "$output")' already exists and is not a file." >&2
         exit 1
     fi
     if [ -f "$output" ]; then
-        printf '\narchive-ardour-session: '%s' already exists and is a file. Overwrite? [Y/n] ' "$(realpath --relative-to "$PWD" -- "$output")" >&2
+        printf '\narsar: '%s' already exists and is a file. Overwrite? [Y/n] ' "$(realpath --relative-to "$PWD" -- "$output")" >&2
         read -r ans
         if [ "$ans" = n ] || [ "$ans" = N ]; then
             exit
@@ -341,7 +345,7 @@ elif [ -d "$input" ]; then
     :>"$output"
 
     # Set up temporary output dir
-    tmpd="$(mktemp -d --tmpdir archive-ardour-session.XXXXX)"
+    tmpd="$(mktemp -d --tmpdir arsar.XXXXX)"
     cleanup () {
         rm -rf -- "$tmpd"
         if [ ! -s "$output" ]; then
@@ -515,7 +519,7 @@ elif [ -d "$input" ]; then
 
     # Copy used audio sources in interchange. Audio is transcoded to 24-bit FLAC.
     # Do this last, because it is the longest step, and we want to minimize the risk
-    # of some files changing on disk while archive-ardour-session is running.
+    # of some files changing on disk while arsar is running.
     i=1
     n_wanted_audiofiles="$(wc -l <"$wanted_audiofile_names")"
     echo
@@ -570,6 +574,6 @@ elif [ -d "$input" ]; then
     fi
     echo "Successfully written $(basename -- "$output")."
 else
-    echo "archive-ardour-session: No such file or directory: $input" >&2
+    echo "arsar: No such file or directory: $input" >&2
     exit 1
 fi
