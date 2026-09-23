@@ -377,7 +377,7 @@ elif [ -d "$input" ]; then
         if grep -qF "$proc_id" "$used_processor_ids"; then
             mkdir -p -- "$output_dir/plugins/$proc_id"
             for state_dir in $(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour); do
-                find "$plugin_dir" -maxdepth 0 -type d -name "$state_dir" \
+                find "$plugin_dir" -mindepth 1 -maxdepth 1 -type d -name "$state_dir" \
                     -exec cp -ar -- '{}' "$output_dir/plugins/$proc_id/" \; \
                     -quit
             done
