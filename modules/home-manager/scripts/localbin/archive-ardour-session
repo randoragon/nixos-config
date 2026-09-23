@@ -141,21 +141,42 @@ get_plugin_state_dirs () {
     shift
     gawk '
         BEGIN {
-            inside = 0
+            inside_proc = 0
+            inside_regionfx = 0
         }
 
         /<Processor[[:space:]]/ {
-            if (inside == 0) {
+            if (inside_proc == 0 && inside_regionfx == 0) {
                 if ($0 ~ /[[:space:]]id="'"$id"'"/) {
-                    inside = 1
+                    inside_proc = 1
                 }
             } else {
-                inside = 0
+                print "error: nested <Processor> and <RegionFXPlugin> are not supported!" >"/dev/stderr"
+                exit 1
             }
         }
 
+        /<RegionFXPlugin[[:space:]]/ {
+            if (inside_proc == 0 && inside_regionfx == 0) {
+                if ($0 ~ /[[:space:]]id="'"$id"'"/) {
+                    inside_regionfx = 1
+                }
+            } else {
+                print "error: nested <RegionFXPlugin> and <Processor> are not supported!" >"/dev/stderr"
+                exit 1
+            }
+        }
+
+        /<\/Processor>/ {
+            inside_proc = 0
+        }
+
+        /<\/RegionFXPlugin>/ {
+            inside_regionfx = 0
+        }
+
         {
-            if (inside == 1) {
+            if (inside_proc == 1 || inside_regionfx == 1) {
                 if (match($0, /[[:space:]]state-dir="[^"]+"/)) {
                     print substr($0, RSTART + 12, RLENGTH - 13)
                 }
@@ -370,7 +391,8 @@ elif [ -d "$input" ]; then
     # Copy used plugin data
     used_processor_ids="$tmpd/used_processor_ids"
     printf '[*] Scanning session files for used plugins ... '
-    sed -n 's/.*<Processor\s.*\bid="\([0-9]\+\)".*/\1/p' "$output_dir"/*.ardour | sort -u >"$used_processor_ids"
+    sed -n 's/.*<\(Processor\|RegionFXPlugin\)\s.*\bid="\([0-9]\+\)".*/\2/p' "$output_dir"/*.ardour \
+        | sort -u >"$used_processor_ids"
     for plugin_dir in "$input"/plugins/*; do
         proc_id="$(basename -- "$plugin_dir")"
         if grep -qF "$proc_id" "$used_processor_ids"; then
