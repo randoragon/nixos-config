@@ -248,23 +248,13 @@ if [ -f "$input" ]; then
     trap "rm -rf -- '$tmpd'" INT QUIT TERM EXIT
 
     echo "[*] Extracting $(realpath --relative-to "$PWD" -- "$input") ..."
-    # Use cmp to check for XZ magic bytes, because neither xz nor tar expose
-    # a clean way for checking this...
-    printf '\xfd\x37\x7a\x58\x5a\x00' >"$tmpd/xz-magic-bytes.bin"
-    if head -c6 "$input" | cmp -sn6 -- "$tmpd/xz-magic-bytes.bin" -; then
-        # Input is an XZ compressed file
-        if ! pv "$input" | tar -C "$tmpd" -xJf -; then
-            echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
-            exit 1
-        fi
-    else
-        # Assume input is a plain tar
-        if ! pv "$input" | tar -C "$tmpd" -xf -; then
+    # Input is an XZ compressed file
+    if ! pv "$input" | tar -C "$tmpd" -xJf - 1>/dev/null 2>&1; then
+        if ! pv "$input" | tar -C "$tmpd" -xf - 1>/dev/null 2>&1; then
             echo "archive-ardour-session: '$(realpath --relative-to "$PWD" -- "$input")' is neither a tar nor a tar.xz." >&2
             exit 1
         fi
     fi
-    rm -f -- "$tmpd/xz-magic-bytes.bin"
     echo "done."
     echo
 
@@ -283,10 +273,10 @@ if [ -f "$input" ]; then
         i=1
         echo "$audiofiles" | while read -r fpath; do
             printf '[%d/%d] Transcoding ... ' "$i" "$n_audiofiles"
-            transcode_to_wav "$fpath" "$tmpf" \
-                && printf '\r-> transcoded %-20s\n' "$(basename -- "$fpath")"
+            transcode_to_wav "$fpath" "$tmpf"
             rm -f -- "$fpath"
             cp -- "$tmpf" "${fpath%.*}.wav"
+            printf '\r-> transcoded %-20s\n' "$(basename -- "${fpath%.*}.wav")"
             i=$((i + 1))
         done
         rm -f -- "$tmpf"
@@ -506,9 +496,9 @@ elif [ -d "$input" ]; then
                     transcode_to_flac \
                         "$input/interchange/$interchange_subdir/audiofiles/$audiosrc" \
                         "$output_dir/interchange/$interchange_subdir/audiofiles/${audiosrc%.*}.flac" \
-                        && printf '\r-> transcoded %-20s\n' "$audiosrc"
                     ln -s "$output_dir/interchange/$interchange_subdir/audiofiles/${audiosrc%.*}.flac" \
                         "$transcoded_dir/${audiosrc%.*}.flac"
+                    printf '\r-> transcoded %-20s\n' "${audiosrc%.*}.flac"
                     i=$((i + 1))
                 fi
             else
