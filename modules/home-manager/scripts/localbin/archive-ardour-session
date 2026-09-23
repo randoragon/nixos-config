@@ -17,7 +17,7 @@ help () {
     echo
     echo 'Options:'
     echo '  --help, -h         Print this help and exit.'
-    echo '  -s, --slim         Exclude unused sources (keeps only those tied to regions).'
+    echo '  -s, --slim         Exclude unused sources and plugin data.'
     echo '  -0, --no-compress  Do not use compression (no transcoding, uncompressed *.tar).'
     echo
     echo 'If extracting, the -0/--no-compress option skips transcoding entirely,'
@@ -355,10 +355,13 @@ elif [ -d "$input" ]; then
     # Copy simple directories and files
     for fname in externals instant.xml rus.xml; do
         printf '[+] Copying %s ... ' "$fname"
-        if cp -ar -- "$input/$fname" "$output_dir" 1>/dev/null 2>&1; then
+        if [ ! -e "$input/$fname" ]; then
+            echo 'not found.'
+        elif cp -ar -- "$input/$fname" "$output_dir"; then
             echo 'done.'
         else
-            echo 'not found.'
+            echo 'failed!'
+            exit 1
         fi
     done
 
@@ -366,10 +369,13 @@ elif [ -d "$input" ]; then
     find "$input" -maxdepth 0 -type f -name '*.history' | while read -r fpath; do
         fname="$(basename -- "$fpath")"
         printf '[+] Copying %s ... ' "$fname"
-        if cp -ar -- "$fpath" "$output_dir"; then
+        if [ ! -e "$input/$fpath" ]; then
+            echo 'not found.'
+        elif cp -ar -- "$fpath" "$output_dir"; then
             echo 'done.'
         else
-            echo 'failed! continuing regardless ...'
+            echo 'failed!'
+            exit 1
         fi
     done
 
@@ -389,23 +395,35 @@ elif [ -d "$input" ]; then
     done
 
     # Copy used plugin data
-    used_processor_ids="$tmpd/used_processor_ids"
-    printf '[*] Scanning session files for used plugins ... '
-    sed -n 's/.*<\(Processor\|RegionFXPlugin\)\s.*\bid="\([0-9]\+\)".*/\2/p' "$output_dir"/*.ardour \
-        | sort -u >"$used_processor_ids"
-    for plugin_dir in "$input"/plugins/*; do
-        proc_id="$(basename -- "$plugin_dir")"
-        if grep -qF "$proc_id" "$used_processor_ids"; then
-            mkdir -p -- "$output_dir/plugins/$proc_id"
-            for state_dir in $(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour); do
-                find "$plugin_dir" -mindepth 1 -maxdepth 1 -type d -name "$state_dir" \
-                    -exec cp -ar -- '{}' "$output_dir/plugins/$proc_id/" \; \
-                    -quit
-            done
+    if [ -z "$slim" ]; then
+        printf '[+] Copying plugins ... '
+        if [ ! -e "$input/plugins" ]; then
+            echo 'not found.'
+        elif cp -ar -- "$input/plugins" "$output_dir"; then
+            echo 'done.'
+        else
+            echo 'failed!'
+            exit 1
         fi
-    done
-    rm -f -- "$used_processor_ids"
-    echo 'done.'
+    else
+        used_processor_ids="$tmpd/used_processor_ids"
+        printf '[*] Scanning session files for used plugins ... '
+        sed -n 's/.*<\(Processor\|RegionFXPlugin\)\s.*\bid="\([0-9]\+\)".*/\2/p' "$output_dir"/*.ardour \
+            | sort -u >"$used_processor_ids"
+        for plugin_dir in "$input"/plugins/*; do
+            proc_id="$(basename -- "$plugin_dir")"
+            if grep -qF "$proc_id" "$used_processor_ids"; then
+                mkdir -p -- "$output_dir/plugins/$proc_id"
+                for state_dir in $(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour); do
+                    find "$plugin_dir" -mindepth 1 -maxdepth 1 -type d -name "$state_dir" \
+                        -exec cp -ar -- '{}' "$output_dir/plugins/$proc_id/" \; \
+                        -quit
+                done
+            fi
+        done
+        rm -f -- "$used_processor_ids"
+        echo 'done.'
+    fi
 
     wanted_audiofile_names="$tmpd/wanted_audiofile_names"
     wanted_midifile_names="$tmpd/wanted_midifile_names"
