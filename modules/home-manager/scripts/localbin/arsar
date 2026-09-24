@@ -146,42 +146,21 @@ get_plugin_state_dirs () {
     shift
     gawk '
         BEGIN {
-            inside_proc = 0
-            inside_regionfx = 0
+            inside = 0
         }
 
-        /<Processor[[:space:]]/ {
-            if (inside_proc == 0 && inside_regionfx == 0) {
+        /<Processor[[:space:]]/ || /<RegionFXPlugin[[:space:]]/ {
+            if (inside == 0) {
                 if ($0 ~ /[[:space:]]id="'"$id"'"/) {
-                    inside_proc = 1
+                    inside = 1
                 }
             } else {
-                print "error: nested <Processor> and <RegionFXPlugin> are not supported!" >"/dev/stderr"
-                exit 1
+                inside = 0
             }
-        }
-
-        /<RegionFXPlugin[[:space:]]/ {
-            if (inside_proc == 0 && inside_regionfx == 0) {
-                if ($0 ~ /[[:space:]]id="'"$id"'"/) {
-                    inside_regionfx = 1
-                }
-            } else {
-                print "error: nested <RegionFXPlugin> and <Processor> are not supported!" >"/dev/stderr"
-                exit 1
-            }
-        }
-
-        /<\/Processor>/ {
-            inside_proc = 0
-        }
-
-        /<\/RegionFXPlugin>/ {
-            inside_regionfx = 0
         }
 
         {
-            if (inside_proc == 1 || inside_regionfx == 1) {
+            if (inside == 1) {
                 if (match($0, /[[:space:]]state-dir="[^"]+"/)) {
                     print substr($0, RSTART + 12, RLENGTH - 13)
                 }
@@ -421,7 +400,8 @@ elif [ -d "$input" ]; then
             proc_id="$(basename -- "$plugin_dir")"
             if grep -qF "$proc_id" "$used_processor_ids"; then
                 mkdir -p -- "$output_dir/plugins/$proc_id"
-                for state_dir in $(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour); do
+                plugin_state_dirs="$(get_plugin_state_dirs "$proc_id" "$output_dir"/*.ardour)" || exit 1
+                for state_dir in $plugin_state_dirs; do
                     find "$plugin_dir" -mindepth 1 -maxdepth 1 -type d -name "$state_dir" \
                         -exec cp -ar -- '{}' "$output_dir/plugins/$proc_id/" \; \
                         -quit
@@ -447,8 +427,8 @@ elif [ -d "$input" ]; then
             | sed 's/.*="\([^"]\+\)"/\1/' | sort -u >"$used_midifile_ids"
 
         # Find the name of every used source
-        all_audiofile_xmls="$(get_sources 'audio' "$input"/*.ardour)"
-        all_midifile_xmls="$(get_sources 'midi' "$input"/*.ardour)"
+        all_audiofile_xmls="$(get_sources 'audio' "$input"/*.ardour)" || exit 1
+        all_midifile_xmls="$(get_sources 'midi' "$input"/*.ardour)" || exit 1
         n_audiofile_xmls="$(echo "$all_audiofile_xmls" | wc -l)"
         n_midifile_xmls="$(echo "$all_midifile_xmls" | wc -l)"
         n_source_xmls=$((n_audiofile_xmls + n_midifile_xmls))
