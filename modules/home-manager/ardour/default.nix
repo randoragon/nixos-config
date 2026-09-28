@@ -2,18 +2,17 @@
   home.packages = with pkgs; [ ardour ];
 
   # Symlink Ardour configuration.
-  # Use activation, because we want the config file to be writeable.
+  # Use activation, because we want the config files to be writeable.
   home.activation = let
-    configSrc = "$HOME/nixos-config/modules/home-manager/ardour";
-    configDest = "${config.xdg.configHome}/ardour8";
+    configSrc = "$HOME/nixos-config/modules/home-manager/ardour/config";
+    configDest = "${config.xdg.configHome}/${pkgs.ardour.meta.mainProgram}";
   in {
     ardourInitialConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run sh -c '
-        mkdir -p -- "${configDest}"
-        ln -sf -- "${configSrc}/config" "${configDest}/config"
-        ln -sf -- "${configSrc}/ardour.keys" "${configDest}/ardour.keys"
-        ln -sf -- "${configSrc}/ui_config" "${configDest}/ui_config"
-        ln -sf -- "${configSrc}/my-xcolors-ardour-8.8.colors" "${configDest}/my-xcolors-ardour-8.8.colors"
+        if [ -e "${configDest}" ] && [ ! -L "${configDest}" ]; then
+            mv -- "${configDest}" "${configDest}.orig"
+        fi
+        ln -sfT -- "${configSrc}" "${configDest}"
       '
     '';
   };

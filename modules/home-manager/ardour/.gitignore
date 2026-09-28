@@ -1,0 +1,14 @@
+/config/*
+
+!/config/export/
+!/config/plugin_metadata/
+/config/plugin_metadata/*
+!/config/plugin_metadata/plugin_statuses
+!/config/presets/
+!/config/route_templates/
+!/config/templates/
+!/config/ardour.keys
+!/config/config
+!/config/session.rc
+!/config/ui_config
+!/config/ui_scripts
