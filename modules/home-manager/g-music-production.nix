@@ -15,12 +15,15 @@
     ]))
 
     audacity
-    x42-plugins
+    x42-plugins       # eq
     distrho-ports
     gxplugins-lv2
-    lsp-plugins
+    lsp-plugins       # compressors
     tap-plugins
-    zam-plugins
+    zam-plugins       # spatial audio
+    calf              # delay plugin
+    openav-artyfx     # reverb
+    dragonfly-reverb  # reverb
     helm
     geonkick drumgizmo
     vmpk
