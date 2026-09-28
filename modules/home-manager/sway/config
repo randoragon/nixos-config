@@ -70,6 +70,9 @@ bindsym $mod+Ctrl+Shift+Escape mode passthrough
 # mouse button for dragging.
 floating_modifier $mod normal
 
+# Kill windows by right clicking the title bar
+bindsym button3 kill
+
 # Reload the configuration file
 bindsym $mod+Shift+c reload
 
