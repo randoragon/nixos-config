@@ -39,6 +39,11 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    yazi-plugins = {
+      url = "github:yazi-rs/plugins";
+      flake = false;
+    };
   };
 
   outputs = { self, ... }@inputs: let
@@ -49,6 +54,7 @@
     lxmake = inputs.lxmake.packages.${system}.default;
     note = inputs.note.packages.${system}.default;
     music-tools = inputs.music-tools.packages.${system}.default;
+    yazi-plugins = inputs.yazi-plugins;
     inherited-inputs = {
       inherit spkgs;
       inherit rsid3;
@@ -56,6 +62,7 @@
       inherit lxmake;
       inherit note;
       inherit music-tools;
+      inherit yazi-plugins;
     };
   in {
     nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {

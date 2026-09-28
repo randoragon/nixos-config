@@ -194,7 +194,8 @@
         "nixpkgs-stable": "nixpkgs-stable",
         "note": "note",
         "rsid3": "rsid3",
-        "secrets": "secrets_2"
+        "secrets": "secrets_2",
+        "yazi-plugins": "yazi-plugins"
       }
     },
     "rsid3": {
@@ -252,6 +253,22 @@
       "original": {
         "owner": "randoragon",
         "repo": "secrets",
+        "type": "github"
+      }
+    },
+    "yazi-plugins": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790615432,
+        "narHash": "sha256-9AcARIHIRtKnVShXRmlM/qf+JSQnFGuDOAWZK8ab3Jo=",
+        "owner": "yazi-rs",
+        "repo": "plugins",
+        "rev": "e0f8f6f335b10107a657477978baa345da820c3e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "plugins",
         "type": "github"
       }
     }

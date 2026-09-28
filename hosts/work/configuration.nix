@@ -1,4 +1,4 @@
-{ lib, pkgs, spkgs, secrets, ... }: {
+{ lib, pkgs, spkgs, secrets, yazi-plugins, ... }: {
 
   imports = [
     ./boot.nix
@@ -34,6 +34,7 @@
     extraSpecialArgs = {
       inherit spkgs;
       inherit secrets;
+      inherit yazi-plugins;
     };
     useGlobalPkgs = true;
     useUserPackages = true;

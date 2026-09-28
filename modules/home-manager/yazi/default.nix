@@ -1,4 +1,4 @@
-{
+{ yazi-plugins, ... }: {
   programs.yazi = {
     enable = true;
 
@@ -11,12 +11,11 @@
     theme = builtins.fromTOML (builtins.readFile ./theme.toml);
     keymap = builtins.fromTOML (builtins.readFile ./keymap.toml);
     plugins = {
-      bookmarks = ./plugins/bookmarks.yazi;
-      chmod = ./plugins/chmod.yazi;
-      mount = ./plugins/mount.yazi;
-      piper = ./plugins/piper.yazi;
-      toggle-pane = ./plugins/toggle-pane.yazi;
-      types = ./plugins/types.yazi;
+      chmod = "${yazi-plugins}/chmod.yazi";
+      mount = "${yazi-plugins}/mount.yazi";
+      piper = "${yazi-plugins}/piper.yazi";
+      toggle-pane = "${yazi-plugins}/toggle-pane.yazi";
+      types = "${yazi-plugins}/types.yazi";
     };
   };
 }

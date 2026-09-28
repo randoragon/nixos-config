@@ -1,4 +1,4 @@
-{ pkgs, spkgs, secrets, ... }: {
+{ pkgs, spkgs, secrets, yazi-plugins, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -32,6 +32,7 @@
     extraSpecialArgs = {
       inherit spkgs;
       inherit secrets;
+      inherit yazi-plugins;
     };
     useGlobalPkgs = true;
     useUserPackages = true;

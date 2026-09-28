@@ -1,4 +1,4 @@
-{ pkgs, spkgs, rsid3, secrets, lxmake, note, music-tools, ... }: {
+{ pkgs, spkgs, rsid3, secrets, lxmake, note, music-tools, yazi-plugins, ... }: {
 
   imports = [
     ./hardware-configuration.nix
@@ -36,6 +36,7 @@
       inherit lxmake;
       inherit note;
       inherit music-tools;
+      inherit yazi-plugins;
     };
     useGlobalPkgs = true;
     useUserPackages = true;

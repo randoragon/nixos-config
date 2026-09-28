@@ -11,12 +11,6 @@ sort_translit = true
 [open]
 prepend_rules = [
 	{ url = "*", use = [ "open" ] },
-	{ url = "bulk-rename.txt", use = "bulk-rename" },
-]
-
-[opener]
-bulk-rename = [
-	{ run = 'nvim "$@"', block = true },
 ]
 
 [plugin]
