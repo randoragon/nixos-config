@@ -32,7 +32,11 @@
     lilypond
     sfizz-ui
     zynaddsubfx
-  ] ++ [ rsid3 ] ++ (with spkgs; [ yabridge yabridgectl guitarix ]);  # TODO: bring back unstable when they're not broken anymore
+    guitarix
+
+    # For running Windows plugins
+    yabridge yabridgectl
+  ] ++ [ rsid3 ];
 
   # https://discourse.nixos.org/t/audio-plugins-no-longer-detected-after-switching-to-nix-2-4-flakes/17177/4
   home.sessionVariables = let
