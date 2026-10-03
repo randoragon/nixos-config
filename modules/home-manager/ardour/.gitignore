@@ -12,3 +12,5 @@
 !/config/session.rc
 !/config/ui_config
 !/config/ui_scripts
+
+!/config/**/.dummy
