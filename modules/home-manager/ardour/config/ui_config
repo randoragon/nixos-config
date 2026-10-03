@@ -18,7 +18,7 @@
     <Option name="plugin-gui-behavior" value="PluginGUIDestroyAny"/>
     <Option name="prefer-inline-over-gui" value="0"/>
     <Option name="action-table-columns" value="0"/>
-    <Option name="stripable-color-palette" value="#2C2E39:#4BDC2B:#DEA202:#FF0000:#C45312:#2849F5:#5A08C2:#D4BA6A:#806515:#554000:#FFD6DF:#8080B3:#565695:#1A1A59:#09093B:#2D882D:#88CC88:#55AA55:#116611:#004400"/>
+    <Option name="stripable-color-palette" value="#2C2E39:#C45312:#DEA202:#7F3DA6:#000000:#000000:#000000:#000000:#000000:#FF0000:#FFD6DF:#4BDC2B:#3CBADF:#2849F5:#000000:#000000:#000000:#000000:#000000:#FF00A2"/>
     <Option name="use-palette-for-new-track" value="0"/>
     <Option name="use-palette-for-new-bus" value="0"/>
     <Option name="use-palette-for-new-vca" value="0"/>

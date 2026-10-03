@@ -4,6 +4,7 @@
     <Option name="preferred_time_domain" value="BeatTime"/>
     <Option name="capture-buffer-seconds" value="10"/>
     <Option name="playback-buffer-seconds" value="10"/>
+    <Option name="clicking" value="1"/>
     <Option name="save-history-depth" value="100"/>
     <Option name="history-depth" value="0"/>
     <Option name="default-session-parent-dir" value="/home/pcache/Production"/>
