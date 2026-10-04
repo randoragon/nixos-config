@@ -9,6 +9,7 @@
   in {
     ardourInitialConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run sh -c '
+        mkdir -p -- "${configDest}/.."
         if [ -e "${configDest}" ] && [ ! -L "${configDest}" ]; then
             mv -- "${configDest}" "${configDest}.orig"
         fi
