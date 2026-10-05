@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Route version="7003" id="177" name="VOCAL" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak">
+  <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8" name="VOCAL"/>
+  <PresentationInfo order="14" flags="AudioBus,OrderSet" color="4278190335"/>
+  <Controllable name="solo" id="185" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
+  <Controllable name="solo-iso" id="191" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
+  <Controllable name="solo-safe" id="193" flags="Toggle" value="0" solo-safe="0"/>
+  <IO name="VOCAL" id="206" direction="Input" default-type="audio">
+    <Port name="VOCAL/audio_in 1" type="audio" direction="Input">
+      <Connection other="voc/audio_out 1"/>
+    </Port>
+    <Port name="VOCAL/audio_in 2" type="audio" direction="Input">
+      <Connection other="voc/audio_out 2"/>
+    </Port>
+  </IO>
+  <IO name="VOCAL" id="207" direction="Output" default-type="audio">
+    <Port name="VOCAL/audio_out 1" type="audio" direction="Output">
+      <Connection other="Master/audio_in 1"/>
+    </Port>
+    <Port name="VOCAL/audio_out 2" type="audio" direction="Output">
+      <Connection other="Master/audio_in 2"/>
+    </Port>
+  </IO>
+  <MuteMaster mute-point="PostFader,Listen,Main,SurroundSend" muted="0"/>
+  <Controllable name="mute" id="187" flags="Toggle,RealTime" value="0"/>
+  <Controllable name="phase" id="189" flags="Toggle" value="0" phase-invert="00"/>
+  <Automation>
+    <AutomationList automation-id="solo" id="4674" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+    <AutomationList automation-id="solo-iso" id="4680" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+    <AutomationList automation-id="solo-safe" id="4682" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+    <AutomationList automation-id="mute" id="4676" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+    <AutomationList automation-id="phase" id="4678" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+  </Automation>
+  <Comment>README
+
+Vocal EQ sane default:
+    High-pass: 70–100 Hz
+    Cut mud: 200–350 Hz, about 1-4 dB if needed
+    Tame boxiness: 500-900 Hz, small cut if needed
+    Add presence: 2-5 kHz, small boost if the vocal needs clarity
+    Add air: 10-16 kHz, gentle shelf if it needs brightness
+Rules of thumb:
+    Use wide, subtle moves first.
+    If the vocal is harsh, reduce 3-5 kHz before boosting anything.
+    If it sounds dull, add a little air instead of pushing presence too hard.</Comment>
+  <Pannable>
+    <Controllable name="pan-azimuth" id="196" flags="" value="0.5"/>
+    <Controllable name="pan-width" id="200" flags="" value="0"/>
+    <Controllable name="pan-elevation" id="198" flags="" value="0"/>
+    <Controllable name="pan-frontback" id="202" flags="" value="0"/>
+    <Controllable name="pan-lfe" id="204" flags="" value="0"/>
+    <Automation>
+      <AutomationList automation-id="pan-azimuth" id="197" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+      <AutomationList automation-id="pan-elevation" id="199" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+      <AutomationList automation-id="pan-width" id="201" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+      <AutomationList automation-id="pan-frontback" id="203" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+      <AutomationList automation-id="pan-lfe" id="205" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+    </Automation>
+  </Pannable>
+  <musical-mode tuning="TwelveTone" ring="0" type="PitchClass" name="Major" elements="0,2,4,5,7,9,11" root="0"/>
+  <Processor id="216" name="Return" active="1" user-latency="0" use-user-latency="0" type="intreturn"/>
+  <Processor id="209" name="Polarity" active="1" user-latency="0" use-user-latency="0" type="polarity"/>
+  <Processor id="211" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
+    <Automation>
+      <AutomationList automation-id="trim" id="4672" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <Controllable name="trimcontrol" id="183" flags="GainLike" value="1"/>
+  </Processor>
+  <Processor id="2278" name="x42-eq - Parametric Equalizer Stereo" active="1" user-latency="0" use-user-latency="0" type="lv2" unique-id="http://gareus.org/oss/lv2/fil4#stereo" count="1" custom="0">
+    <Automation>
+      <AutomationList automation-id="parameter-2" id="4706" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-3" id="4708" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-5" id="4710" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-6" id="4712" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-7" id="4714" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-8" id="4716" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-9" id="4718" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-10" id="4720" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-11" id="4722" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-12" id="4724" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-13" id="4726" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-14" id="4728" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-15" id="4730" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-16" id="4732" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-17" id="4734" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-18" id="4736" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-19" id="4738" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-20" id="4740" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-21" id="4742" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-22" id="4744" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-23" id="4746" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-24" id="4748" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-25" id="4750" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-26" id="4752" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-27" id="4754" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-28" id="4756" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-29" id="4758" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-30" id="4760" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-31" id="4762" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-32" id="4764" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-33" id="4766" interpolation-style="Logarithmic" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-34" id="4768" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="parameter-35" id="4770" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <ConfiguredInput>
+      <Channels type="audio" count="2"/>
+    </ConfiguredInput>
+    <CustomSinks>
+      <Channels type="audio" count="2"/>
+    </CustomSinks>
+    <ConfiguredOutput>
+      <Channels type="audio" count="2"/>
+    </ConfiguredOutput>
+    <PresetOutput/>
+    <InputMap-0>
+      <Channelmap type="audio" from="0" to="0"/>
+      <Channelmap type="audio" from="1" to="1"/>
+    </InputMap-0>
+    <OutputMap-0>
+      <Channelmap type="audio" from="0" to="0"/>
+      <Channelmap type="audio" from="1" to="1"/>
+    </OutputMap-0>
+    <ThruMap/>
+    <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/route_templates/VOCAL" state-dir="state7">
+      <Port symbol="enable" value="1"/>
+      <Port symbol="gain" value="0"/>
+      <Port symbol="peakreset" value="1"/>
+      <Port symbol="HighPass" value="0"/>
+      <Port symbol="HPfreq" value="20"/>
+      <Port symbol="HPQ" value="0.69999998807907104"/>
+      <Port symbol="LowPass" value="0"/>
+      <Port symbol="LPfreq" value="20000"/>
+      <Port symbol="LPQ" value="1"/>
+      <Port symbol="LSsec" value="1"/>
+      <Port symbol="LSfreq" value="80.061485290527344"/>
+      <Port symbol="LSq" value="1"/>
+      <Port symbol="LSgain" value="-18"/>
+      <Port symbol="sec1" value="1"/>
+      <Port symbol="freq1" value="240.05967712402344"/>
+      <Port symbol="q1" value="0.14358730614185333"/>
+      <Port symbol="gain1" value="-2"/>
+      <Port symbol="sec2" value="1"/>
+      <Port symbol="freq2" value="703.29278564453125"/>
+      <Port symbol="q2" value="0.19842514395713806"/>
+      <Port symbol="gain2" value="-2.5999994277954102"/>
+      <Port symbol="sec3" value="1"/>
+      <Port symbol="freq3" value="3030.653564453125"/>
+      <Port symbol="q3" value="0.32987698912620544"/>
+      <Port symbol="gain3" value="1"/>
+      <Port symbol="sec4" value="0"/>
+      <Port symbol="freq4" value="2500.000244140625"/>
+      <Port symbol="q4" value="0.5"/>
+      <Port symbol="gain4" value="0"/>
+      <Port symbol="HSsec" value="1"/>
+      <Port symbol="HSfreq" value="11957.099609375"/>
+      <Port symbol="HSq" value="1.0139591693878174"/>
+      <Port symbol="HSgain" value="0.39999961853027344"/>
+    </lv2>
+    <Controllable name="Enable" id="2280" flags="Toggle" value="1" parameter="2" symbol="enable"/>
+    <Controllable name="Gain" id="2282" flags="" value="0" parameter="3" symbol="gain"/>
+    <Controllable name="Reset Peak Hold" id="2284" flags="Toggle" value="1" parameter="5" symbol="peakreset"/>
+    <Controllable name="Highpass" id="2286" flags="Toggle" value="0" parameter="6" symbol="HighPass"/>
+    <Controllable name="Highpass Frequency" id="2288" flags="" value="20" parameter="7" symbol="HPfreq"/>
+    <Controllable name="Highpass Resonance" id="2290" flags="" value="0.69999998807907104" parameter="8" symbol="HPQ"/>
+    <Controllable name="Lowpass" id="2292" flags="Toggle" value="0" parameter="9" symbol="LowPass"/>
+    <Controllable name="Lowpass Frequency" id="2294" flags="" value="20000" parameter="10" symbol="LPfreq"/>
+    <Controllable name="Lowpass Resonance" id="2296" flags="" value="1" parameter="11" symbol="LPQ"/>
+    <Controllable name="Lowshelf" id="2298" flags="Toggle" value="1" parameter="12" symbol="LSsec"/>
+    <Controllable name="Lowshelf Frequency" id="2300" flags="" value="80.061485290527344" parameter="13" symbol="LSfreq"/>
+    <Controllable name="Lowshelf Bandwidth" id="2302" flags="" value="1" parameter="14" symbol="LSq"/>
+    <Controllable name="Lowshelf Gain" id="2304" flags="" value="-18" parameter="15" symbol="LSgain"/>
+    <Controllable name="Section 1" id="2306" flags="Toggle" value="1" parameter="16" symbol="sec1"/>
+    <Controllable name="Frequency 1" id="2308" flags="" value="240.05967712402344" parameter="17" symbol="freq1"/>
+    <Controllable name="Bandwidth 1" id="2310" flags="" value="0.14358730614185333" parameter="18" symbol="q1"/>
+    <Controllable name="Gain 1" id="2312" flags="" value="-2" parameter="19" symbol="gain1"/>
+    <Controllable name="Section 2" id="2314" flags="Toggle" value="1" parameter="20" symbol="sec2"/>
+    <Controllable name="Frequency 2" id="2316" flags="" value="703.29278564453125" parameter="21" symbol="freq2"/>
+    <Controllable name="Bandwidth 2" id="2318" flags="" value="0.19842514395713806" parameter="22" symbol="q2"/>
+    <Controllable name="Gain 2" id="2320" flags="" value="-2.5999994277954102" parameter="23" symbol="gain2"/>
+    <Controllable name="Section 3" id="2322" flags="Toggle" value="1" parameter="24" symbol="sec3"/>
+    <Controllable name="Frequency 3" id="2324" flags="" value="3030.653564453125" parameter="25" symbol="freq3"/>
+    <Controllable name="Bandwidth 3" id="2326" flags="" value="0.32987698912620544" parameter="26" symbol="q3"/>
+    <Controllable name="Gain 3" id="2328" flags="" value="1" parameter="27" symbol="gain3"/>
+    <Controllable name="Section 4" id="2330" flags="Toggle" value="0" parameter="28" symbol="sec4"/>
+    <Controllable name="Frequency 4" id="2332" flags="" value="2500.000244140625" parameter="29" symbol="freq4"/>
+    <Controllable name="Bandwidth 4" id="2334" flags="" value="0.5" parameter="30" symbol="q4"/>
+    <Controllable name="Gain 4" id="2336" flags="" value="0" parameter="31" symbol="gain4"/>
+    <Controllable name="Highshelf" id="2338" flags="Toggle" value="1" parameter="32" symbol="HSsec"/>
+    <Controllable name="Highshelf Frequency" id="2340" flags="" value="11957.099609375" parameter="33" symbol="HSfreq"/>
+    <Controllable name="Highshelf Bandwidth" id="2342" flags="" value="1.0139591693878174" parameter="34" symbol="HSq"/>
+    <Controllable name="Highshelf Gain" id="2344" flags="" value="0.39999961853027344" parameter="35" symbol="HSgain"/>
+  </Processor>
+  <Processor id="208" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+    <Automation>
+      <AutomationList automation-id="gain" id="4670" interpolation-style="Exponential" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <Controllable name="gaincontrol" id="181" flags="GainLike" value="1"/>
+  </Processor>
+  <Processor id="6931" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
+    <Automation>
+      <AutomationList automation-id="phase" id="6932" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="send" id="6933" interpolation-style="Exponential" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <PannerShell bypassed="0" user-panner="" linked-to-route="1">
+      <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
+    </PannerShell>
+    <Pannable>
+      <Controllable name="pan-azimuth" id="6935" flags="" value="0.5"/>
+      <Controllable name="pan-width" id="6936" flags="" value="0"/>
+      <Controllable name="pan-elevation" id="6937" flags="" value="0"/>
+      <Controllable name="pan-frontback" id="6938" flags="" value="0"/>
+      <Controllable name="pan-lfe" id="6939" flags="" value="0"/>
+      <Automation>
+        <AutomationList automation-id="pan-azimuth" id="6940" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-elevation" id="6941" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-width" id="6942" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-frontback" id="6943" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-lfe" id="6944" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      </Automation>
+    </Pannable>
+    <Controllable name="polarity-invert" id="6945" flags="Toggle" value="0"/>
+    <Controllable name="gaincontrol" id="6930" flags="GainLike,InlineControl" value="0"/>
+  </Processor>
+  <Processor id="622" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
+    <Automation>
+      <AutomationList automation-id="phase" id="4791" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="send" id="4785" interpolation-style="Exponential" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <PannerShell bypassed="0" user-panner="" linked-to-route="1">
+      <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
+    </PannerShell>
+    <Pannable>
+      <Controllable name="pan-azimuth" id="626" flags="" value="0.5"/>
+      <Controllable name="pan-width" id="627" flags="" value="0"/>
+      <Controllable name="pan-elevation" id="628" flags="" value="0"/>
+      <Controllable name="pan-frontback" id="629" flags="" value="0"/>
+      <Controllable name="pan-lfe" id="630" flags="" value="0"/>
+      <Automation>
+        <AutomationList automation-id="pan-azimuth" id="631" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-elevation" id="632" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-width" id="633" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-frontback" id="634" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-lfe" id="635" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      </Automation>
+    </Pannable>
+    <Controllable name="polarity-invert" id="636" flags="Toggle" value="0"/>
+    <Controllable name="gaincontrol" id="621" flags="GainLike,InlineControl" value="0"/>
+  </Processor>
+  <Processor id="1352" name="send 2" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="send" role="Send" bitslot="2" selfdestruct="1">
+    <Automation>
+      <AutomationList automation-id="phase" id="4838" interpolation-style="Discrete" time-domain="AudioTime" state="Off"/>
+      <AutomationList automation-id="send" id="4832" interpolation-style="Exponential" time-domain="AudioTime" state="Off"/>
+    </Automation>
+    <IO name="send 2" id="1353" direction="Output" default-type="audio" pretty-name="SC VOCAL (2)">
+      <Port name="send 2/audio_send 1" type="audio" direction="Output">
+        <Connection other="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 1"/>
+      </Port>
+      <Port name="send 2/audio_send 2" type="audio" direction="Output">
+        <Connection other="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 2"/>
+      </Port>
+    </IO>
+    <PannerShell bypassed="0" user-panner="" linked-to-route="1">
+      <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
+    </PannerShell>
+    <Pannable>
+      <Controllable name="pan-azimuth" id="1356" flags="" value="0.5"/>
+      <Controllable name="pan-width" id="1360" flags="" value="0"/>
+      <Controllable name="pan-elevation" id="1358" flags="" value="0"/>
+      <Controllable name="pan-frontback" id="1362" flags="" value="0"/>
+      <Controllable name="pan-lfe" id="1364" flags="" value="0"/>
+      <Automation>
+        <AutomationList automation-id="pan-azimuth" id="1357" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-elevation" id="1359" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-width" id="1361" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-frontback" id="1363" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+        <AutomationList automation-id="pan-lfe" id="1365" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+      </Automation>
+    </Pannable>
+    <Controllable name="polarity-invert" id="1373" flags="Toggle" value="0"/>
+    <Controllable name="gaincontrol" id="1367" flags="GainLike,InlineControl" value="1"/>
+  </Processor>
+  <Processor id="212" name="meter-VOCAL" active="1" user-latency="0" use-user-latency="0" type="meter"/>
+  <Processor id="213" name="VOCAL" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="VOCAL" type="main-outs" role="Main">
+    <PannerShell bypassed="0" user-panner="" linked-to-route="1"/>
+  </Processor>
+  <Slavable/>
+  <description>README
+
+Vocal EQ sane default:
+    High-pass: 70–100 Hz
+    Cut mud: 200–350 Hz, about 1-4 dB if needed
+    Tame boxiness: 500-900 Hz, small cut if needed
+    Add presence: 2-5 kHz, small boost if the vocal needs clarity
+    Add air: 10-16 kHz, gentle shelf if it needs brightness
+Rules of thumb:
+    Use wide, subtle moves first.
+    If the vocal is harsh, reduce 3-5 kHz before boosting anything.
+    If it sounds dull, add a little air instead of pushing presence too hard.</description>
+</Route>

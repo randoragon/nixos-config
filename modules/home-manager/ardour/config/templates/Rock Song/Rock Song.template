@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Session version="7003" id-counter="2393" rg-counter="22" name-counter="5" event-counter="0" vca-counter="1">
+<Session version="7003" id-counter="9266" rg-counter="22" name-counter="5" event-counter="0" vca-counter="1">
   <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
   <MIDIPorts>
     <Port name="Cue Control in" type="midi" direction="Input"/>
@@ -73,7 +73,7 @@
   <TriggerBindings/>
   <Regions/>
   <Locations>
-    <Location id="2395" name="session" start="b0" end="b0" flags="IsSessionRange" locked="0" timestamp="1791022307" cue="0"/>
+    <Location id="9268" name="session" start="b0" end="b0" flags="IsSessionRange" locked="0" timestamp="1791244119" cue="0"/>
   </Locations>
   <Bundles/>
   <VCAManager/>
@@ -86,11 +86,13 @@
       <Controllable name="solo-safe" id="94" flags="Toggle" value="0" solo-safe="0"/>
       <IO name="Master" id="107" direction="Input" default-type="audio">
         <Port name="Master/audio_in 1" type="audio" direction="Input">
+          <Connection other="AUX_DELAY/audio_out 1"/>
           <Connection other="AUX_REVERB/audio_out 1"/>
           <Connection other="INSTRUMENTAL/audio_out 1"/>
           <Connection other="VOCAL/audio_out 1"/>
         </Port>
         <Port name="Master/audio_in 2" type="audio" direction="Input">
+          <Connection other="AUX_DELAY/audio_out 2"/>
           <Connection other="AUX_REVERB/audio_out 2"/>
           <Connection other="INSTRUMENTAL/audio_out 2"/>
           <Connection other="VOCAL/audio_out 2"/>
@@ -149,7 +151,7 @@
           <Channelmap type="audio" from="1" to="1"/>
         </OutputMap-0>
         <ThruMap/>
-        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state2">
+        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state8">
           <Port symbol="showpmx" value="0"/>
           <Port symbol="in2lk" value="0"/>
           <Port symbol="lk2in" value="0"/>
@@ -217,7 +219,7 @@
         <Controllable name="Sidechain graph visibility Right" id="817" flags="Toggle" value="1" parameter="38" symbol="scgv_r"/>
         <Controllable name="Gain graph visibility Right" id="819" flags="Toggle" value="1" parameter="39" symbol="grgv_r"/>
         <Controllable name="Knee smooth" id="821" flags="" value="-5" parameter="44" symbol="smooth"/>
-        <Controllable name="property-http://lsp-plug.in/plugins/lv2/limiter_stereo/ports#link" id="822" flags="NotAutomatable" property="180"/>
+        <Controllable name="property-http://lsp-plug.in/plugins/lv2/limiter_stereo/ports#link" id="7142" flags="NotAutomatable" property="172"/>
       </Processor>
       <Processor id="109" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
         <Controllable name="gaincontrol" id="82" flags="GainLike" value="1"/>
@@ -305,7 +307,7 @@ Rules of thumb:
           <Channelmap type="audio" from="1" to="1"/>
         </OutputMap-0>
         <ThruMap/>
-        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state3">
+        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state9">
           <Port symbol="enable" value="1"/>
           <Port symbol="gain" value="0"/>
           <Port symbol="peakreset" value="1"/>
@@ -374,6 +376,30 @@ Rules of thumb:
         <Controllable name="Highshelf Bandwidth" id="2342" flags="" value="1.0139591693878174" parameter="34" symbol="HSq"/>
         <Controllable name="Highshelf Gain" id="2344" flags="" value="0.39999961853027344" parameter="35" symbol="HSgain"/>
       </Processor>
+      <Processor id="208" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="181" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6931" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
+        <PannerShell bypassed="0" user-panner="" linked-to-route="1">
+          <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
+        </PannerShell>
+        <Pannable>
+          <Controllable name="pan-azimuth" id="6935" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6936" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6937" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6938" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6939" flags="" value="0"/>
+          <Automation>
+            <AutomationList automation-id="pan-azimuth" id="6940" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6941" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6942" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6943" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6944" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+          </Automation>
+        </Pannable>
+        <Controllable name="polarity-invert" id="6945" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6930" flags="GainLike,InlineControl" value="0"/>
+      </Processor>
       <Processor id="622" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
@@ -393,32 +419,7 @@ Rules of thumb:
           </Automation>
         </Pannable>
         <Controllable name="polarity-invert" id="636" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="621" flags="GainLike,InlineControl" value="0.13493902981281281"/>
-      </Processor>
-      <Processor id="1326" name="send 1" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="send" role="Send" bitslot="1" selfdestruct="1">
-        <IO name="send 1" id="1327" direction="Output" default-type="audio" pretty-name="SC VOCAL (1)">
-          <Port name="send 1/audio_send 1" type="audio" direction="Output"/>
-          <Port name="send 1/audio_send 2" type="audio" direction="Output"/>
-        </IO>
-        <PannerShell bypassed="0" user-panner="" linked-to-route="1">
-          <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
-        </PannerShell>
-        <Pannable>
-          <Controllable name="pan-azimuth" id="1330" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="1334" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="1332" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="1336" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="1338" flags="" value="0"/>
-          <Automation>
-            <AutomationList automation-id="pan-azimuth" id="1331" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="1333" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="1335" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="1337" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="1339" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-          </Automation>
-        </Pannable>
-        <Controllable name="polarity-invert" id="1347" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="1341" flags="GainLike,InlineControl" value="1"/>
+        <Controllable name="gaincontrol" id="621" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="1352" name="send 2" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="send" role="Send" bitslot="2" selfdestruct="1">
         <IO name="send 2" id="1353" direction="Output" default-type="audio" pretty-name="SC VOCAL (2)">
@@ -426,7 +427,7 @@ Rules of thumb:
             <Connection other="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 1"/>
           </Port>
           <Port name="send 2/audio_send 2" type="audio" direction="Output">
-            <Connection other="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 1"/>
+            <Connection other="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 2"/>
           </Port>
         </IO>
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -448,9 +449,6 @@ Rules of thumb:
         </Pannable>
         <Controllable name="polarity-invert" id="1373" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="1367" flags="GainLike,InlineControl" value="1"/>
-      </Processor>
-      <Processor id="208" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="181" flags="GainLike" value="1"/>
       </Processor>
       <Processor id="212" name="meter-VOCAL" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="213" name="VOCAL" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="VOCAL" type="main-outs" role="Main">
@@ -546,12 +544,13 @@ Dynamic EQ sane default:
           <IO name="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4" id="1351" direction="Input" default-type="audio" pretty-name="SC LSP Sidechain Multiband Compressor Stereo x8">
             <Port name="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 1" type="audio" direction="Input">
               <Connection other="send 2/audio_send 1"/>
+            </Port>
+            <Port name="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 2" type="audio" direction="Input">
               <Connection other="send 2/audio_send 2"/>
             </Port>
-            <Port name="SC VOCAL_DUCK/LSP Sidechain Multiband Compressor Stereo x8 4/audio_in 2" type="audio" direction="Input"/>
           </IO>
         </Processor>
-        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state2">
+        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state8">
           <Port symbol="showpmx" value="0"/>
           <Port symbol="in2lk" value="0"/>
           <Port symbol="lk2in" value="0"/>
@@ -1047,7 +1046,7 @@ Dynamic EQ sane default:
         <Controllable name="Boost signal amount 8" id="1316" flags="" value="1.9952600002288818" parameter="268" symbol="bsa_7"/>
         <Controllable name="Makeup gain 8" id="1318" flags="" value="1" parameter="269" symbol="mk_7"/>
         <Controllable name="Hue  8" id="1320" flags="" value="0.875" parameter="270" symbol="hue_7"/>
-        <Controllable name="property-http://lsp-plug.in/plugins/lv2/sc_mb_compressor_stereo/ports#link" id="1321" flags="NotAutomatable" property="249"/>
+        <Controllable name="property-http://lsp-plug.in/plugins/lv2/sc_mb_compressor_stereo/ports#link" id="7854" flags="NotAutomatable" property="257"/>
       </Processor>
       <Processor id="253" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
         <Controllable name="gaincontrol" id="226" flags="GainLike" value="1"/>
@@ -1157,26 +1156,29 @@ Dynamic EQ sane default:
       <Processor id="346" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
         <Controllable name="trimcontrol" id="318" flags="GainLike" value="1"/>
       </Processor>
-      <Processor id="2183" name="VOCAL_DUCK" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="2" selfdestruct="0" target="222" allow-feedback="0">
+      <Processor id="343" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="316" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6814" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
         </PannerShell>
         <Pannable>
-          <Controllable name="pan-azimuth" id="2187" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="2188" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="2189" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="2190" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="2191" flags="" value="0"/>
+          <Controllable name="pan-azimuth" id="6818" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6819" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6820" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6821" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6822" flags="" value="0"/>
           <Automation>
-            <AutomationList automation-id="pan-azimuth" id="2192" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="2193" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="2194" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="2195" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="2196" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-azimuth" id="6823" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6824" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6825" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6826" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6827" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
           </Automation>
         </Pannable>
-        <Controllable name="polarity-invert" id="2197" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="2182" flags="GainLike,InlineControl" value="0"/>
+        <Controllable name="polarity-invert" id="6828" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6813" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="537" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -1199,9 +1201,6 @@ Dynamic EQ sane default:
         <Controllable name="polarity-invert" id="557" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="551" flags="GainLike,InlineControl" value="0"/>
       </Processor>
-      <Processor id="343" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="316" flags="GainLike" value="1"/>
-      </Processor>
       <Processor id="347" name="meter-GUITARS" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="348" name="GUITARS" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="GUITARS" type="main-outs" role="Main">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1"/>
@@ -1210,7 +1209,7 @@ Dynamic EQ sane default:
     </Route>
     <Route version="7003" id="357" name="AUX_REVERB" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak">
       <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
-      <PresentationInfo order="15" flags="AudioBus,OrderSet" color="4278231807"/>
+      <PresentationInfo order="16" flags="AudioBus,OrderSet" color="4278231807"/>
       <Controllable name="solo" id="365" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
       <Controllable name="solo-iso" id="371" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
       <Controllable name="solo-safe" id="373" flags="Toggle" value="0" solo-safe="0"/>
@@ -1269,7 +1268,7 @@ Dynamic EQ sane default:
           <Channelmap type="audio" from="1" to="1"/>
         </OutputMap-0>
         <ThruMap/>
-        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state4">
+        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song" state-dir="state10">
           <Port symbol="dry_level" value="0"/>
           <Port symbol="early_level" value="60.122699737548828"/>
           <Port symbol="early_send" value="80.36810302734375"/>
@@ -1360,26 +1359,29 @@ Dynamic EQ sane default:
       <Processor id="436" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
         <Controllable name="trimcontrol" id="408" flags="GainLike" value="1"/>
       </Processor>
-      <Processor id="2144" name="VOCAL_DUCK" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="2" selfdestruct="0" target="222" allow-feedback="0">
+      <Processor id="433" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="406" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6775" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
         </PannerShell>
         <Pannable>
-          <Controllable name="pan-azimuth" id="2148" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="2149" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="2150" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="2151" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="2152" flags="" value="0"/>
+          <Controllable name="pan-azimuth" id="6779" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6780" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6781" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6782" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6783" flags="" value="0"/>
           <Automation>
-            <AutomationList automation-id="pan-azimuth" id="2153" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="2154" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="2155" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="2156" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="2157" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-azimuth" id="6784" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6785" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6786" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6787" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6788" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
           </Automation>
         </Pannable>
-        <Controllable name="polarity-invert" id="2158" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="2143" flags="GainLike,InlineControl" value="0"/>
+        <Controllable name="polarity-invert" id="6789" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6774" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="700" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -1401,9 +1403,6 @@ Dynamic EQ sane default:
         </Pannable>
         <Controllable name="polarity-invert" id="714" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="699" flags="GainLike,InlineControl" value="0"/>
-      </Processor>
-      <Processor id="433" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="406" flags="GainLike" value="1"/>
       </Processor>
       <Processor id="437" name="meter-BASS" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="438" name="BASS" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="BASS" type="main-outs" role="Main">
@@ -1456,26 +1455,29 @@ Dynamic EQ sane default:
       <Processor id="481" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
         <Controllable name="trimcontrol" id="453" flags="GainLike" value="1"/>
       </Processor>
-      <Processor id="2098" name="VOCAL_DUCK" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="2" selfdestruct="0" target="222" allow-feedback="0">
+      <Processor id="478" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="451" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6729" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
         </PannerShell>
         <Pannable>
-          <Controllable name="pan-azimuth" id="2101" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="2105" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="2103" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="2107" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="2109" flags="" value="0"/>
+          <Controllable name="pan-azimuth" id="6732" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6736" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6734" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6738" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6740" flags="" value="0"/>
           <Automation>
-            <AutomationList automation-id="pan-azimuth" id="2102" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="2104" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="2106" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="2108" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="2110" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-azimuth" id="6733" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6735" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6737" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6739" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6741" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
           </Automation>
         </Pannable>
-        <Controllable name="polarity-invert" id="2118" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="2112" flags="GainLike,InlineControl" value="0"/>
+        <Controllable name="polarity-invert" id="6749" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6743" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="661" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -1497,9 +1499,6 @@ Dynamic EQ sane default:
         </Pannable>
         <Controllable name="polarity-invert" id="675" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="660" flags="GainLike,InlineControl" value="0"/>
-      </Processor>
-      <Processor id="478" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="451" flags="GainLike" value="1"/>
       </Processor>
       <Processor id="482" name="meter-DRUMS" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="483" name="DRUMS" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="DRUMS" type="main-outs" role="Main">
@@ -1552,26 +1551,29 @@ Dynamic EQ sane default:
       <Processor id="526" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
         <Controllable name="trimcontrol" id="498" flags="GainLike" value="1"/>
       </Processor>
-      <Processor id="2222" name="VOCAL_DUCK" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="2" selfdestruct="0" target="222" allow-feedback="0">
+      <Processor id="523" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="496" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6853" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
         </PannerShell>
         <Pannable>
-          <Controllable name="pan-azimuth" id="2226" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="2227" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="2228" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="2229" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="2230" flags="" value="0"/>
+          <Controllable name="pan-azimuth" id="6857" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6858" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6859" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6860" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6861" flags="" value="0"/>
           <Automation>
-            <AutomationList automation-id="pan-azimuth" id="2231" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="2232" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="2233" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="2234" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="2235" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-azimuth" id="6862" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6863" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6864" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6865" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6866" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
           </Automation>
         </Pannable>
-        <Controllable name="polarity-invert" id="2236" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="2221" flags="GainLike,InlineControl" value="0"/>
+        <Controllable name="polarity-invert" id="6867" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6852" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="583" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -1594,9 +1596,6 @@ Dynamic EQ sane default:
         <Controllable name="polarity-invert" id="597" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="582" flags="GainLike,InlineControl" value="0"/>
       </Processor>
-      <Processor id="523" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="496" flags="GainLike" value="1"/>
-      </Processor>
       <Processor id="527" name="meter-KEYS" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="528" name="KEYS" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="KEYS" type="main-outs" role="Main">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1"/>
@@ -1605,7 +1604,7 @@ Dynamic EQ sane default:
     </Route>
     <Route version="7003" id="1376" name="voc" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak" audio-playlist="1439" alignment-choice="Automatic" mode="Normal">
       <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
-      <PresentationInfo order="4" flags="AudioTrack,OrderSet,TriggerTrack" color="1018879999"/>
+      <PresentationInfo order="4" flags="AudioTrack,OrderSet,TriggerTrack" color="345425151"/>
       <Controllable name="solo" id="1401" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
       <Controllable name="solo-iso" id="1407" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
       <Controllable name="solo-safe" id="1409" flags="Toggle" value="0" solo-safe="0"/>
@@ -1845,7 +1844,7 @@ Dynamic EQ sane default:
     </Route>
     <Route version="7003" id="1601" name="bas" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak" audio-playlist="1664" alignment-choice="Automatic" mode="Normal">
       <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
-      <PresentationInfo order="2" flags="AudioTrack,OrderSet,TriggerTrack" color="675935743"/>
+      <PresentationInfo order="2" flags="AudioTrack,OrderSet,TriggerTrack" color="642503679"/>
       <Controllable name="solo" id="1626" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
       <Controllable name="solo-iso" id="1632" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
       <Controllable name="solo-safe" id="1634" flags="Toggle" value="0" solo-safe="0"/>
@@ -1925,7 +1924,7 @@ Dynamic EQ sane default:
     </Route>
     <Route version="7003" id="1676" name="drm" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak" audio-playlist="1739" alignment-choice="Automatic" mode="Normal">
       <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
-      <PresentationInfo order="1" flags="AudioTrack,OrderSet,TriggerTrack" color="2134746879"/>
+      <PresentationInfo order="1" flags="AudioTrack,OrderSet,TriggerTrack" color="1680498943"/>
       <Controllable name="solo" id="1701" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
       <Controllable name="solo-iso" id="1707" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
       <Controllable name="solo-safe" id="1709" flags="Toggle" value="0" solo-safe="0"/>
@@ -2005,7 +2004,7 @@ Dynamic EQ sane default:
     </Route>
     <Route version="7003" id="1755" name="syn" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak" audio-playlist="1818" alignment-choice="Automatic" mode="Normal">
       <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
-      <PresentationInfo order="6" flags="AudioTrack,OrderSet,TriggerTrack" color="1272720383"/>
+      <PresentationInfo order="6" flags="AudioTrack,OrderSet,TriggerTrack" color="1344326399"/>
       <Controllable name="solo" id="1780" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
       <Controllable name="solo-iso" id="1786" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
       <Controllable name="solo-safe" id="1788" flags="Toggle" value="0" solo-safe="0"/>
@@ -2128,26 +2127,29 @@ Dynamic EQ sane default:
       <Processor id="2048" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
         <Controllable name="trimcontrol" id="2020" flags="GainLike" value="1"/>
       </Processor>
-      <Processor id="2261" name="VOCAL_DUCK" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="2" selfdestruct="0" target="222" allow-feedback="0">
+      <Processor id="2045" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="2018" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6892" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="3" selfdestruct="0" target="6684" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
           <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
         </PannerShell>
         <Pannable>
-          <Controllable name="pan-azimuth" id="2265" flags="" value="0.5"/>
-          <Controllable name="pan-width" id="2266" flags="" value="0"/>
-          <Controllable name="pan-elevation" id="2267" flags="" value="0"/>
-          <Controllable name="pan-frontback" id="2268" flags="" value="0"/>
-          <Controllable name="pan-lfe" id="2269" flags="" value="0"/>
+          <Controllable name="pan-azimuth" id="6896" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="6897" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="6898" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="6899" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="6900" flags="" value="0"/>
           <Automation>
-            <AutomationList automation-id="pan-azimuth" id="2270" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-elevation" id="2271" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-width" id="2272" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-frontback" id="2273" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
-            <AutomationList automation-id="pan-lfe" id="2274" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-azimuth" id="6901" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="6902" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="6903" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="6904" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="6905" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
           </Automation>
         </Pannable>
-        <Controllable name="polarity-invert" id="2275" flags="Toggle" value="0"/>
-        <Controllable name="gaincontrol" id="2260" flags="GainLike,InlineControl" value="0"/>
+        <Controllable name="polarity-invert" id="6906" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="6891" flags="GainLike,InlineControl" value="0"/>
       </Processor>
       <Processor id="2082" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1">
@@ -2170,11 +2172,122 @@ Dynamic EQ sane default:
         <Controllable name="polarity-invert" id="2096" flags="Toggle" value="0"/>
         <Controllable name="gaincontrol" id="2081" flags="GainLike,InlineControl" value="0"/>
       </Processor>
-      <Processor id="2045" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
-        <Controllable name="gaincontrol" id="2018" flags="GainLike" value="1"/>
-      </Processor>
       <Processor id="2049" name="meter-SYNTHS" active="1" user-latency="0" use-user-latency="0" type="meter"/>
       <Processor id="2050" name="SYNTHS" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="SYNTHS" type="main-outs" role="Main">
+        <PannerShell bypassed="0" user-panner="" linked-to-route="1"/>
+      </Processor>
+      <Slavable/>
+    </Route>
+    <Route version="7003" id="6684" name="AUX_DELAY" default-type="audio" strict-io="1" active="1" denormal-protection="0" meter-point="MeterPostFader" disk-io-point="DiskIOPreFader" meter-type="MeterPeak">
+      <ProgramVersion created-with="Ardour 9.8" modified-with="Ardour 9.8"/>
+      <PresentationInfo order="15" flags="AudioBus,OrderSet" color="4278231807"/>
+      <Controllable name="solo" id="6692" flags="Toggle,RealTime" value="0" self-solo="0" soloed-by-upstream="0" soloed-by-downstream="0"/>
+      <Controllable name="solo-iso" id="6698" flags="Toggle,RealTime" value="0" solo-isolated="0"/>
+      <Controllable name="solo-safe" id="6700" flags="Toggle" value="0" solo-safe="0"/>
+      <IO name="AUX_DELAY" id="6713" direction="Input" default-type="audio">
+        <Port name="AUX_DELAY/audio_in 1" type="audio" direction="Input"/>
+        <Port name="AUX_DELAY/audio_in 2" type="audio" direction="Input"/>
+      </IO>
+      <IO name="AUX_DELAY" id="6714" direction="Output" default-type="audio">
+        <Port name="AUX_DELAY/audio_out 1" type="audio" direction="Output">
+          <Connection other="Master/audio_in 1"/>
+        </Port>
+        <Port name="AUX_DELAY/audio_out 2" type="audio" direction="Output">
+          <Connection other="Master/audio_in 2"/>
+        </Port>
+      </IO>
+      <MuteMaster mute-point="PostFader,Listen,Main,SurroundSend" muted="0"/>
+      <Controllable name="mute" id="6694" flags="Toggle,RealTime" value="0"/>
+      <Controllable name="phase" id="6696" flags="Toggle" value="0" phase-invert="00"/>
+      <Pannable>
+        <Controllable name="pan-azimuth" id="6703" flags="" value="0.5"/>
+        <Controllable name="pan-width" id="6707" flags="" value="0"/>
+        <Controllable name="pan-elevation" id="6705" flags="" value="0"/>
+        <Controllable name="pan-frontback" id="6709" flags="" value="0"/>
+        <Controllable name="pan-lfe" id="6711" flags="" value="0"/>
+        <Automation>
+          <AutomationList automation-id="pan-azimuth" id="6704" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+          <AutomationList automation-id="pan-elevation" id="6706" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+          <AutomationList automation-id="pan-width" id="6708" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+          <AutomationList automation-id="pan-frontback" id="6710" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+          <AutomationList automation-id="pan-lfe" id="6712" interpolation-style="Linear" time-domain="BeatTime" state="Off"/>
+        </Automation>
+      </Pannable>
+      <musical-mode tuning="TwelveTone" ring="0" type="PitchClass" name="Major" elements="0,2,4,5,7,9,11" root="0"/>
+      <Processor id="6723" name="Return" active="1" user-latency="0" use-user-latency="0" type="intreturn"/>
+      <Processor id="6716" name="Polarity" active="1" user-latency="0" use-user-latency="0" type="polarity"/>
+      <Processor id="6718" name="Amp" active="1" user-latency="0" use-user-latency="0" type="trim">
+        <Controllable name="trimcontrol" id="6690" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="6992" name="ZamDelay" active="1" user-latency="0" use-user-latency="0" type="lv2" unique-id="urn:zamaudio:ZamDelay" count="2" custom="0">
+        <ConfiguredInput>
+          <Channels type="audio" count="2"/>
+        </ConfiguredInput>
+        <CustomSinks>
+          <Channels type="audio" count="1"/>
+        </CustomSinks>
+        <ConfiguredOutput>
+          <Channels type="audio" count="2"/>
+        </ConfiguredOutput>
+        <PresetOutput/>
+        <InputMap-0>
+          <Channelmap type="audio" from="0" to="0"/>
+        </InputMap-0>
+        <OutputMap-0>
+          <Channelmap type="audio" from="0" to="0"/>
+        </OutputMap-0>
+        <InputMap-1>
+          <Channelmap type="audio" from="0" to="1"/>
+        </InputMap-1>
+        <OutputMap-1>
+          <Channelmap type="audio" from="0" to="1"/>
+        </OutputMap-1>
+        <ThruMap/>
+        <lv2 last-preset-uri="" last-preset-label="" parameter-changed-since-last-preset="1" template-dir="/home/pcache/.config/ardour9/templates/Rock Song">
+          <Port symbol="inv" value="0"/>
+          <Port symbol="time" value="160"/>
+          <Port symbol="sync" value="1"/>
+          <Port symbol="lpf" value="6000"/>
+          <Port symbol="div" value="3"/>
+          <Port symbol="gain" value="0"/>
+          <Port symbol="drywet" value="1"/>
+          <Port symbol="feedb" value="0.36499983072280884"/>
+        </lv2>
+        <Controllable name="Invert" id="6994" flags="Toggle" value="0" parameter="3" symbol="inv"/>
+        <Controllable name="Time" id="6996" flags="" value="160" parameter="4" symbol="time"/>
+        <Controllable name="Sync BPM" id="6998" flags="Toggle" value="1" parameter="5" symbol="sync"/>
+        <Controllable name="LPF" id="7000" flags="" value="6000" parameter="6" symbol="lpf"/>
+        <Controllable name="Divisor" id="7002" flags="" value="3" parameter="7" symbol="div"/>
+        <Controllable name="Output Gain" id="7004" flags="" value="0" parameter="8" symbol="gain"/>
+        <Controllable name="Dry/Wet" id="7006" flags="" value="1" parameter="9" symbol="drywet"/>
+        <Controllable name="Feedback" id="7008" flags="" value="0.36499983072280884" parameter="10" symbol="feedb"/>
+      </Processor>
+      <Processor id="6715" name="Amp" active="1" user-latency="0" use-user-latency="0" type="amp">
+        <Controllable name="gaincontrol" id="6688" flags="GainLike" value="1"/>
+      </Processor>
+      <Processor id="9249" name="AUX_REVERB" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="1" type="intsend" role="Aux" bitslot="1" selfdestruct="0" target="357" allow-feedback="0">
+        <PannerShell bypassed="0" user-panner="" linked-to-route="1">
+          <Panner uri="http://ardour.org/plugin/panner_balance" type="Stereo Balance"/>
+        </PannerShell>
+        <Pannable>
+          <Controllable name="pan-azimuth" id="9253" flags="" value="0.5"/>
+          <Controllable name="pan-width" id="9254" flags="" value="0"/>
+          <Controllable name="pan-elevation" id="9255" flags="" value="0"/>
+          <Controllable name="pan-frontback" id="9256" flags="" value="0"/>
+          <Controllable name="pan-lfe" id="9257" flags="" value="0"/>
+          <Automation>
+            <AutomationList automation-id="pan-azimuth" id="9258" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-elevation" id="9259" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-width" id="9260" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-frontback" id="9261" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+            <AutomationList automation-id="pan-lfe" id="9262" interpolation-style="Linear" time-domain="AudioTime" state="Off"/>
+          </Automation>
+        </Pannable>
+        <Controllable name="polarity-invert" id="9263" flags="Toggle" value="0"/>
+        <Controllable name="gaincontrol" id="9248" flags="GainLike,InlineControl" value="0"/>
+      </Processor>
+      <Processor id="6719" name="meter-AUX_DELAY" active="1" user-latency="0" use-user-latency="0" type="meter"/>
+      <Processor id="6720" name="AUX_DELAY" active="1" user-latency="0" use-user-latency="0" own-input="1" own-output="0" output="AUX_DELAY" type="main-outs" role="Main">
         <PannerShell bypassed="0" user-panner="" linked-to-route="1"/>
       </Processor>
       <Slavable/>
@@ -2232,10 +2345,10 @@ Dynamic EQ sane default:
       <Window name="session-options-editor" visible="0" x-off="0" y-off="186" x-size="873" y-size="470"/>
       <Window name="speaker-config" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="about" visible="0" x-off="0" y-off="0" x-size="505" y-size="587"/>
-      <Window name="add-routes" visible="0" x-off="-1" y-off="-1" x-size="727" y-size="491"/>
+      <Window name="add-routes" visible="0" x-off="-1" y-off="-1" x-size="741" y-size="491"/>
       <Window name="add-video" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="inspector" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="audio-midi-setup" visible="0" x-off="1209" y-off="0" x-size="711" y-size="381"/>
+      <Window name="audio-midi-setup" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="video-export" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="script-manager" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="bundle-manager" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
@@ -2244,7 +2357,7 @@ Dynamic EQ sane default:
       <Window name="big-transport" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="virtual-keyboard" visible="0" x-off="56" y-off="248" x-size="750" y-size="187"/>
       <Window name="library-downloader" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="audio-connection-manager" visible="0" x-off="0" y-off="236" x-size="1148" y-size="659"/>
+      <Window name="audio-connection-manager" visible="0" x-off="0" y-off="236" x-size="851" y-size="864"/>
       <Window name="midi-connection-manager" visible="0" x-off="66" y-off="77" x-size="594" y-size="617"/>
       <Window name="luawindow" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="rtawindow" visible="0" x-off="673" y-off="385" x-size="852" y-size="517"/>
@@ -2252,34 +2365,36 @@ Dynamic EQ sane default:
       <Window name="io-plugins" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="plugin-manager" visible="0" x-off="766" y-off="289" x-size="1213" y-size="893"/>
       <Window name="plugin-dsp-load" visible="0" x-off="381" y-off="514" x-size="628" y-size="744"/>
-      <Window name="dsp-statistics" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="dsp-statistics" visible="0" x-off="243" y-off="421" x-size="366" y-size="274"/>
       <Window name="transport-masters" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="RPM-78" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-177" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1676" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1601" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1451" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1376" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1526" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-1755" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-447" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-402" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-312" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-492" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-2014" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="RPM-222" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="RPM-267" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-312" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-177" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="RPM-357" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-402" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-447" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-492" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="P-357-717" visible="0" x-off="500" y-off="362" x-size="920" y-size="379" custom-ui="1"/>
-      <Window name="PM-357-717" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="P-78-755" visible="0" x-off="567" y-off="266" x-size="785" y-size="571" custom-ui="1"/>
       <Window name="PM-78-755" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="P-222-826" visible="0" x-off="380" y-off="140" x-size="897" y-size="890" custom-ui="1"/>
+      <Window name="P-222-826" visible="0" x-off="511" y-off="107" x-size="897" y-size="890" custom-ui="1"/>
       <Window name="PM-222-826" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="P-177-1326" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1" custom-ui="1"/>
-      <Window name="P-177-1352" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1" custom-ui="1"/>
-      <Window name="RPM-1376" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-1451" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-1526" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-1601" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-1676" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-1755" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
-      <Window name="RPM-2014" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <Window name="P-177-2278" visible="0" x-off="560" y-off="326" x-size="800" y-size="452" custom-ui="1"/>
+      <Window name="P-177-1352" visible="0" x-off="622" y-off="254" x-size="676" y-size="596" custom-ui="1"/>
       <Window name="PM-177-2278" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="P-357-717" visible="0" x-off="500" y-off="362" x-size="920" y-size="379" custom-ui="1"/>
+      <Window name="PM-357-717" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="RPM-6684" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
+      <Window name="P-6684-6992" visible="0" x-off="751" y-off="390" x-size="418" y-size="324" custom-ui="1"/>
+      <Window name="PM-6684-6992" visible="0" x-off="-1" y-off="-1" x-size="-1" y-size="-1"/>
       <GUIObjectState>
         <Object id="rtav 78" height="68"/>
         <Object id="automation 82" height="68" visible="0"/>
@@ -2377,6 +2492,10 @@ Dynamic EQ sane default:
             <Object id="control 2342" visible="0"/>
             <Object id="InlineDisplay" visible="1"/>
           </Object>
+          <Object id="processor 6931">
+            <Object id="control 6945" visible="0"/>
+            <Object id="control 6930" visible="1"/>
+          </Object>
         </Object>
         <Object id="rtav 177" height="68"/>
         <Object id="automation 181" height="68" visible="0"/>
@@ -2456,6 +2575,10 @@ Dynamic EQ sane default:
             <Object id="control 2370" visible="0"/>
             <Object id="control 2372" visible="0"/>
           </Object>
+          <Object id="processor 6814">
+            <Object id="control 6828" visible="0"/>
+            <Object id="control 6813" visible="1"/>
+          </Object>
         </Object>
         <Object id="rtav 312" height="68"/>
         <Object id="automation 316" height="68" visible="0"/>
@@ -2503,6 +2626,10 @@ Dynamic EQ sane default:
             <Object id="control 2158" visible="0"/>
             <Object id="control 2143" visible="1"/>
           </Object>
+          <Object id="processor 6775">
+            <Object id="control 6789" visible="0"/>
+            <Object id="control 6774" visible="1"/>
+          </Object>
         </Object>
         <Object id="rtav 402" height="68"/>
         <Object id="automation 406" height="68" visible="0"/>
@@ -2521,6 +2648,10 @@ Dynamic EQ sane default:
             <Object id="control 2118" visible="0"/>
             <Object id="control 2112" visible="1"/>
           </Object>
+          <Object id="processor 6729">
+            <Object id="control 6749" visible="0"/>
+            <Object id="control 6743" visible="1"/>
+          </Object>
         </Object>
         <Object id="rtav 447" height="68"/>
         <Object id="automation 451" height="68" visible="0"/>
@@ -2538,6 +2669,10 @@ Dynamic EQ sane default:
           <Object id="processor 2222">
             <Object id="control 2236" visible="0"/>
             <Object id="control 2221" visible="1"/>
+          </Object>
+          <Object id="processor 6853">
+            <Object id="control 6867" visible="0"/>
+            <Object id="control 6852" visible="1"/>
           </Object>
         </Object>
         <Object id="rtav 492" height="68"/>
@@ -2622,12 +2757,57 @@ Dynamic EQ sane default:
             <Object id="control 2275" visible="0"/>
             <Object id="control 2260" visible="1"/>
           </Object>
+          <Object id="processor 6892">
+            <Object id="control 6906" visible="0"/>
+            <Object id="control 6891" visible="1"/>
+          </Object>
         </Object>
         <Object id="rtav 2014" height="68"/>
         <Object id="automation 2018" height="68" visible="0"/>
         <Object id="automation 2020" height="68" visible="0"/>
         <Object id="automation 2014 12/0/0" height="68" visible="0"/>
         <Object id="automation 2033" height="68" visible="0"/>
+        <Object id="rtav 6684" height="68"/>
+        <Object id="automation 6688" height="68" visible="0"/>
+        <Object id="automation 6690" height="68" visible="0"/>
+        <Object id="automation 6684 12/0/0" height="68" visible="0"/>
+        <Object id="automation 6703" height="68" visible="0"/>
+        <Object id="strip 6684">
+          <Object id="processor 6715">
+            <Object id="control 6688" visible="0"/>
+          </Object>
+          <Object id="processor 6948">
+            <Object id="control 6950" visible="0"/>
+            <Object id="control 6952" visible="0"/>
+            <Object id="control 6954" visible="0"/>
+            <Object id="control 6956" visible="0"/>
+            <Object id="control 6958" visible="0"/>
+            <Object id="control 6960" visible="0"/>
+            <Object id="control 6962" visible="0"/>
+            <Object id="control 6964" visible="0"/>
+            <Object id="control 6966" visible="0"/>
+            <Object id="control 6968" visible="0"/>
+            <Object id="control 6970" visible="0"/>
+            <Object id="control 6972" visible="0"/>
+            <Object id="control 6974" visible="0"/>
+            <Object id="control 6976" visible="0"/>
+            <Object id="control 6978" visible="0"/>
+            <Object id="control 6980" visible="0"/>
+            <Object id="control 6982" visible="0"/>
+            <Object id="control 6984" visible="0"/>
+            <Object id="control 6986" visible="0"/>
+          </Object>
+          <Object id="processor 6992">
+            <Object id="control 6994" visible="0"/>
+            <Object id="control 6996" visible="0"/>
+            <Object id="control 6998" visible="0"/>
+            <Object id="control 7000" visible="0"/>
+            <Object id="control 7002" visible="0"/>
+            <Object id="control 7004" visible="0"/>
+            <Object id="control 7006" visible="0"/>
+            <Object id="control 7008" visible="0"/>
+          </Object>
+        </Object>
       </GUIObjectState>
     </UI>
     <Videomonitor active="0"/>

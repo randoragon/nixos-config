@@ -6,7 +6,7 @@ VST3 Favorite 56535450737764646561746877657374
 VST3 Favorite 56535450617675767520636F6D707265
 Lua Favorite 918f3b991b13912d151b8f9805d96c57a0212faa
 LV2 Favorite urn:zamaudio:ZamHeadX2
-LV2 Favorite urn:juce:TalReverb3
+LV2 Favorite urn:zamaudio:ZamDelay
 LV2 Favorite urn:dragonfly:room
 LV2 Favorite urn:dragonfly:plate
 LV2 Favorite urn:dragonfly:early
@@ -19,12 +19,12 @@ LV2 Favorite http://tytel.org/helm
 LV2 Favorite http://sfztools.github.io/sfizz
 LV2 Favorite http://lsp-plug.in/plugins/lv2/sc_mb_compressor_stereo
 LV2 Favorite http://lsp-plug.in/plugins/lv2/mixer_x8_stereo
-LV2 Favorite http://lsp-plug.in/plugins/lv2/loud_comp_stereo
-LV2 Favorite http://lsp-plug.in/plugins/lv2/loud_comp_mono
 LV2 Favorite http://lsp-plug.in/plugins/lv2/limiter_stereo
 LV2 Favorite http://lsp-plug.in/plugins/lv2/flanger_stereo
 LV2 Favorite http://lsp-plug.in/plugins/lv2/compressor_stereo
 LV2 Favorite http://lsp-plug.in/plugins/lv2/compressor_mono
+LV2 Favorite http://kxstudio.sf.net/carla/plugins/audiogain_s
+LV2 Favorite http://kxstudio.sf.net/carla/plugins/audiogain
 LV2 Favorite http://guitarix.sourceforge.net/plugins/gx_blueamp_#_blueamp_
 LV2 Favorite http://geonkick.org/geonkick
 LV2 Favorite http://gareus.org/oss/lv2/spectra#Mono

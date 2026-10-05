@@ -18,13 +18,14 @@
     <Option name="plugin-gui-behavior" value="PluginGUIDestroyAny"/>
     <Option name="prefer-inline-over-gui" value="0"/>
     <Option name="action-table-columns" value="0"/>
-    <Option name="stripable-color-palette" value="#2C2E39:#C45312:#DEA202:#7F3DA6:#000000:#000000:#000000:#000000:#000000:#FF0000:#FFD6DF:#4BDC2B:#3CBADF:#2849F5:#000000:#000000:#000000:#000000:#000000:#FF00A2"/>
+    <Option name="stripable-color-palette" value="#2C2E39:#C45312:#DEA202:#642A60:#000000:#000000:#000000:#000000:#000000:#FF0000:#342A1D:#5020CA:#1496C4:#264BD3:#000000:#000000:#000000:#000000:#000000:#FF00A2"/>
     <Option name="use-palette-for-new-track" value="0"/>
     <Option name="use-palette-for-new-bus" value="0"/>
     <Option name="use-palette-for-new-vca" value="0"/>
     <Option name="snap-target" value="SnapTargetBoth"/>
     <Option name="freesound-dir" value="/home/pcache/.cache/ardour8/freesound"/>
     <Option name="region-edit-disposition" value="NeverBottomPane"/>
+    <Option name="default-midi-note-color-mode" value="MeterColors"/>
     <Option name="insert-at-position" value="2"/>
     <Option name="note-name-display" value="Never"/>
     <Option name="scroll-velocity-editing" value="0"/>
