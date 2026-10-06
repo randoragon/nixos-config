@@ -31,7 +31,7 @@
     setbfree
     lilypond
     sfizz-ui
-    surge-xt
+    surge-xt ob-xf
     guitarix
 
     # For running Windows plugins
