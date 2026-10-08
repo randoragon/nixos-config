@@ -6,6 +6,7 @@
     ./sox
     ./vitalium
     ./wine  # For yabridge
+    ./tone3000
   ];
 
   home.packages = with pkgs; [
