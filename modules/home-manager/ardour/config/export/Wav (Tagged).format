@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExportFormatSpecification name="Wav (Tagged)" id="dd4f6f30-f054-4e0a-8d91-67eed5d79153" with-cue="0" with-toc="0" with-mp4chaps="0" command="" analyse="0" reimport="0" soundcloud-upload="0">
   <Encoding id="F_WAV" type="T_Sndfile" extension="wav" name="WAV" has-sample-format="1" channel-limit="256"/>
-  <SampleRate rate="SR_Session"/>
+  <SampleRate rate="SR_48"/>
   <SRCQuality quality="SRC_SincBest"/>
   <Watermark level="-20" duration="0" interval="0"/>
   <EncodingOptions>
-    <Option name="sample-format" value="SF_16"/>
-    <Option name="dithering" value="D_Shaped"/>
+    <Option name="sample-format" value="SF_24"/>
+    <Option name="dithering" value="D_None"/>
     <Option name="tag-metadata" value="1"/>
     <Option name="tag-support" value="1"/>
     <Option name="broadcast-info" value="0"/>
