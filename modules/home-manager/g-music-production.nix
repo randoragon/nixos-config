@@ -22,9 +22,11 @@
     lsp-plugins       # compressors
     tap-plugins
     zam-plugins       # spatial audio
-    calf              # delay plugin
+    calf qdelay       # delay plugin
     openav-artyfx     # reverb
     dragonfly-reverb  # reverb
+    airwindows-lv2    # Pressure4 colorful compressor
+    chow-tape-model
     helm
     geonkick drumgizmo
     vmpk
