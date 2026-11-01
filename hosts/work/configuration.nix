@@ -54,7 +54,7 @@
     mono gtk-sharp-2_0
   ];
   systemd.coredump.enable = false;
-  boot.kernel.sysctl."kernel.core_pattern" = "core";
+  boot.kernel.sysctl."kernel.core_pattern" = lib.mkForce "core";
 
   # Adapted from https://github.com/wayland-transpositor/wprs/blob/master/wprsd.service
   systemd.user.services.wprsd = {
