@@ -4,6 +4,11 @@ let {
 		label = "  "
 	}
 
+	$sp = {
+		type = "label"
+		label = " "
+	}
+
 	$sep = {
 		type = "label"
 		label = " | "
@@ -45,6 +50,12 @@ let {
 		show_sources = false
 	}
 
+	$easyeffects = {
+		type = "script"
+		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/easyeffects"
+		mode = "watch"
+	}
+
 	$storage = {
 		type = "script"
 		cmd = "$env_XDG_CONFIG_HOME/ironbar/scripts/storage"
@@ -79,5 +90,5 @@ let {
 
 	start = [ $pad $sway_workspace $sway_mode ]
 	center = [ $focused ]
-	end = [ $volume $sep $storage $sep $gpg_expire $sep $clock $battery $pad ]
+	end = [ $volume $sp $easyeffects $sep $storage $sep $gpg_expire $sep $clock $battery $pad ]
 }

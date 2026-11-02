@@ -1,0 +1,19 @@
+#!/bin/sh -e
+
+if ! command -v easyeffects >/dev/null 2>&1; then
+    exit
+fi
+
+while true; do
+    if pidof -sq easyeffects; then
+        case "$(easyeffects -b3)" in
+            1) echo 'FX-';;
+            2) echo 'FX+';;
+            *) echo 'FX?';;
+        esac
+    else
+        echo
+    fi
+
+    sleep 2
+done
