@@ -3,6 +3,7 @@
   imports = [
     ./ardour
     ./carla
+    ./easyeffects
     ./sox
     ./vitalium
     ./wine  # For yabridge
