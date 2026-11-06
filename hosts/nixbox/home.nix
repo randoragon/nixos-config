@@ -27,6 +27,9 @@
     lxmake
   ];
 
+  # Decrease monitor brightness
+  services.wlsunset.gamma = 0.8;
+
   home.sessionVariables = {
     NCMPCPP_SWITCH_WALLPAPER = "1";
     NCMPCPP_FANCY_TRANSITIONS = "1";
