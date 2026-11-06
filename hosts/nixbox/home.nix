@@ -22,7 +22,6 @@
   home.homeDirectory = "/home/${config.home.username}";
 
   home.packages = with pkgs; [
-    spotify
     nvtopPackages.full
     lxmake
   ];
