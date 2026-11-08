@@ -25,7 +25,7 @@
     wlr-randr wdisplays
     brightnessctl
     ripdrag
-    waypipe wayvnc wlvncc wprs
+    waypipe wayvnc wlvncc
     zenity
 
     firefox ungoogled-chromium
