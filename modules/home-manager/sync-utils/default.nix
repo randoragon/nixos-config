@@ -12,7 +12,6 @@
 
     ~/Documents/0wn/ Docs
     ~/Pictures/0wn/ Art
-    ~/.local/share/lmms/projects LMMS
     ~/.local/share/wallpapers/
     ~/Documents/Books/
     ~/Documents/sheet-music/
@@ -28,7 +27,6 @@
 
     Docs/ ~/Documents/0wn/
     Art/ ~/Pictures/0wn/
-    LMMS/ ~/.local/share/lmms/
     wallpapers/ ~/.local/share/wallpapers/
     Books/ ~/Documents/Books/
     clips/ ~/Videos/clips/
