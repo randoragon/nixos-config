@@ -32,7 +32,6 @@
     xarchiver
     libreoffice
     android-file-transfer
-    anki
     aseprite
   ];
 
