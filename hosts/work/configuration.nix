@@ -51,7 +51,7 @@
     teams-for-linux
     poppler-utils
     python3
-    mono gtk-sharp-2_0
+    mono
   ];
   systemd.coredump.enable = false;
   boot.kernel.sysctl."kernel.core_pattern" = lib.mkForce "core";
