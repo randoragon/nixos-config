@@ -265,6 +265,7 @@ assign [app_id="teams-for-linux"] workspace 13:d
 
 # Flameshot
 for_window [title="Save screenshot"] floating enable
+for_window [title="flameshot-pin"] floating enable
 
 # GPG Pinentry
 for_window [app_id="Pinentry"] floating enable
