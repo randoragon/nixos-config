@@ -24,7 +24,7 @@
   # User configuration
   users.users.piotrkas = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "input" "uinput" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "input" "uinput" "docker" "wireshark" ];
     shell = pkgs.bash;
     openssh.authorizedKeys.keyFiles = [ ../authorized_keys_p ];
     linger = true;
@@ -46,6 +46,7 @@
   # Extra work stuff
   programs.wayvnc.enable = true;
   programs.gnupg.agent.pinentryPackage = lib.mkForce pkgs.pinentry-curses;
+  programs.wireshark.enable = true;
   virtualisation.docker.enable = true;
   environment.systemPackages = with pkgs; [
     teams-for-linux
