@@ -141,14 +141,11 @@ prepend_keymap = [
 	{ on = [ "c", "d", "n", "o" ], run = "cd ~/.local/share/notes" },
 	{ on = [ "c", "d", "h", "l" ], run = "cd ~/.local/share/ledger" },
 	{ on = [ "c", "d", "p", "i" ], run = "cd ~/Pictures" },
-	{ on = [ "c", "d", "p", "u", "t" ], run = "cd ~/Documents/put/sem10" },
 	{ on = [ "c", "d", "s", "c" ], run = "cd ~/.scripts" },
 	{ on = [ "c", "d", "s", "o" ], run = "cd ~/Software" },
 	{ on = [ "c", "d", "t", "r" ], run = "cd ~/.local/share/Trash/files" },
 	{ on = [ "c", "d", "v", "i" ], run = "cd ~/Videos" },
 	{ on = [ "c", "d", "w", "a", "l", "l" ], run = "cd ~/.local/share/wallpapers" },
-	{ on = [ "c", "d", "r", "u" ], run = "cd ~/Software/randoutils" },
-	{ on = [ "c", "d", "s", "p" ], run = "cd ~/Software/libstaple" },
 	{ on = [ "c", "d", "n", "v" ], run = "cd ~/nixos-config/modules/home-manager/nvim/nvim/" },
 ]
 
