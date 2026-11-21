@@ -74,3 +74,4 @@ inoremap <buffer> <Leader>ve <Esc>0C<Tab>velokonto<Tab><Tab><Tab><Tab>
 inoremap <buffer> <Leader>vs <Esc>0C<Tab>vision<Tab><Tab><Tab><Tab><Tab>
 inoremap <buffer> <Leader>vp <Esc>0C<Tab>vps<Tab><Tab><Tab><Tab><Tab><Tab>
 inoremap <buffer> <Leader>wi <Esc>0C<Tab>wise<Tab><Tab><Tab><Tab><Tab>
+inoremap <buffer> <Leader>xt <Esc>0C<Tab>xtb<Tab><Tab><Tab><Tab><Tab><Tab>
