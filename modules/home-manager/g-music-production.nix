@@ -35,7 +35,7 @@
     hydrogen
     setbfree
     lilypond
-    sfizz-ui
+    sfizz-ui decent-sampler
     surge-xt ob-xf
     guitarix
 
