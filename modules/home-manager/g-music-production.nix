@@ -3,6 +3,7 @@
   imports = [
     ./ardour
     ./carla
+    ./dussek
     ./easyeffects
     ./sox
     ./vitalium
