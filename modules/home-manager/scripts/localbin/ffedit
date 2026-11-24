@@ -49,10 +49,10 @@ convert () {
         ffmpeg_ext=mov
         case "$video_codec" in
             *Video:\ dnxhd*)
-                ffmpeg_flags="$ffmpeg_flags -c:v copy"
+                ffmpeg_flags="$ffmpeg_flags -c:v copy -fps_mode cfr"
                 ;;
             *)
-                ffmpeg_flags="$ffmpeg_flags -c:V dnxhd -profile:V dnxhr_hq -pix_fmt yuv422p"
+                ffmpeg_flags="$ffmpeg_flags -c:V dnxhd -fps_mode cfr -profile:V dnxhr_hq -pix_fmt yuv422p"
                 work_to_do=1
                 ;;
         esac
