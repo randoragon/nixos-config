@@ -7,9 +7,10 @@ sort_dir_first = true
 [which]
 sort_translit = true
 
-# Always use xdg-open for opening
+# Always use xdg-open for opening, except for bulk renaming
 [open]
 prepend_rules = [
+	{ url = "bulk-rename.txt", use = [ "edit" ] },
 	{ url = "*", use = [ "open" ] },
 ]
 
