@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   xdg.mime.enable = true;
   home.packages = with pkgs; [ xdg-utils ];
 
@@ -58,7 +58,7 @@
       # Misc
       "inode/directory" = [ "file.desktop" ];
       "inode/x-empty" = [ "text.desktop" ];
-      "application/octet-stream" = [ "text.desktop" ];
+      "application/octet-stream" = [ "binary.desktop" ];
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = [ "libreoffice-writer.desktop" "writer.desktop" ];
       "application/zip" = [ "xarchiver.desktop" ];
       "application/xml" = [ "text.desktop" "firefox.desktop" ];
@@ -123,6 +123,15 @@
       exec = "open-plain-text %u";
       terminal = false;
       mimeType = [ "text/plain" ];
+    };
+
+    binary = {
+      type = "Application";
+      name = "Hyx";
+      genericName = "Binary File Editor";
+      exec = "${config.home.sessionVariables.TERMINAL} ${pkgs.hyx}/bin/hyx -- %f";
+      terminal = false;
+      mimeType = [ "application/octet-stream" ];
     };
 
     mpdplay = {
